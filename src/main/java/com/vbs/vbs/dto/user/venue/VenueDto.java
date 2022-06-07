@@ -1,5 +1,6 @@
 package com.vbs.vbs.dto.user.venue;
 
+import com.vbs.vbs.enums.VenueStatus;
 import lombok.*;
 
 @NoArgsConstructor
@@ -18,5 +19,6 @@ public class VenueDto {
     private String city_name;
     private String street_name;
     private String password;
+    private VenueStatus venueStatus;
 
 }

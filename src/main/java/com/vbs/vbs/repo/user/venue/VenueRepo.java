@@ -24,4 +24,6 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "select  * from tbl_venue where  v_name= ?1",nativeQuery = true)
     Venue findByV_name(String v_name);
 
+    @Query(value="select * from tbl_venue where venueUpdateStatus=PENDING",nativeQuery = true)
+    List<Venue>findInAdminPage();
 }

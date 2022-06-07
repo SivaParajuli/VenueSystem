@@ -1,9 +1,9 @@
 package com.vbs.vbs.service.user.client;
 
-import com.vbs.vbs.dto.user.client.ClientRegisterDto;
+import com.vbs.vbs.dto.user.client.ClientDto;
 
 
 public interface ClientService {
-    ClientRegisterDto create (ClientRegisterDto clientRegisterDto);
+    ClientDto create (ClientDto clientDto);
 
 }

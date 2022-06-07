@@ -1,6 +1,6 @@
 package com.vbs.vbs.service.impl.user.admin;
 
-import com.vbs.vbs.dto.user.admin.AdminRegisterDto;
+import com.vbs.vbs.dto.user.admin.AdminDto;
 import com.vbs.vbs.entity.user.admin.Admin;
 import com.vbs.vbs.repo.user.admin.AdminRegisterRepo;
 import com.vbs.vbs.service.user.admin.AdminService;
@@ -18,15 +18,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminRegisterDto create(AdminRegisterDto adminRegisterDto) {
+    public AdminDto create(AdminDto adminDto) {
         Admin entity= Admin.builder()
-                .id(adminRegisterDto.getId())
-                .name(adminRegisterDto.getName())
-                .email(adminRegisterDto.getEmail())
-                .password(adminRegisterDto.getPassword())
+                .id(adminDto.getId())
+                .name(adminDto.getName())
+                .email(adminDto.getEmail())
+                .password(adminDto.getPassword())
                 .build();
         entity= adminRegisterRepo.save(entity);
-        return AdminRegisterDto.builder()
+        return AdminDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .email(entity.getEmail())

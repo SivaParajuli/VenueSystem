@@ -1,7 +1,11 @@
 package com.vbs.vbs.service.impl.user.venue;
 
+import com.vbs.vbs.dto.user.client.BookingRequestDto;
 import com.vbs.vbs.dto.user.venue.VenueDto;
 import com.vbs.vbs.entity.user.venue.Venue;
+import com.vbs.vbs.entity.user.venue.VenueBookingRequest;
+import com.vbs.vbs.enums.VenueStatus;
+import com.vbs.vbs.repo.user.venue.VenueBookingRequestRepo;
 import com.vbs.vbs.repo.user.venue.VenueRepo;
 import com.vbs.vbs.service.user.venue.VenueService;
 import org.springframework.stereotype.Service;
@@ -15,25 +19,31 @@ public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
 
+    private final VenueBookingRequestRepo venueBookingRequestRepo;
 
-    public VenueServiceImpl(VenueRepo venueRepo) {
+
+
+    public VenueServiceImpl(VenueRepo venueRepo, VenueBookingRequestRepo venueBookingRequestRepo) {
         this.venueRepo = venueRepo;
+        this.venueBookingRequestRepo = venueBookingRequestRepo;
     }
 
 
     @Override
     public VenueDto create(VenueDto venueDto) {
+        Venue entity=new Venue();
+        entity.setId(venueDto.getId());
+        entity.setCity_name(venueDto.getCity_name());
+        entity.setCapacity(venueDto.getCapacity());
+        entity.setContact(venueDto.getContact());
+        entity.setEmail(venueDto.getEmail());
+        entity.setStreet_name(venueDto.getStreet_name());
+        if(venueDto.getVenueStatus()==null) {
+            entity.setVenueStatus(VenueStatus.PENDING);
+        }
+        else
+            entity.setVenueStatus(venueDto.getVenueStatus());
 
-        Venue entity = Venue.builder()
-                .id(venueDto.getId())
-                .v_name(venueDto.getV_name())
-                .contact(venueDto.getContact())
-                .email(venueDto.getEmail())
-                .city_name(venueDto.getCity_name())
-                .street_name(venueDto.getStreet_name())
-                .capacity(venueDto.getCapacity())
-                .password(venueDto.getPassword())
-                .build();
         entity = venueRepo.save(entity);
         return VenueDto.builder()
                 .id(entity.getId())
@@ -43,7 +53,6 @@ public class VenueServiceImpl  implements VenueService {
                 .city_name(venueDto.getCity_name())
                 .street_name(venueDto.getStreet_name())
                 .capacity(entity.getCapacity())
-                .password(entity.getPassword())
                 .build();
     }
 
@@ -94,6 +103,21 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     @Override
+    public List<VenueDto> findInAdminPage() {
+        List<Venue> venueList = venueRepo.findInAdminPage();
+        return venueList.stream().map(entity->VenueDto.builder()
+                .v_name(entity.getV_name())
+                .capacity(entity.getCapacity())
+                .contact(entity.getContact())
+                .email(entity.getEmail())
+                .city_name(entity.getCity_name())
+                .street_name(entity.getStreet_name())
+                .venueStatus(entity.getVenueStatus())
+                .build()).collect(Collectors.toList());
+
+    }
+
+    @Override
     public List<VenueDto> findByCity_name(String city_name) {
         List<Venue> venueList = venueRepo.findByCity_name( city_name);
         return venueList.stream().map(entity-> VenueDto.builder()
@@ -114,6 +138,23 @@ public class VenueServiceImpl  implements VenueService {
                 .capacity(entity.getCapacity())
                 .city_name(entity.getCity_name())
                 .street_name(entity.getStreet_name())
+                .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteBYId(Integer integer) {
+        venueRepo.deleteById(integer);
+    }
+
+    @Override
+    public List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId) {
+        List<VenueBookingRequest> requestList= venueBookingRequestRepo.getVenueBookingRequestByClient(venueId);
+        return requestList.stream().map(entity->BookingRequestDto.builder()
+                .BookingDate(entity.getBookingDate())
+                .clientId(entity.getId())
+                .functionType(entity.getFunctionType())
+                .payment(entity.getPayment())
+                .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());
     }
 

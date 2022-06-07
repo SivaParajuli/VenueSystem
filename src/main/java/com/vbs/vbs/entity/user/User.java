@@ -1,6 +1,6 @@
 package com.vbs.vbs.entity.user;
 
-import com.vbs.vbs.enums.UserStatus;
+import com.vbs.vbs.enums.UserRoles;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +27,6 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private UserStatus userStatus;
+    private UserRoles userRoles;
 }
 

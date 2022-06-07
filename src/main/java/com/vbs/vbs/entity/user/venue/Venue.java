@@ -1,5 +1,6 @@
 package com.vbs.vbs.entity.user.venue;
 
+import com.vbs.vbs.enums.VenueStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class Venue implements Serializable {
 
     @Column(name="password",length=50)
     private String password;
+
+    @Column(name="venueStatus")
+    private VenueStatus venueStatus;
 
     @Column(name="city_address",length=45)
     private String city_name;
