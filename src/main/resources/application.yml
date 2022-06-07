@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/vbsdb
+    username: vgxlzkqppiyxeq
+    password: 10c50c312a01aca3ffeba34744ac27b1c7fe8388f35841162dd8fd9dac43aa9a
+    url: jdbc:postgresql://ec2-34-230-153-41.compute-1.amazonaws.com:5432/vbsdb
     driver-class-name: org.postgresql.Driver
 
 
