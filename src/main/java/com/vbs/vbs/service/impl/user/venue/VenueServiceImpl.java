@@ -33,6 +33,7 @@ public class VenueServiceImpl  implements VenueService {
     public VenueDto create(VenueDto venueDto) {
         Venue entity=new Venue();
         entity.setId(venueDto.getId());
+        entity.setV_name(venueDto.getV_name());
         entity.setCity_name(venueDto.getCity_name());
         entity.setCapacity(venueDto.getCapacity());
         entity.setContact(venueDto.getContact());

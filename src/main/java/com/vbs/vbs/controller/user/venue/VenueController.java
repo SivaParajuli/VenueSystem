@@ -5,7 +5,6 @@ import com.vbs.vbs.controller.BaseController;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.user.client.BookingRequestDto;
 import com.vbs.vbs.dto.user.venue.VenueDto;
-import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.service.user.venue.VenueBookingRequestService;
 import com.vbs.vbs.service.user.venue.VenueService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class VenueController extends BaseController {
     }
 
 
-    @PostMapping("create")
+    @PostMapping(path="/create")
     public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto){
         venueDto =venueService.create(venueDto);
         if(venueDto !=null){

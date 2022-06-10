@@ -20,28 +20,16 @@ public class Venue implements Serializable {
     private Integer id;
 
     @Column(name="v_name",length=200)
-    private String v_name;
+    private String venueName;
+
+    @Column(name="user_name")
+    private String username;
 
     @Column(name="contact",length=10)
-    private String contact;
+    private String contactNumber;
 
-    @Column(name="email",length=200)
-    private String email;
-
-    @Column(name="capacity",length=100)
-    private String capacity;
-
-    @Column(name="password",length=50)
-    private String password;
-
-    @Column(name="venueStatus")
-    private VenueStatus venueStatus;
-
-    @Column(name="city_address",length=45)
-    private String city_name;
-
-    @Column(name="street_address",length=34)
-    private String street_name;
+    @Column(name="address",length=45)
+    private String address;
 
 
 
