@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequestMapping("venue")
 @RestController
+@CrossOrigin
 public class VenueController extends BaseController {
 
     private final VenueService venueService;
@@ -24,6 +25,14 @@ public class VenueController extends BaseController {
         this.venueService = venueService;
         this.venueBookingRequestService = venueBookingRequestService;
     }
+
+    @GetMapping
+    public ResponseEntity findAll(){
+        List<VenueDto> venueDtoList =venueService.findAll();
+        return new ResponseEntity<>
+                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
+    }
+
 
 
     @PostMapping(path="create")
