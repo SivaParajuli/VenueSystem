@@ -1,8 +1,6 @@
 package com.vbs.vbs.controller.user.admin;
 
 import com.vbs.vbs.controller.BaseController;
-import com.vbs.vbs.dto.user.admin.AdminDto;
-import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.user.venue.VenueDto;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.service.user.admin.AdminService;
@@ -26,20 +24,6 @@ public class  AdminController extends BaseController {
     public AdminController(AdminService adminService, VenueService venueService) {
         this.adminService = adminService;
         this.venueService = venueService;
-    }
-
-    @PostMapping("create")
-    public ResponseEntity<ResponseDto> createAdmin(@RequestBody AdminDto adminDto){
-       adminDto = adminService.create(adminDto);
-        if(adminDto !=null) {
-            return new ResponseEntity<>
-                    (successResponse("created successfully.", adminDto), HttpStatus.CREATED);
-
-        }
-        else{
-            return new ResponseEntity<>
-                    (errorResponse("creation Failed", null), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping

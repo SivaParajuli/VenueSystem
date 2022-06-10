@@ -42,25 +42,7 @@ public class VenueController extends BaseController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity findAll(){
-        List<VenueDto> venueDtoList =venueService.findAll();
-        return new ResponseEntity<>
-                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
-    }
 
-    @GetMapping("by-id/{id}")
-    public ResponseEntity<ResponseDto>findById(@PathVariable Integer id){
-        VenueDto venueDto =venueService.findById(id);
-        if(venueDto !=null) {
-            return new ResponseEntity<>
-                    (successResponse("Venue   Fetched.", venueDto), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>
-                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping("/requests")
     public ResponseEntity<ResponseDto>getVenueRequestByClient(Integer id){
@@ -68,19 +50,10 @@ public class VenueController extends BaseController {
         return null;
     }
 
-    @PostMapping("response/{bookingStatus}")
+   /* @PostMapping("response/{bookingStatus}")
     public ResponseEntity<ResponseDto> BookingResponse(BookingRequestDto bookingRequestDto,
-                                                       @PathVariable("bookingStatus") String bookingStatus){
-//    TODO    bookingRequestDto=venueBookingRequestService.findById();
-        if(bookingStatus=="ok") {
-            bookingRequestDto.setBookingStatus(BookingStatus.BOOKED);
-            venueBookingRequestService.VenueBookingRequest(bookingRequestDto);
-            venueBookingRequestService.BookingResponse(1);
-        }
-        if(bookingStatus=="deny"){
-            venueBookingRequestService.BookingResponse(0);
-//    TODO        venueBookingRequestService.deleteBYId(id);
-        }
-        return null;
-    }
+                                                       @PathVariable("bookingStatus") Integer bookingStatus){
+        venueBookingRequestService.BookingResponse(bookingStatus);
+        return new ResponseEntity<>(successResponse("venue booked",HttpStatus.OK)
+    }*/
 }

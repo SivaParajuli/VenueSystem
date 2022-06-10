@@ -17,23 +17,6 @@ public class AdminServiceImpl implements AdminService {
 //        this.venueService = venueService;
     }
 
-    @Override
-    public AdminDto create(AdminDto adminDto) {
-        Admin entity= Admin.builder()
-                .id(adminDto.getId())
-                .name(adminDto.getName())
-                .email(adminDto.getEmail())
-                .password(adminDto.getPassword())
-                .build();
-        entity= adminRegisterRepo.save(entity);
-        return AdminDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .email(entity.getEmail())
-                .password(entity.getPassword())
-                .build();
-    }
-
 //    public void book(VenueRegister venueRegister){
 //       VenueRegisterDto venueRegister1 = venueService.findById(venueRegister.getAddress());
 //       venueRegister1.setContact("724959473");
