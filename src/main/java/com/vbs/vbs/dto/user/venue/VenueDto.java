@@ -12,13 +12,13 @@ import lombok.*;
 public class VenueDto {
 
     private Integer id;
-    private String v_name;
-    private String contact;
+    private String venueName;
+    private String userName;
+    private String contactNumber;
     private String email;
-    private String capacity;
-    private String city_name;
-    private String street_name;
+    private String address;
     private String password;
+
     private VenueStatus venueStatus;
 
 }

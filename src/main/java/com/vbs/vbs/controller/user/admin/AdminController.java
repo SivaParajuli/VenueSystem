@@ -29,7 +29,7 @@ public class  AdminController extends BaseController {
     @GetMapping
     public ResponseEntity findInAdminPage(){
 
-        List<VenueDto> venueDtoList= venueService.findInMainPage();
+        List<VenueDto> venueDtoList= venueService.findInAdminPage();
         return new ResponseEntity<>
                 (successResponse("Successfull",venueDtoList),HttpStatus.OK);
 

@@ -23,13 +23,22 @@ public class Venue implements Serializable {
     private String venueName;
 
     @Column(name="user_name")
-    private String username;
+    private String userName;
+
+    @Column(name="email")
+    private String email;
+
+    @Column(name="password")
+    private String password;
 
     @Column(name="contact",length=10)
     private String contactNumber;
 
     @Column(name="address",length=45)
     private String address;
+
+    @Column(name="venueStatus")
+    private VenueStatus venueStatus;
 
 
 

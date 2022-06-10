@@ -33,12 +33,11 @@ public class VenueServiceImpl  implements VenueService {
     public VenueDto create(VenueDto venueDto) {
         Venue entity=new Venue();
         entity.setId(venueDto.getId());
-        entity.setV_name(venueDto.getV_name());
-        entity.setCity_name(venueDto.getCity_name());
-        entity.setCapacity(venueDto.getCapacity());
-        entity.setContact(venueDto.getContact());
+        entity.setVenueName(venueDto.getVenueName());
+        entity.setUserName(venueDto.getUserName());
         entity.setEmail(venueDto.getEmail());
-        entity.setStreet_name(venueDto.getStreet_name());
+        entity.setAddress(venueDto.getAddress());
+        entity.setContactNumber(venueDto.getContactNumber());
         if(venueDto.getVenueStatus()==null) {
             entity.setVenueStatus(VenueStatus.PENDING);
         }
@@ -48,12 +47,10 @@ public class VenueServiceImpl  implements VenueService {
         entity = venueRepo.save(entity);
         return VenueDto.builder()
                 .id(entity.getId())
-                .v_name(entity.getV_name())
+                .venueName(entity.getVenueName())
                 .email(entity.getEmail())
-                .contact(entity.getContact())
-                .city_name(venueDto.getCity_name())
-                .street_name(venueDto.getStreet_name())
-                .capacity(entity.getCapacity())
+                .contactNumber(entity.getContactNumber())
+                .address(venueDto.getAddress())
                 .build();
     }
 
@@ -62,13 +59,10 @@ public class VenueServiceImpl  implements VenueService {
         List<Venue> venueList = venueRepo.findAll();
         return venueList.stream().map(entity-> VenueDto.builder()
                 .id(entity.getId())
-                .v_name(entity.getV_name())
-                .contact(entity.getContact())
+                .venueName(entity.getVenueName())
+                .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
-                .capacity(entity.getCapacity())
-                .city_name(entity.getCity_name())
-                .street_name(entity.getStreet_name())
-                .password(entity.getPassword())
+                .address(entity.getAddress())
                 .build()).collect(Collectors.toList());
     }
 
@@ -79,68 +73,40 @@ public class VenueServiceImpl  implements VenueService {
             Venue entity=venueOptional.get();
             return VenueDto.builder()
                     .id(entity.getId())
-                    .v_name(entity.getV_name())
+                    .venueName(entity.getVenueName())
                     .email(entity.getEmail())
-                    .contact(entity.getContact())
-                    .city_name(entity.getCity_name())
-                    .street_name(entity.getStreet_name())
-                    .capacity(entity.getCapacity())
-                    .password(entity.getPassword())
+                    .contactNumber(entity.getContactNumber())
+                    .address(entity.getAddress())
                     .build();
         }
         return null;
     }
 
-    @Override
-    public List<VenueDto> findInMainPage() {
-        List<Venue> venueList = venueRepo.findInMainPage();
-        return venueList.stream().map(entity-> VenueDto.builder()
-                .id(entity.getId())
-                .v_name(entity.getV_name())
-                .capacity(entity.getCapacity())
-                .city_name(entity.getCity_name())
-                .street_name(entity.getStreet_name())
-                .build()).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<VenueDto> findInMainPage() {
+//        List<Venue> venueList = venueRepo.findInMainPage();
+//        return venueList.stream().map(entity-> VenueDto.builder()
+//                .id(entity.getId())
+//                .v_name(entity.getV_name())
+//                .capacity(entity.getCapacity())
+//                .city_name(entity.getCity_name())
+//                .street_name(entity.getStreet_name())
+//                .build()).collect(Collectors.toList());
+//    }
 
     @Override
     public List<VenueDto> findInAdminPage() {
         List<Venue> venueList = venueRepo.findInAdminPage();
         return venueList.stream().map(entity->VenueDto.builder()
-                .v_name(entity.getV_name())
-                .capacity(entity.getCapacity())
-                .contact(entity.getContact())
+                .venueName(entity.getVenueName())
+                .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
-                .city_name(entity.getCity_name())
-                .street_name(entity.getStreet_name())
+                .address(entity.getAddress())
                 .venueStatus(entity.getVenueStatus())
                 .build()).collect(Collectors.toList());
 
     }
 
-    @Override
-    public List<VenueDto> findByCity_name(String city_name) {
-        List<Venue> venueList = venueRepo.findByCity_name( city_name);
-        return venueList.stream().map(entity-> VenueDto.builder()
-                .id(entity.getId())
-                .v_name(entity.getV_name())
-                .capacity(entity.getCapacity())
-                .city_name(entity.getCity_name())
-                .street_name(entity.getStreet_name())
-                .build()).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<VenueDto> findByStreet_name(String street_name) {
-        List<Venue> venueList = venueRepo.findByStreet_name( street_name);
-        return venueList.stream().map(entity-> VenueDto.builder()
-                .id(entity.getId())
-                .v_name(entity.getV_name())
-                .capacity(entity.getCapacity())
-                .city_name(entity.getCity_name())
-                .street_name(entity.getStreet_name())
-                .build()).collect(Collectors.toList());
-    }
 
     @Override
     public void deleteBYId(Integer integer) {

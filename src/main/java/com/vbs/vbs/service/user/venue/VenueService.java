@@ -11,16 +11,9 @@ public interface VenueService{
 
     List<VenueDto> findAll();
 
+    List<VenueDto> findInAdminPage();
+
     VenueDto findById(Integer id);
-
-    List<VenueDto> findInMainPage();
-
-    List<VenueDto>findInAdminPage();
-
-    List<VenueDto> findByCity_name(String city_name);
-
-
-    List<VenueDto> findByStreet_name(String street_name);
 
     void deleteBYId(Integer integer);
 

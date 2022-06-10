@@ -26,7 +26,7 @@ public class VenueController extends BaseController {
     }
 
 
-    @PostMapping(path="/create")
+    @PostMapping(path="create")
     public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto){
         venueDto =venueService.create(venueDto);
         if(venueDto !=null){
@@ -43,7 +43,7 @@ public class VenueController extends BaseController {
 
 
 
-    @GetMapping("/requests")
+    @GetMapping("requests")
     public ResponseEntity<ResponseDto>getVenueRequestByClient(Integer id){
         List<BookingRequestDto> bookingRequestDto =venueService.getVenueBookingRequestByClient(id);
         return null;
