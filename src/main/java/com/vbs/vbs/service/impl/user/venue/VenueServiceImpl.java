@@ -60,6 +60,7 @@ public class VenueServiceImpl  implements VenueService {
         return venueList.stream().map(entity-> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
+                .userName(entity.getUserName())
                 .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
                 .address(entity.getAddress())
