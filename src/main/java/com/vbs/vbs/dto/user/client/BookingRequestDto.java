@@ -17,7 +17,8 @@ public class BookingRequestDto {
     private Double payment;
     private String functionType;
     private Integer requiredCapacity;
-    private Integer clientId;
+    private String clientName;
+    private Integer contactNumber;
     private Integer venueId;
     private BookingStatus bookingStatus;
 }

@@ -73,6 +73,7 @@ public class VenueServiceImpl  implements VenueService {
             Venue entity=venueOptional.get();
             return VenueDto.builder()
                     .id(entity.getId())
+                    .userName(entity.getUserName())
                     .venueName(entity.getVenueName())
                     .email(entity.getEmail())
                     .contactNumber(entity.getContactNumber())
@@ -82,17 +83,7 @@ public class VenueServiceImpl  implements VenueService {
         return null;
     }
 
-//    @Override
-//    public List<VenueDto> findInMainPage() {
-//        List<Venue> venueList = venueRepo.findInMainPage();
-//        return venueList.stream().map(entity-> VenueDto.builder()
-//                .id(entity.getId())
-//                .v_name(entity.getV_name())
-//                .capacity(entity.getCapacity())
-//                .city_name(entity.getCity_name())
-//                .street_name(entity.getStreet_name())
-//                .build()).collect(Collectors.toList());
-//    }
+
 
     @Override
     public List<VenueDto> findInAdminPage() {
@@ -107,7 +98,6 @@ public class VenueServiceImpl  implements VenueService {
 
     }
 
-
     @Override
     public void deleteBYId(Integer integer) {
         venueRepo.deleteById(integer);
@@ -118,12 +108,25 @@ public class VenueServiceImpl  implements VenueService {
         List<VenueBookingRequest> requestList= venueBookingRequestRepo.getVenueBookingRequestByClient(venueId);
         return requestList.stream().map(entity->BookingRequestDto.builder()
                 .BookingDate(entity.getBookingDate())
-                .clientId(entity.getId())
+                .clientName(entity.getClientName())
+                .contactNumber(entity.getContactNumber())
                 .functionType(entity.getFunctionType())
                 .payment(entity.getPayment())
                 .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());
     }
+
+    //    @Override
+//    public List<VenueDto> findInMainPage() {
+//        List<Venue> venueList = venueRepo.findInMainPage();
+//        return venueList.stream().map(entity-> VenueDto.builder()
+//                .id(entity.getId())
+//                .v_name(entity.getV_name())
+//                .capacity(entity.getCapacity())
+//                .city_name(entity.getCity_name())
+//                .street_name(entity.getStreet_name())
+//                .build()).collect(Collectors.toList());
+//    }
 
 }
 

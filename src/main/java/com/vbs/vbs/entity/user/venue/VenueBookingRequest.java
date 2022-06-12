@@ -1,6 +1,5 @@
 package com.vbs.vbs.entity.user.venue;
 
-import com.vbs.vbs.entity.user.client.Client;
 import com.vbs.vbs.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,17 +28,20 @@ public class VenueBookingRequest{
     @Column(nullable = false)
     private Double payment;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name="functionType")
     private String functionType;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name="requiredCapacity")
     private Integer requiredCapacity;
 
     @Column(nullable = false)
     private BookingStatus bookingStatus;
 
-    @OneToOne
-    private Client client;
+    @Column(nullable = false,name="clientName")
+    private String clientName;
+
+    @Column(nullable = false,name="contactNumber")
+    private Integer contactNumber;
 
     @OneToOne
     private Venue venue;

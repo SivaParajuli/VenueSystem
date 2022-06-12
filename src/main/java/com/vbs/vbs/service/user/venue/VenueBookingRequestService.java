@@ -6,6 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface VenueBookingRequestService {
       BookingRequestDto VenueBookingRequest(BookingRequestDto bookingRequestDto);
-      Integer BookingResponse(Integer integer);
 
 }
