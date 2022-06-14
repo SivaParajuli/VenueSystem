@@ -15,31 +15,29 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Venue implements Serializable {
     @Id
-    @SequenceGenerator(name="owner_id_sequence",sequenceName = "owner_id_sequence")
-    @GeneratedValue(generator = "owner_id_sequence",strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "owner_id_sequence", sequenceName = "owner_id_sequence")
+    @GeneratedValue(generator = "owner_id_sequence", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name="v_name",length=200)
+    @Column(name = "v_name", length = 200)
     private String venueName;
 
-    @Column(name="user_name")
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name="contact",length=10)
+    @Column(name = "contact", length = 10)
     private String contactNumber;
 
-    @Column(name="address",length=45)
+    @Column(name = "address", length = 45)
     private String address;
 
-    @Column(name="venueStatus")
+    @Column(name = "venueStatus")
     private VenueStatus venueStatus;
-
-
 
 }

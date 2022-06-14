@@ -19,10 +19,5 @@ public interface VenueService{
 
     List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId);
 
-
-
-
-
-
-
+    VenueDto update(Integer id,VenueDto venueDto);
 }

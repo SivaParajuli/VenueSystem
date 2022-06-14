@@ -117,6 +117,39 @@ public class VenueServiceImpl  implements VenueService {
                 .build()).collect(Collectors.toList());
     }
 
+    @Override
+    public VenueDto update(Integer id ,VenueDto venueDto) {
+        Venue entity =venueRepo.findById(id).orElseThrow(()->new RuntimeException("Invalid id"));
+        if(venueDto.getVenueName()==null)
+            entity.setVenueName(entity.getVenueName());
+        else
+            entity.setVenueName(venueDto.getVenueName());
+        if(venueDto.getUserName()==null)
+            entity.setUserName(entity.getUserName());
+        else
+            entity.setUserName(venueDto.getUserName());
+        if(venueDto.getAddress()==null)
+            entity.setAddress(entity.getAddress());
+        else
+            entity.setAddress(venueDto.getAddress());
+        if(venueDto.getEmail()==null)
+            entity.setEmail(entity.getEmail());
+        else
+            entity.setEmail(venueDto.getEmail());
+        if(venueDto.getContactNumber()==null)
+            entity.setContactNumber(entity.getContactNumber());
+        else
+            entity.setContactNumber(venueDto.getContactNumber());
+        entity = venueRepo.save(entity);
+        return VenueDto.builder()
+                .id(entity.getId())
+                .venueName(entity.getVenueName())
+                .email(entity.getEmail())
+                .contactNumber(entity.getContactNumber())
+                .address(venueDto.getAddress())
+                .build();
+    }
+
     //    @Override
 //    public List<VenueDto> findInMainPage() {
 //        List<Venue> venueList = venueRepo.findInMainPage();

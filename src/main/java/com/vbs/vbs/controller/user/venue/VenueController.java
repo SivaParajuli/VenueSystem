@@ -50,6 +50,34 @@ public class VenueController extends BaseController {
         }
     }
 
+    @PutMapping(path="updateDetails")
+    public ResponseEntity<ResponseDto> updateVenue(@PathVariable("venueId") Integer id ,@RequestBody VenueDto venueDto){
+        venueDto =venueService.update(id,venueDto);
+        if(venueDto !=null){
+
+
+            return new ResponseEntity<>
+                    (successResponse("Venue Created.", venueDto), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Venue Creation Failed",null),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResponseDto>findById(@PathVariable Integer id){
+        VenueDto venueDto =venueService.findById(id);
+        if(venueDto !=null) {
+            return new ResponseEntity<>
+                    (successResponse("Venue   Fetched.", venueDto), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
     @GetMapping("requests")
