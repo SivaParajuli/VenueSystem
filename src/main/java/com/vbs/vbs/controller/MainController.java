@@ -1,6 +1,6 @@
 //package com.vbs.vbs.controller;
 //
-//import com.vbs.vbs.dto.user.venue.VenueDto;
+//import com.vbs.vbs.dto.venue.VenueDto;
 //import com.vbs.vbs.service.user.venue.VenueService;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
