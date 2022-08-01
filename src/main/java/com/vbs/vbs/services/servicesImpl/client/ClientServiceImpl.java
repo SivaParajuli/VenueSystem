@@ -54,7 +54,7 @@ public class  ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDto findUserByEmail(String email) {
-        Optional<Client> clientOptional= clientRepo.findUserByEmail(email);
+        Optional<Client> clientOptional= clientRepo.findClientByEmail(email);
         if(clientOptional.isPresent()){
             Client entity=clientOptional.get();
             return ClientDto.builder()

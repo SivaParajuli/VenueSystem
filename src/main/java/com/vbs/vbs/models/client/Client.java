@@ -8,12 +8,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="tbl_client")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="tbl_client")
 public class Client implements Serializable {
     @Id
     @SequenceGenerator(name="client_id_sequence",sequenceName="client_id_sequence")
@@ -26,7 +26,7 @@ public class Client implements Serializable {
     @Column(name="moblie_no",length=10)
     private String mobile_no;
 
-    @Column(name="mail",length=255)
+    @Column(name="email")
     private String email;
 
     @Column(name="password",length=500)
