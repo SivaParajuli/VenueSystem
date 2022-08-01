@@ -41,29 +41,20 @@ public class ClientController extends BaseController {
                     (errorResponse("Client Creation Failed",null),HttpStatus.BAD_REQUEST);
         }
     }
-
+//TODO
     @GetMapping
     public ResponseEntity findAll(){
         List<ClientDto> clientDtoList =clientService.findAll();
         return new ResponseEntity<>
                 (successResponse("Venue List Fetched", clientDtoList),HttpStatus.OK);
     }
-
-
-
-//    @GetMapping
-//    public ResponseEntity findAll(){
-//        List<VenueDto> venueDtoList =venueService.findAll();
-//        return new ResponseEntity<>
-//                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
-//    }
-
-    @PostMapping("BookingRequest")
-    public ResponseEntity<ResponseDto>BookingRequest(@RequestBody BookingRequestDto bookingRequestDto){
+//TODO
+    @PostMapping(path="book-venue/{email}")
+    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingRequestDto bookingRequestDto,@PathVariable String email){
         bookingRequestDto = venueBookingRequestService.VenueBookingRequest(bookingRequestDto);
         if(bookingRequestDto!=null){
             return new ResponseEntity<>
-                    (successResponse("Request Sent",bookingRequestDto),HttpStatus.OK);
+                    (successResponse("Request Sent",bookingRequestDto), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>
@@ -73,8 +64,19 @@ public class ClientController extends BaseController {
     }
 
 
-    @GetMapping("email")
-    public ResponseEntity<ResponseDto>findClientByEmail(@RequestBody String email){
+//TODO
+//    @GetMapping
+//    public ResponseEntity findAll(){
+//        List<VenueDto> venueDtoList =venueService.findAll();
+//        return new ResponseEntity<>
+//                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
+//    }
+
+
+
+
+    @GetMapping(path="{email}")
+    public ResponseEntity<ResponseDto>findClientByEmail(@PathVariable String email){
         ClientDto clientDto=clientService.findUserByEmail(email);
         if(clientDto !=null) {
             return new ResponseEntity<>
