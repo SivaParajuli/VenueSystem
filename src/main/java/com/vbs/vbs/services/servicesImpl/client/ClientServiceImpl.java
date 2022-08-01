@@ -1,7 +1,9 @@
 package com.vbs.vbs.services.servicesImpl.client;
 import com.vbs.vbs.dto.client.ClientDto;
+import com.vbs.vbs.dto.venue.VenueDto;
 import com.vbs.vbs.models.User;
 import com.vbs.vbs.models.client.Client;
+import com.vbs.vbs.models.venue.Venue;
 import com.vbs.vbs.repo.UserRepo;
 import com.vbs.vbs.repo.client.ClientRepo;
 import com.vbs.vbs.security.ApplicationUserRole;
@@ -9,7 +11,9 @@ import com.vbs.vbs.services.client.ClientService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class  ClientServiceImpl implements ClientService {
@@ -66,5 +70,15 @@ public class  ClientServiceImpl implements ClientService {
         return null;
     }
 
+    @Override
+    public List<ClientDto> findAll() {
+        List<Client> clientList = clientRepo.findAll();
+        return clientList.stream().map(entity-> ClientDto.builder()
+                .name(entity.getName())
+                .mobile_no(entity.getMobile_no())
+                .email(entity.getEmail())
+                .street_name(entity.getStreet_name())
+                .build()).collect(Collectors.toList());
+    }
 
 }

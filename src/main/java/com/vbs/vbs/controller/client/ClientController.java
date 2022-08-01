@@ -42,14 +42,21 @@ public class ClientController extends BaseController {
         }
     }
 
-
-
     @GetMapping
     public ResponseEntity findAll(){
-        List<VenueDto> venueDtoList =venueService.findAll();
+        List<ClientDto> clientDtoList =clientService.findAll();
         return new ResponseEntity<>
-                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
+                (successResponse("Venue List Fetched", clientDtoList),HttpStatus.OK);
     }
+
+
+
+//    @GetMapping
+//    public ResponseEntity findAll(){
+//        List<VenueDto> venueDtoList =venueService.findAll();
+//        return new ResponseEntity<>
+//                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
+//    }
 
     @PostMapping("BookingRequest")
     public ResponseEntity<ResponseDto>BookingRequest(@RequestBody BookingRequestDto bookingRequestDto){
