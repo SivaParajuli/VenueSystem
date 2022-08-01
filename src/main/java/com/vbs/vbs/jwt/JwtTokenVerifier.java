@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@CrossOrigin
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
@@ -31,6 +32,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     private final SecretKey secretKey;
     @Autowired
     private final JwtConfig jwtConfig;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

@@ -9,10 +9,12 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.crypto.SecretKey;
 
 @Component
+@CrossOrigin
 @ConfigurationProperties(prefix="application.jwt")
 @Getter
 @Setter
