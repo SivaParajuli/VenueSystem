@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 

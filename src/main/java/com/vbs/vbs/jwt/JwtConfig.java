@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.crypto.SecretKey;
 
 @Component
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @ConfigurationProperties(prefix="application.jwt")
 @Getter
 @Setter

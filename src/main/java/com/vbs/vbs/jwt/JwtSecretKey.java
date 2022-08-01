@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 
 @Configuration
 @AllArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class JwtSecretKey {
     @Autowired
     private final JwtConfig jwtConfig;

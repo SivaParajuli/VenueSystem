@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

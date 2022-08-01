@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.crypto.SecretKey;
 
 @Configuration
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)

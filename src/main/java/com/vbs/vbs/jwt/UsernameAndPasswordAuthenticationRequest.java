@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
