@@ -66,18 +66,18 @@ public class ClientController extends BaseController {
     }
 
 
-//    @GetMapping("by-id/{id}")
-//    public ResponseEntity<ResponseDto>findById(@PathVariable Integer id){
-//        VenueDto venueDto =venueService.findById(id);
-//        if(venueDto !=null) {
-//            return new ResponseEntity<>
-//                    (successResponse("Venue   Fetched.", venueDto), HttpStatus.OK);
-//        }
-//        else{
-//            return new ResponseEntity<>
-//                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @GetMapping("email")
+    public ResponseEntity<ResponseDto>findClientByEmail(@RequestBody String email){
+        ClientDto clientDto=clientService.findUserByEmail(email);
+        if(clientDto !=null) {
+            return new ResponseEntity<>
+                    (successResponse("Client   Fetched.", clientDto), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Client Fetched Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    @PostMapping("create")
 //    ResponseEntity<ResponseDto> createClient(@RequestBody ClientDto clientDto){
