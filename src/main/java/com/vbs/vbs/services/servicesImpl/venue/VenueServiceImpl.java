@@ -93,9 +93,9 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public VenueDto findUserByEmail(String email) {
-        Optional<Venue> venueOptional= venueRepo.findUserByEmail(email);
-        if(venueOptional.isPresent()){
-            Venue entity=venueOptional.get();
+        Optional<Venue> venue= venueRepo.findUserByEmail(email);
+        if(venue.isPresent()){
+           Venue entity = venue.get();
             return VenueDto.builder()
                     .id(entity.getId())
                     .userName(entity.getUserName())
@@ -132,19 +132,19 @@ public class VenueServiceImpl  implements VenueService {
     public void deleteBYId(Integer integer) {
         venueRepo.deleteById(integer);
     }
-
-    @Override
-    public List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId) {
-        List<VenueBookingRequest> requestList= venueBookingRequestRepo.getVenueBookingRequestByClient(venueId);
-        return requestList.stream().map(entity->BookingRequestDto.builder()
-                .BookingDate(entity.getBookingDate())
-                .clientName(entity.getClientName())
-                .contactNumber(entity.getContactNumber())
-                .functionType(entity.getFunctionType())
-                .payment(entity.getPayment())
-                .requiredCapacity(entity.getRequiredCapacity())
-                .build()).collect(Collectors.toList());
-    }
+//TODO
+//    @Override
+//    public List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId) {
+//        List<VenueBookingRequest> requestList= venueBookingRequestRepo.getVenueBookingRequestByClient(venueId);
+//        return requestList.stream().map(entity->BookingRequestDto.builder()
+//                .BookingDate(entity.getBookingDate())
+//                .clientName(entity.getClientName())
+//                .contactNumber(entity.getContactNumber())
+//                .functionType(entity.getFunctionType())
+//                .payment(entity.getPayment())
+//                .requiredCapacity(entity.getRequiredCapacity())
+//                .build()).collect(Collectors.toList());
+//    }
 
     @Override
     public VenueDto update(Integer id ,VenueDto venueDto) {

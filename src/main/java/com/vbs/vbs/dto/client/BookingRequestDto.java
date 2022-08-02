@@ -12,13 +12,12 @@ import java.util.Date;
 @Setter
 @Builder
 public class BookingRequestDto {
-    private Integer id;
-    private Date BookingDate;
-    private Double payment;
-    private String functionType;
-    private Integer requiredCapacity;
-    private String clientName;
+    private String clientEmail;
+    private String venueEmail;
     private Integer contactNumber;
-    private Integer venueId;
+    private Date BookingDate;
+    private String functionType;
+    private Double OfferedPayment;
+    private Integer requiredCapacity;
     private BookingStatus bookingStatus;
 }

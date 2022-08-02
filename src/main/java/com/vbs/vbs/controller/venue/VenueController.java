@@ -72,12 +72,12 @@ public class VenueController extends BaseController {
     }
 
 
-
-    @GetMapping("requests")
-    public ResponseEntity<ResponseDto>getVenueRequestByClient(Integer id){
-        List<BookingRequestDto> bookingRequestDto =venueService.getVenueBookingRequestByClient(id);
-        return null;
-    }
+//TODO
+//    @GetMapping("requests")
+//    public ResponseEntity<ResponseDto>getVenueRequestByClient(Integer id){
+//        List<BookingRequestDto> bookingRequestDto =venueService.getVenueBookingRequestByClient(id);
+//        return null;
+//    }
 
    /* @PostMapping("response/{bookingStatus}")
     public ResponseEntity<ResponseDto> BookingResponse(BookingRequestDto bookingRequestDto,

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VenueBookingRequest{
+public class VenueBookingRequest implements Serializable {
 
     @Id
     @SequenceGenerator(name="BookingRequest_SEG_GEN",sequenceName = "BookingRequest_SEG_GEN")
@@ -23,7 +24,7 @@ public class VenueBookingRequest{
     private Integer id;
 
     @Temporal(TemporalType.DATE)
-    private Date BookingDate;
+    private Date bookingDate;
 
     @Column(nullable = false)
     private Double payment;

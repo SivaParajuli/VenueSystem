@@ -49,19 +49,19 @@ public class ClientController extends BaseController {
                 (successResponse("Venue List Fetched", clientDtoList),HttpStatus.OK);
     }
 //TODO
-    @PostMapping(path="book-venue/{email}")
-    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingRequestDto bookingRequestDto,@PathVariable String email){
-        bookingRequestDto = venueBookingRequestService.VenueBookingRequest(bookingRequestDto);
-        if(bookingRequestDto!=null){
-            return new ResponseEntity<>
-                    (successResponse("Request Sent",bookingRequestDto), HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<>
-                    (errorResponse("Request Sent",null),HttpStatus.BAD_REQUEST);
-
-
-    }
+//    @PostMapping(path="book-venue/{email}")
+//    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingRequestDto bookingRequestDto,@PathVariable String email){
+//        bookingRequestDto = venueBookingRequestService.VenueBookingRequest(bookingRequestDto,email);
+//        if(bookingRequestDto!=null){
+//            return new ResponseEntity<>
+//                    (successResponse("Request Sent",bookingRequestDto), HttpStatus.OK);
+//        }
+//        else
+//            return new ResponseEntity<>
+//                    (errorResponse("Request Sent",null),HttpStatus.BAD_REQUEST);
+//
+//
+//    }
 
 
 //TODO
