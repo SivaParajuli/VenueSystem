@@ -36,12 +36,12 @@ public class  ClientServiceImpl implements ClientService {
                 .city_name(clientDto.getCity_name())
                 .street_name(clientDto.getStreet_name())
                 .password(passwordEncoder.encode(clientDto.getPassword()))
-                .applicationUserRole(ApplicationUserRole.CUSTOMER)
+                .applicationUserRole(ApplicationUserRole.CLIENT)
                 .build();
         User entity1= User.builder()
                 .email(clientDto.getEmail())
                 .password(passwordEncoder.encode(clientDto.getPassword()))
-                .applicationUserRole(ApplicationUserRole.CUSTOMER).build();
+                .applicationUserRole(ApplicationUserRole.CLIENT).build();
         userRepo.save(entity1);
         entity= clientRepo.save(entity);
         return ClientDto.builder()

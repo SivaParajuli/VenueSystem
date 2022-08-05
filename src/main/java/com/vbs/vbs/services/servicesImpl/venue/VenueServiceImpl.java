@@ -56,7 +56,7 @@ public class VenueServiceImpl  implements VenueService {
         entity.setAddress(venueDto.getAddress());
         entity.setContactNumber(venueDto.getContactNumber());
         entity.setDescription(venueDto.getDescription());
-        entity.setApplicationUserRole(ApplicationUserRole.OWNER);
+        entity.setApplicationUserRole(ApplicationUserRole.VENUE);
         entity.setFilePath(filepath);
         if(venueDto.getVenueStatus()==null) {
             entity.setVenueStatus(VenueStatus.PENDING);
@@ -66,7 +66,7 @@ public class VenueServiceImpl  implements VenueService {
             User user = new User();
             user.setEmail(venueDto.getEmail());
             user.setPassword(passwordEncoder.encode(venueDto.getPassword()));
-            user.setApplicationUserRole(ApplicationUserRole.OWNER);
+            user.setApplicationUserRole(ApplicationUserRole.VENUE);
             userRepo.save(user);
         }
         entity = venueRepo.save(entity);

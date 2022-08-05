@@ -11,8 +11,8 @@ import static com.vbs.vbs.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
     ADMIN(Sets.newHashSet(ADMIN_READ,ADMIN_WRITE)),
-    CUSTOMER(Sets.newHashSet(CUSTOMER_READ,CUSTOMER_WRITE)),
-    OWNER(Sets.newHashSet(OWNER_READ,OWNER_WRITE));
+    CLIENT(Sets.newHashSet(CLIENT_READ,CLIENT_WRITE)),
+    VENUE(Sets.newHashSet(VENUE_READ,VENUE_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
 
