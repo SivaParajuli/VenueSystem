@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -46,7 +47,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(),jwtConfig,secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey,jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/","index","/css/**","/js/**","/client/register/**","/venue/**","/login/**").permitAll()
+                .antMatchers("/","index","/css/**","/js/**","/client/register/**","/venue/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/login/**").permitAll()
 //                .antMatchers("/client/api/**").hasRole(CUSTOMER.name())
 //                .antMatchers("/owner/api/**").hasRole(OWNER.name())
 //                .antMatchers("/admin/api/**").hasRole(ADMIN.name())
