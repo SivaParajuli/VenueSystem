@@ -1,16 +1,14 @@
 package com.vbs.vbs.services.servicesImpl.client;
 import com.vbs.vbs.dto.client.ClientDto;
-import com.vbs.vbs.dto.venue.VenueDto;
 import com.vbs.vbs.models.User;
 import com.vbs.vbs.models.client.Client;
-import com.vbs.vbs.models.venue.Venue;
+import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.repo.UserRepo;
 import com.vbs.vbs.repo.client.ClientRepo;
 import com.vbs.vbs.security.ApplicationUserRole;
 import com.vbs.vbs.services.client.ClientService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,7 +55,7 @@ public class  ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDto findUserByEmail(String email) {
+    public ClientDto findClientByEmail(String email) {
         Optional<Client> clientOptional= clientRepo.findClientByEmail(email);
         if(clientOptional.isPresent()){
             Client entity=clientOptional.get();
@@ -78,6 +76,20 @@ public class  ClientServiceImpl implements ClientService {
                 .mobile_no(entity.getMobile_no())
                 .email(entity.getEmail())
                 .street_name(entity.getStreet_name())
+                .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookingRequest> getAllRequests(String email) {
+        List<BookingRequest> requestList= clientRepo.getAllBookingRequests(email);
+        return requestList.stream().map(entity->BookingRequest.builder()
+                .id(entity.getId())
+                .bookingDate(entity.getBookingDate())
+                .client(entity.getClient())
+                .contactNumber(entity.getContactNumber())
+                .functionType(entity.getFunctionType())
+                .offeredPayment(entity.getOfferedPayment())
+                .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());
     }
 

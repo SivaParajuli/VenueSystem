@@ -1,11 +1,13 @@
 package com.vbs.vbs.models.client;
 
 
+import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.security.ApplicationUserRole;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,6 +42,9 @@ public class Client implements Serializable {
 
     @Column(name="street_address",length=34)
     private String street_name;
+
+    @OneToMany(targetEntity = BookingRequest.class,mappedBy = "client")
+    private List<BookingRequest> bookingRequestList;
 
 
 }

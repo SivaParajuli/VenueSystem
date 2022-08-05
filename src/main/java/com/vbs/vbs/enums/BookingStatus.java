@@ -1,5 +1,5 @@
 package com.vbs.vbs.enums;
 
 public enum BookingStatus {
-    PENDING,BOOKED;
+    PENDING,BOOKED,DELETED;
 }

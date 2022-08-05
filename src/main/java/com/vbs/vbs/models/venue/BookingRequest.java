@@ -1,10 +1,8 @@
 package com.vbs.vbs.models.venue;
 
 import com.vbs.vbs.enums.BookingStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.vbs.vbs.models.client.Client;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,9 +12,10 @@ import java.util.Date;
 @Table(name = "VenueBookingRequest")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VenueBookingRequest implements Serializable {
+public class BookingRequest implements Serializable {
 
     @Id
     @SequenceGenerator(name="BookingRequest_SEG_GEN",sequenceName = "BookingRequest_SEG_GEN")
@@ -26,25 +25,25 @@ public class VenueBookingRequest implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date bookingDate;
 
-    @Column(nullable = false)
-    private Double payment;
+    private Double offeredPayment;
 
-    @Column(nullable = false,name="functionType")
+    @Column(name="functionType")
     private String functionType;
 
-    @Column(nullable = false,name="requiredCapacity")
+    @Column(name="requiredCapacity")
     private Integer requiredCapacity;
 
-    @Column(nullable = false)
     private BookingStatus bookingStatus;
 
-    @Column(nullable = false,name="clientName")
-    private String clientName;
-
-    @Column(nullable = false,name="contactNumber")
+    @Column(name="contactNumber")
     private Integer contactNumber;
 
-   @OneToOne
+    @ManyToOne(targetEntity = Client.class,fetch =FetchType.LAZY)
+    @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))
+    private Client client;
+
+    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
+    @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;
 
 }

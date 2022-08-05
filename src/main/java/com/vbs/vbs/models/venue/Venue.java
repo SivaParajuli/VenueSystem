@@ -6,9 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name="tbl_venue")
 @Getter
 @Setter
 @Builder
@@ -50,5 +50,6 @@ public class Venue implements Serializable {
     @Column(name="filePath")
     private String filePath;
 
-
+    @OneToMany(targetEntity = BookingRequest.class,mappedBy = "venue")
+    private List<BookingRequest> bookingRequestList;
 }

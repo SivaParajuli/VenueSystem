@@ -22,7 +22,7 @@ public class User implements Serializable {
     @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "password", length = 100)
+    @Column(name = "password", length = 200)
     private String password;
 
     @Enumerated(EnumType.STRING)

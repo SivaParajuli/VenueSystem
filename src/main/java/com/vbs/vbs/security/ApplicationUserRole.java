@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import static com.vbs.vbs.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    ADMIN(Sets.newHashSet(ADMIN_READ)),
+    ADMIN(Sets.newHashSet(ADMIN_READ,ADMIN_WRITE)),
     CUSTOMER(Sets.newHashSet(CUSTOMER_READ,CUSTOMER_WRITE)),
     OWNER(Sets.newHashSet(OWNER_READ,OWNER_WRITE));
 

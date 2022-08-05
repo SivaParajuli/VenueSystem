@@ -33,6 +33,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     private final SecretKey secretKey;
 
     @Override
+    @CrossOrigin
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
 
@@ -51,10 +52,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     }
 
     @Override
+    @CrossOrigin
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+                                            Authentication authResult) {
 
 
        String token = Jwts.builder()
@@ -65,6 +67,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                                 .signWith(secretKey)
                                                         .compact();
 
-       response.addHeader(jwtConfig.getAuthorizationHeader(),jwtConfig.getTokenPrefix() +"token");
+       response.addHeader(jwtConfig.getAuthorizationHeader(),jwtConfig.getTokenPrefix() + token);
     }
 }

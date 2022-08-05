@@ -1,10 +1,9 @@
 package com.vbs.vbs.services.servicesImpl.venue;
 
-import com.vbs.vbs.dto.client.BookingRequestDto;
 import com.vbs.vbs.dto.venue.VenueDto;
 import com.vbs.vbs.models.User;
+import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.models.venue.Venue;
-import com.vbs.vbs.models.venue.VenueBookingRequest;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.repo.UserRepo;
 import com.vbs.vbs.repo.venue.VenueBookingRequestRepo;
@@ -92,8 +91,8 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     @Override
-    public VenueDto findUserByEmail(String email) {
-        Optional<Venue> venue= venueRepo.findUserByEmail(email);
+    public VenueDto findVenueByEmail(String email) {
+        Optional<Venue> venue= venueRepo.findVenueByEmail(email);
         if(venue.isPresent()){
            Venue entity = venue.get();
             return VenueDto.builder()
@@ -132,20 +131,22 @@ public class VenueServiceImpl  implements VenueService {
     public void deleteBYId(Integer integer) {
         venueRepo.deleteById(integer);
     }
-//TODO
-//    @Override
-//    public List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId) {
-//        List<VenueBookingRequest> requestList= venueBookingRequestRepo.getVenueBookingRequestByClient(venueId);
-//        return requestList.stream().map(entity->BookingRequestDto.builder()
-//                .BookingDate(entity.getBookingDate())
-//                .clientName(entity.getClientName())
-//                .contactNumber(entity.getContactNumber())
-//                .functionType(entity.getFunctionType())
-//                .payment(entity.getPayment())
-//                .requiredCapacity(entity.getRequiredCapacity())
-//                .build()).collect(Collectors.toList());
-//    }
 
+    @Override
+    public List<BookingRequest> getRequestedBooking(String email) {
+        List<BookingRequest> requestList= venueRepo.getAllPendingBookingRequest(email);
+        return requestList.stream().map(entity->BookingRequest.builder()
+                .id(entity.getId())
+                .bookingDate(entity.getBookingDate())
+                .client(entity.getClient())
+                .contactNumber(entity.getContactNumber())
+                .functionType(entity.getFunctionType())
+                .offeredPayment(entity.getOfferedPayment())
+                .requiredCapacity(entity.getRequiredCapacity())
+                .build()).collect(Collectors.toList());
+    }
+
+    //TODO
     @Override
     public VenueDto update(Integer id ,VenueDto venueDto) {
         Venue entity =venueRepo.findById(id).orElseThrow(()->new RuntimeException("Invalid id"));
