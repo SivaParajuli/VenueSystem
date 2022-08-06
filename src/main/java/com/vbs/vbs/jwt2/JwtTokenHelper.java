@@ -1,8 +1,10 @@
 //package com.vbs.vbs.jwt2;
 //
+//import com.vbs.vbs.auth.ApplicationUser;
 //import io.jsonwebtoken.Claims;
 //import io.jsonwebtoken.Jwts;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.stereotype.Component;
 //
@@ -10,6 +12,7 @@
 //import java.security.spec.InvalidKeySpecException;
 //import java.time.LocalDate;
 //import java.util.Date;
+//import java.util.Set;
 //
 //@Component
 //public class JwtTokenHelper {
@@ -50,11 +53,10 @@
 //        return username;
 //    }
 //
-//    public String generateToken(String username,UserDetails userDetails) throws InvalidKeySpecException {
+//    public String generateToken(String username) throws InvalidKeySpecException {
 //
 //        return Jwts.builder()
 //                .setSubject(username)
-//                .claim("authorities",userDetails.getAuthorities())
 //                .setIssuedAt(new Date())
 //                .setExpiration((java.sql.Date.valueOf(LocalDate.now().plusWeeks(jwtConfig.getTokenExpirationAfterDays()))))
 //                .signWith(jwtSecretKey.secretKey())

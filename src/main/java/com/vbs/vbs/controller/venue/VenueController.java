@@ -2,7 +2,7 @@ package com.vbs.vbs.controller.venue;
 
 
 import com.vbs.vbs.controller.BaseController;
-import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.responses.ResponseDto;
 import com.vbs.vbs.dto.venue.VenueDto;
 import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.services.venue.VenueBookingRequestService;

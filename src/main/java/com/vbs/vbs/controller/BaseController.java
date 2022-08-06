@@ -1,6 +1,6 @@
 package com.vbs.vbs.controller;
 
-import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.responses.ResponseDto;
 
 public class BaseController {
 
