@@ -48,10 +48,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(),jwtConfig,secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey,jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/","index","/css/**","/js/**","/client/register/**","/venue/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET,"/login").permitAll()
+                .authorizeRequests((request)->request.antMatchers("/","index","/css/**","/js/**","/client/register/**","/venue/**").permitAll()
+                .antMatchers(HttpMethod.POST, "**/login").permitAll()
+                .antMatchers(HttpMethod.GET,"**/login").permitAll().anyRequest()
+                        .authenticated())
+
 //                .antMatchers("/client/api/**").hasRole(CUSTOMER.name())
 //                .antMatchers("/owner/api/**").hasRole(OWNER.name())
 //                .antMatchers("/admin/api/**").hasRole(ADMIN.name())
@@ -63,8 +64,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.PUT,"/venue/api/**").hasAuthority(OWNER_WRITE.getPermission())
 //                .antMatchers(HttpMethod.GET,"/admin/api/**").hasAuthority(ADMIN_READ.getPermission())
 //                .antMatchers(HttpMethod.GET,"/admin/api/**").hasAnyRole(CUSTOMER_READ.name(),ADMIN_READ.name())
-                .anyRequest()
-                .authenticated();
+                ;
     }
 
 
