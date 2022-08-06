@@ -3,7 +3,6 @@ package com.vbs.vbs.controller.client;
 import com.vbs.vbs.controller.BaseController;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.client.ClientDto;
-import com.vbs.vbs.jwt.UsernameAndPasswordAuthenticationRequest;
 import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.services.client.ClientService;
 import com.vbs.vbs.services.venue.VenueBookingRequestService;
@@ -11,14 +10,14 @@ import com.vbs.vbs.services.venue.VenueService;
 import com.vbs.vbs.utils.CurrentUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path="client")
 
@@ -46,6 +45,7 @@ public class ClientController extends BaseController {
                     (errorResponse("Client Creation Failed",null),HttpStatus.BAD_REQUEST);
         }
     }
+
 //TODO
     @GetMapping
     public ResponseEntity findAll(){

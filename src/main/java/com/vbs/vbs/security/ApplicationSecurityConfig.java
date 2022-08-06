@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -49,6 +50,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/","index","/css/**","/js/**","/client/register/**","/venue/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/login/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/login/**").permitAll()
 //                .antMatchers("/client/api/**").hasRole(CUSTOMER.name())
 //                .antMatchers("/owner/api/**").hasRole(OWNER.name())
 //                .antMatchers("/admin/api/**").hasRole(ADMIN.name())
@@ -66,6 +68,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
+    @CrossOrigin(origins = "*")
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
@@ -74,6 +77,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    @CrossOrigin(origins = "*")
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }

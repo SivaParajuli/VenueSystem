@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Component
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @ConfigurationProperties(prefix="application.jwt")
 @Getter
 @Setter

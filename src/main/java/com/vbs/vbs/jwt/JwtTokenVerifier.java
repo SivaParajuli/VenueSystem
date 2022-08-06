@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
@@ -35,6 +35,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
 
     @Override
+    @CrossOrigin(origins = "*")
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {

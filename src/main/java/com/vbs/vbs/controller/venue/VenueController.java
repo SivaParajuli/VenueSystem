@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequestMapping("venue")
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class VenueController extends BaseController {
 
     private final VenueService venueService;
