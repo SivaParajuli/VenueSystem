@@ -23,7 +23,7 @@ import javax.crypto.SecretKey;
 
 
 @Configuration
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -41,7 +41,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable().cors().and().headers().frameOptions().disable();
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
