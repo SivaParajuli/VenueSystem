@@ -1,6 +1,6 @@
 package com.vbs.vbs.jwt;
 
-import com.vbs.vbs.jwt2.JwtConfig;
+import com.vbs.vbs.jwt.JwtConfig;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
