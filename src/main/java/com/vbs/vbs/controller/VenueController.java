@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("venue")
+@RequestMapping("venue-")
 @RestController
 @CrossOrigin(origins = "*")
 public class VenueController extends BaseController {

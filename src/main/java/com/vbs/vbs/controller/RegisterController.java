@@ -22,7 +22,7 @@ public class RegisterController extends BaseController {
     }
 
     @PostMapping(path="client")
-    public ResponseEntity<ResponseDto> createClient(@RequestBody ClientDto clientDto) throws IOException {
+    public ResponseEntity<ResponseDto> createClient(@RequestBody ClientDto clientDto) {
         clientDto =registerService.clientRegister(clientDto);
         if(clientDto !=null){
             return new ResponseEntity<>

@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(path="client")
+@RequestMapping(path="client-")
 
 public class ClientController extends BaseController {
     private final BookingServices bookingServices;

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    @Autowired(required = false)
+    @Autowired
     private JwtProvider jwtProvider;
 
     @Override
