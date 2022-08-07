@@ -1,11 +1,11 @@
-package com.vbs.vbs.services.venue;
+package com.vbs.vbs.services;
 
 
-import com.vbs.vbs.models.venue.BookingRequest;
+import com.vbs.vbs.models.Booking;
 
-public interface VenueBookingRequestService {
+public interface BookingServices {
 
-    BookingRequest VenueBookingRequest(BookingRequest bookingRequest, String email, String client);
+    Booking VenueBookingRequest(Booking booking, String email, String client);
 
-    BookingRequest VenueBookingResponse(Integer bookingStatus,Integer id);
+    Booking VenueBookingResponse(Integer bookingStatus, Integer id);
 }

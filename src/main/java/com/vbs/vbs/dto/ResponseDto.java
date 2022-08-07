@@ -1,4 +1,4 @@
-package com.vbs.vbs.dto.responses;
+package com.vbs.vbs.dto;
 
 
 import lombok.*;

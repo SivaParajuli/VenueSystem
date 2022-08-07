@@ -1,14 +1,14 @@
-package com.vbs.vbs.services.Impl.venueImpl;
+package com.vbs.vbs.services.Impl;
 
 
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.models.Client;
-import com.vbs.vbs.models.venue.Venue;
-import com.vbs.vbs.models.venue.BookingRequest;
+import com.vbs.vbs.models.Venue;
+import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
-import com.vbs.vbs.repo.venue.VenueBookingRequestRepo;
-import com.vbs.vbs.repo.venue.VenueRepo;
-import com.vbs.vbs.services.venue.VenueBookingRequestService;
+import com.vbs.vbs.repo.BookingRepo;
+import com.vbs.vbs.repo.VenueRepo;
+import com.vbs.vbs.services.BookingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,49 +16,49 @@ import java.util.Optional;
 
 
 @Service
-public class BookingRequestServiceImpl implements VenueBookingRequestService {
-    private final VenueBookingRequestRepo venueBookingRequestRepo;
+public class BookingServicesImpl implements BookingServices {
+    private final BookingRepo bookingRepo;
     private final VenueRepo venueRepo;
     private final ClientRepo clientRepo;
 
 
     @Autowired
-    public BookingRequestServiceImpl(VenueBookingRequestRepo venueBookingRequestRepo,
-                                     VenueRepo venueRepo, ClientRepo clientRepo) {
-        this.venueBookingRequestRepo = venueBookingRequestRepo;
+    public BookingServicesImpl(BookingRepo bookingRepo,
+                               VenueRepo venueRepo, ClientRepo clientRepo) {
+        this.bookingRepo = bookingRepo;
         this.venueRepo = venueRepo;
         this.clientRepo = clientRepo;
     }
 
     @Override
-    public BookingRequest VenueBookingRequest(BookingRequest bookingRequestDto, String email, String client) {
-        BookingRequest entity = new BookingRequest();
-        if ( bookingRequestDto.getBookingDate() !=venueRepo.getBookedVenueDateByEmail(email)) {
+    public Booking VenueBookingRequest(Booking bookingDto, String email, String client) {
+        Booking entity = new Booking();
+        if ( bookingDto.getBookingDate() !=venueRepo.getBookedVenueDateByEmail(email)) {
             Optional<Venue> venue = venueRepo.findVenueByEmail(email);
             if(venue.isPresent()){
                 entity.setVenue(venue.get());
             }
             Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
-            entity.setBookingDate(bookingRequestDto.getBookingDate());
-            entity.setFunctionType(bookingRequestDto.getFunctionType());
+            entity.setBookingDate(bookingDto.getBookingDate());
+            entity.setFunctionType(bookingDto.getFunctionType());
             entity.setBookingStatus(BookingStatus.PENDING);
-            entity.setOfferedPayment(bookingRequestDto.getOfferedPayment());
+            entity.setOfferedPayment(bookingDto.getOfferedPayment());
             entity.setClient(client1);
-            entity.setRequiredCapacity(bookingRequestDto.getRequiredCapacity());
-            entity.setContactNumber(bookingRequestDto.getContactNumber());
-            venueBookingRequestRepo.save(entity);
+            entity.setRequiredCapacity(bookingDto.getRequiredCapacity());
+            entity.setContactNumber(bookingDto.getContactNumber());
+            bookingRepo.save(entity);
         }
         return null;
     }
 
-    public BookingRequest VenueBookingResponse(Integer bookingStatus,Integer id){
-         BookingRequest bookingRequest = venueBookingRequestRepo.findById(id).orElseThrow(()->new RuntimeException("invalid id"));
+    public Booking VenueBookingResponse(Integer bookingStatus, Integer id){
+         Booking booking = bookingRepo.findById(id).orElseThrow(()->new RuntimeException("invalid id"));
         if(bookingStatus==1) {
-            bookingRequest.setBookingStatus(BookingStatus.BOOKED);
+            booking.setBookingStatus(BookingStatus.BOOKED);
         }
         else
-            bookingRequest.setBookingStatus(BookingStatus.DELETED);
-        venueBookingRequestRepo.save(bookingRequest);
+            booking.setBookingStatus(BookingStatus.DELETED);
+        bookingRepo.save(booking);
         return null;
     }
 }

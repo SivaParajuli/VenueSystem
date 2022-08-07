@@ -1,4 +1,4 @@
-package com.vbs.vbs.auth;
+package com.vbs.vbs.security.user;
 
 import com.vbs.vbs.security.user.User;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 @CrossOrigin(origins = "*")
 @Builder
@@ -21,7 +22,7 @@ public class ApplicationUser implements UserDetails {
     private String username;
     transient private String password; //don't show up on serialized places
     transient private User user; // user for only login operation, don't use in JST
-    private Set<GrantedAuthority> authorities;
+    private HashSet<GrantedAuthority> authorities;
 
 
     @Override

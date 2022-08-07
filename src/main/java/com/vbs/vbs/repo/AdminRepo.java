@@ -1,6 +1,6 @@
-package com.vbs.vbs.repo.admin;
+package com.vbs.vbs.repo;
 
-import com.vbs.vbs.models.admin.Admin;
+import com.vbs.vbs.models.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

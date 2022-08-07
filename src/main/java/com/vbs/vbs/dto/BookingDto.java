@@ -1,4 +1,4 @@
-package com.vbs.vbs.dto.venue;
+package com.vbs.vbs.dto;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookedDto {
+public class BookingDto {
     private Integer id;
     private Timestamp date;
     private String function;

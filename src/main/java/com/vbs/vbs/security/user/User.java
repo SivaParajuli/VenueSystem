@@ -1,4 +1,4 @@
-package com.vbs.vbs.models;
+package com.vbs.vbs.security.user;
 
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;

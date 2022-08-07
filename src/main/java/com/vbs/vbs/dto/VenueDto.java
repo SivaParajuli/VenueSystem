@@ -1,4 +1,4 @@
-package com.vbs.vbs.dto.venue;
+package com.vbs.vbs.dto;
 
 import com.vbs.vbs.enums.VenueStatus;
 import lombok.*;

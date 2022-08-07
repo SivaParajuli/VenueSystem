@@ -1,17 +1,20 @@
-package com.vbs.vbs.auth;
+package com.vbs.vbs.security.service;
 
+import com.vbs.vbs.security.user.ApplicationUser;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -28,7 +31,8 @@ public class ApplicationUserService implements UserDetailsService {
 
         User user = userRepo.findUserByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        Set<GrantedAuthority> authorities = Set.of(SecurityUtils.convertToAuthority(user.getApplicationUserRole().name()));
+        HashSet<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(SecurityUtils.convertToAuthority(user.getApplicationUserRole().name()));
 
         return ApplicationUser.builder()
                 .user(user)

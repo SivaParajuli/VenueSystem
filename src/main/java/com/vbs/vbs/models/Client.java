@@ -1,7 +1,6 @@
-package com.vbs.vbs.models.client;
+package com.vbs.vbs.models;
 
 
-import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
 
@@ -43,8 +42,8 @@ public class Client implements Serializable {
     @Column(name="street_address",length=34)
     private String street_name;
 
-    @OneToMany(targetEntity = BookingRequest.class,mappedBy = "client")
-    private List<BookingRequest> bookingRequestList;
+    @OneToMany(targetEntity = Booking.class,mappedBy = "client")
+    private List<Booking> bookingList;
 
 
 }

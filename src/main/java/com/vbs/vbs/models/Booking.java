@@ -1,7 +1,8 @@
-package com.vbs.vbs.models.venue;
+package com.vbs.vbs.models;
 
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.models.Client;
+import com.vbs.vbs.models.Venue;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingRequest implements Serializable {
+public class Booking implements Serializable {
 
     @Id
     @SequenceGenerator(name="BookingRequest_SEG_GEN",sequenceName = "BookingRequest_SEG_GEN")

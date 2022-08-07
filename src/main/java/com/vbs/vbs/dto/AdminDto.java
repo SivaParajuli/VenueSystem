@@ -1,4 +1,4 @@
-package com.vbs.vbs.dto.admin;
+package com.vbs.vbs.dto;
 
 
 import lombok.*;

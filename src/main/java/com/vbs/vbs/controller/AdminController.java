@@ -1,15 +1,14 @@
-package com.vbs.vbs.controller.admin;
+package com.vbs.vbs.controller;
 
-import com.vbs.vbs.controller.BaseController;
-import com.vbs.vbs.dto.venue.VenueDto;
-import com.vbs.vbs.enums.VenueStatus;
-import com.vbs.vbs.services.admin.AdminService;
-import com.vbs.vbs.services.venue.VenueService;
+import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.models.Venue;
+import com.vbs.vbs.services.RegisterService;
+import com.vbs.vbs.services.VenueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -17,36 +16,40 @@ import java.util.List;
 @RequestMapping("admin")
 public class  AdminController extends BaseController {
 
-    private final AdminService adminService;
-
     private final VenueService venueService;
+    private final RegisterService registerService;
 
 
-    public AdminController(AdminService adminService, VenueService venueService) {
-        this.adminService = adminService;
+    public AdminController(VenueService venueService, RegisterService registerService) {
         this.venueService = venueService;
+        this.registerService = registerService;
     }
 
-    @GetMapping
-    public ResponseEntity findInAdminPage(){
-
-        List<VenueDto> venueDtoList= venueService.findInAdminPage();
-        return new ResponseEntity<>
-                (successResponse("Successfull",venueDtoList),HttpStatus.OK);
-
-    }
-
-    @PostMapping("/updateStatus/{id}/{enums}")
-    public void updateVenueStatus(@PathVariable("id") Integer id,VenueDto venueDto,@PathVariable("enums") String enums) throws IOException {
-        venueDto=venueService.findById(id);
-        if(enums=="VERIFY") {
-            venueDto.setVenueStatus(VenueStatus.VERIFY);
-            venueService.create(venueDto);
+    @GetMapping("registerRequests")
+    public ResponseEntity<ResponseDto>getAllRegisterRequests(){
+        List<Venue> venueList =registerService.getAllPendingRegister();
+        if(venueList !=null) {
+            return new ResponseEntity<>
+                    (successResponse("Requested Booking List  Fetched.",venueList), HttpStatus.OK);
         }
         else{
-            venueService.deleteBYId(id);
+            return new ResponseEntity<>
+                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+//    @PostMapping("/updateStatus/{id}/{enums}")
+//    public void updateVenueStatus(@PathVariable("id") Integer id,VenueDto venueDto,@PathVariable("enums") String enums) throws IOException {
+//        venueDto=venueService.findById(id);
+//        if(enums=="VERIFY") {
+//            venueDto.setVenueStatus(VenueStatus.VERIFY);
+//            venueService.create(venueDto);
+//        }
+//        else{
+//            venueService.deleteBYId(id);
+//        }
+//    }
 
 }
 

@@ -1,9 +1,10 @@
-package com.vbs.vbs.services;
+package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.VenueRepo;
+import com.vbs.vbs.services.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -49,21 +50,6 @@ public class VenueServiceImpl  implements VenueService {
                     .build());
         }
         return Optional.empty();
-    }
-
-
-
-    @Override
-    public List<VenueDto> findInAdminPage() {
-        List<Venue> venueList = venueRepo.findInAdminPage();
-        return venueList.stream().map(entity->VenueDto.builder()
-                .venueName(entity.getVenueName())
-                .contactNumber(entity.getContactNumber())
-                .email(entity.getEmail())
-                .address(entity.getAddress())
-                .venueStatus(entity.getVenueStatus())
-                .build()).collect(Collectors.toList());
-
     }
 
     @Override

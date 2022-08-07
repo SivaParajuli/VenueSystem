@@ -1,14 +1,13 @@
-package com.vbs.vbs.services.client;
+package com.vbs.vbs.services;
 
 import com.vbs.vbs.dto.ClientDto;
-import com.vbs.vbs.models.venue.BookingRequest;
+import com.vbs.vbs.models.Booking;
 
 import java.util.List;
 
 public interface ClientService {
-  ClientDto create(ClientDto clientDto);
   ClientDto findClientByEmail(String email);
   List<ClientDto> findAll();
-  List<BookingRequest> getAllRequests(String email);
+  List<Booking> getAllRequests(String email);
 
 }

@@ -1,4 +1,4 @@
-package com.vbs.vbs.services.admin;
+package com.vbs.vbs.services;
 
 
 import org.springframework.stereotype.Service;

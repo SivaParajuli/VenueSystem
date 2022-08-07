@@ -1,4 +1,4 @@
-package com.vbs.vbs.models.venue;
+package com.vbs.vbs.models;
 
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.enums.ApplicationUserRole;
@@ -50,6 +50,6 @@ public class Venue implements Serializable {
     @Column(name="filePath")
     private String filePath;
 
-    @OneToMany(targetEntity = BookingRequest.class,mappedBy = "venue")
-    private List<BookingRequest> bookingRequestList;
+    @OneToMany(targetEntity = Booking.class,mappedBy = "venue")
+    private List<Booking> bookingList;
 }

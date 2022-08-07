@@ -1,21 +1,21 @@
-package com.vbs.vbs.controller.venue;
+package com.vbs.vbs.controller;
 
 
-import com.vbs.vbs.controller.BaseController;
 import com.vbs.vbs.dto.ResponseDto;
-import com.vbs.vbs.dto.venue.VenueDto;
-import com.vbs.vbs.models.venue.BookingRequest;
-import com.vbs.vbs.services.venue.VenueBookingRequestService;
-import com.vbs.vbs.services.venue.VenueService;
+import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.models.Booking;
+import com.vbs.vbs.models.Venue;
+import com.vbs.vbs.services.BookingServices;
+import com.vbs.vbs.services.VenueService;
 import com.vbs.vbs.utils.CurrentUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("venue")
 @RestController
@@ -24,28 +24,13 @@ public class VenueController extends BaseController {
 
     private final VenueService venueService;
 
-    private final VenueBookingRequestService venueBookingRequestService;
+    private final BookingServices bookingServices;
 
-    public VenueController(VenueService venueService, VenueBookingRequestService venueBookingRequestService) {
+    public VenueController(VenueService venueService, BookingServices bookingServices) {
         this.venueService = venueService;
-        this.venueBookingRequestService = venueBookingRequestService;
+        this.bookingServices = bookingServices;
     }
 
-
-        @PostMapping(path="create")
-    public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) throws IOException {
-        venueDto =venueService.create(venueDto);
-        if(venueDto !=null){
-            
-
-            return new ResponseEntity<>
-                    (successResponse("Venue Created.", venueDto), HttpStatus.CREATED);
-        }
-        else{
-            return new ResponseEntity<>
-                    (errorResponse("Venue Creation Failed",null),HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @PutMapping(path="updateDetails")
     public ResponseEntity<ResponseDto> updateVenue(@PathVariable("venueId") Integer id ,@RequestBody VenueDto venueDto){
@@ -64,10 +49,10 @@ public class VenueController extends BaseController {
 
     @GetMapping("{email}")
     public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
-        VenueDto venueDto =venueService.findVenueByEmail(email);
-        if(venueDto !=null) {
+        Optional<Venue> venue =venueService.findVenueByEmail(email);
+        if(venue.isPresent()) {
             return new ResponseEntity<>
-                    (successResponse("Venue   Fetched.", venueDto), HttpStatus.OK);
+                    (successResponse("Venue   Fetched.", venue), HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>
@@ -75,24 +60,13 @@ public class VenueController extends BaseController {
         }
     }
 
-
-    @GetMapping
-    public ResponseEntity findAll(){
-        List<VenueDto> venueDtoList =venueService.findAll();
-        return new ResponseEntity<>
-                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
-    }
-
-
-
-
     @GetMapping("requests")
     public ResponseEntity<ResponseDto>getBookingRequests(){
         CurrentUser user = new CurrentUser();
-        List<BookingRequest> bookingRequest =venueService.getRequestedBooking(user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-        if(bookingRequest !=null) {
+        List<Booking> booking =venueService.getRequestedBooking(user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+        if(booking !=null) {
             return new ResponseEntity<>
-                    (successResponse("Requested Booking List  Fetched.", bookingRequest), HttpStatus.OK);
+                    (successResponse("Requested Booking List  Fetched.", booking), HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>
@@ -103,7 +77,7 @@ public class VenueController extends BaseController {
    @PutMapping("response/{bookingStatus}/{id}")
     public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
                                                        @PathVariable("id")Integer id){
-       venueBookingRequestService.VenueBookingResponse(bookingStatus,id);
+       bookingServices.VenueBookingResponse(bookingStatus,id);
         return new ResponseEntity<>
                 (successResponse("venue booked",null),HttpStatus.OK);
     }

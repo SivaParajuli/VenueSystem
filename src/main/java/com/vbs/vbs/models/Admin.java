@@ -1,4 +1,4 @@
-package com.vbs.vbs.models.admin;
+package com.vbs.vbs.models;
 
 
 import com.vbs.vbs.enums.ApplicationUserRole;

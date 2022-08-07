@@ -1,18 +1,13 @@
-package com.vbs.vbs.services.venue;
-import com.vbs.vbs.dto.venue.VenueDto;
-import com.vbs.vbs.models.venue.BookingRequest;
-import com.vbs.vbs.models.venue.Venue;
+package com.vbs.vbs.services;
+import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.models.Booking;
+import com.vbs.vbs.models.Venue;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public interface VenueService{
-    VenueDto create(VenueDto venueDto) throws IOException;
-
     List<VenueDto> findAll();
-
-    List<VenueDto> findInAdminPage();
 
     VenueDto findById(Integer id);
 
@@ -24,5 +19,5 @@ public interface VenueService{
 
     VenueDto update(Integer id,VenueDto venueDto);
 
-    List<BookingRequest> getRequestedBooking(String email);
+    List<Booking> getRequestedBooking(String email);
 }
