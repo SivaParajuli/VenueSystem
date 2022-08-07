@@ -17,7 +17,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired(required = false)
+    @Autowired
     private JwtProvider jwtProvider;
 
     @Override
@@ -35,7 +35,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         signInUser.setToken(jwt);
 
         return signInUser;
-
-
     }
 }

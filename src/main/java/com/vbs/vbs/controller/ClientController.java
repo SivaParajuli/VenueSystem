@@ -1,9 +1,11 @@
 package com.vbs.vbs.controller;
 
+import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.services.BookingServices;
+import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;
 import com.vbs.vbs.utils.CurrentUser;
 import org.springframework.http.HttpStatus;
@@ -21,10 +23,12 @@ import java.util.List;
 public class ClientController extends BaseController {
     private final BookingServices bookingServices;
     private final VenueService venueService;
+    private final ClientService clientService;
 
-    public ClientController(BookingServices bookingServices, VenueService venueService) {
+    public ClientController(BookingServices bookingServices, VenueService venueService, ClientService clientService) {
         this.bookingServices = bookingServices;
         this.venueService = venueService;
+        this.clientService = clientService;
     }
 
     @GetMapping
@@ -32,6 +36,20 @@ public class ClientController extends BaseController {
         List<VenueDto> venueDtoList =venueService.findAll();
         return new ResponseEntity<>
                 (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
+    }
+
+    @GetMapping(path="currentUser")
+    public ResponseEntity<ResponseDto> findUser(){
+        CurrentUser user = new CurrentUser();
+        String clientMail = user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+       ClientDto currentUser = clientService.findClientByEmail(clientMail);
+        if(currentUser !=null){
+            return new ResponseEntity<>
+                    (successResponse("CurrentUser", currentUser), HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>
+                    (errorResponse("sorry",null),HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(path="book-venue/{email}")
