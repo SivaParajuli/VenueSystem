@@ -38,11 +38,10 @@ public class ClientController extends BaseController {
                 (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
     }
 
-    @GetMapping(path="currentUser")
-    public ResponseEntity<ResponseDto> findUser(){
-        CurrentUser user = new CurrentUser();
-        String clientMail = user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-       ClientDto currentUser = clientService.findClientByEmail(clientMail);
+    @GetMapping(path="{email}")
+    public ResponseEntity<ResponseDto> findUser(@PathVariable String email){
+
+        ClientDto currentUser = clientService.findClientByEmail(email);
         if(currentUser !=null){
             return new ResponseEntity<>
                     (successResponse("CurrentUser", currentUser), HttpStatus.OK);
@@ -51,6 +50,8 @@ public class ClientController extends BaseController {
             return new ResponseEntity<>
                     (errorResponse("sorry",null),HttpStatus.BAD_REQUEST);
     }
+
+
 
     @PostMapping(path="book-venue/{email}")
     public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable String email){

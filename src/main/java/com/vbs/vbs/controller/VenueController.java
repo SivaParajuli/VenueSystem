@@ -31,6 +31,19 @@ public class VenueController extends BaseController {
         this.bookingServices = bookingServices;
     }
 
+    @GetMapping(path="{email}")
+    public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
+        Optional<Venue> venue =venueService.findVenueByEmail(email);
+        if(venue.isPresent()) {
+            return new ResponseEntity<>
+                    (successResponse("Venue   Fetched.", venue), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PutMapping(path="updateDetails")
     public ResponseEntity<ResponseDto> updateVenue(@PathVariable("venueId") Integer id ,@RequestBody VenueDto venueDto){
@@ -47,18 +60,7 @@ public class VenueController extends BaseController {
         }
     }
 
-    @GetMapping("{email}")
-    public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
-        Optional<Venue> venue =venueService.findVenueByEmail(email);
-        if(venue.isPresent()) {
-            return new ResponseEntity<>
-                    (successResponse("Venue   Fetched.", venue), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>
-                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
-        }
-    }
+
 
     @GetMapping("requests")
     public ResponseEntity<ResponseDto>getBookingRequests(){
