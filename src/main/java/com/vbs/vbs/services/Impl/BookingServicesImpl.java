@@ -1,15 +1,14 @@
-package com.vbs.vbs.services.servicesImpl.venue;
+package com.vbs.vbs.services.Impl.venueImpl;
 
 
 import com.vbs.vbs.enums.BookingStatus;
-import com.vbs.vbs.models.client.Client;
+import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.venue.Venue;
 import com.vbs.vbs.models.venue.BookingRequest;
-import com.vbs.vbs.repo.client.ClientRepo;
+import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.venue.VenueBookingRequestRepo;
 import com.vbs.vbs.repo.venue.VenueRepo;
 import com.vbs.vbs.services.venue.VenueBookingRequestService;
-import com.vbs.vbs.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +16,15 @@ import java.util.Optional;
 
 
 @Service
-public class  VenueBookingRequestServiceImpl implements VenueBookingRequestService {
+public class BookingRequestServiceImpl implements VenueBookingRequestService {
     private final VenueBookingRequestRepo venueBookingRequestRepo;
     private final VenueRepo venueRepo;
     private final ClientRepo clientRepo;
 
 
     @Autowired
-    public VenueBookingRequestServiceImpl(VenueBookingRequestRepo venueBookingRequestRepo,
-                                          VenueRepo venueRepo, ClientRepo clientRepo) {
+    public BookingRequestServiceImpl(VenueBookingRequestRepo venueBookingRequestRepo,
+                                     VenueRepo venueRepo, ClientRepo clientRepo) {
         this.venueBookingRequestRepo = venueBookingRequestRepo;
         this.venueRepo = venueRepo;
         this.clientRepo = clientRepo;

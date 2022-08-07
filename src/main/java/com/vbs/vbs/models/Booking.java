@@ -1,7 +1,7 @@
 package com.vbs.vbs.models.venue;
 
 import com.vbs.vbs.enums.BookingStatus;
-import com.vbs.vbs.models.client.Client;
+import com.vbs.vbs.models.Client;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,33 +1,42 @@
 package com.vbs.vbs.auth;
 
-import com.vbs.vbs.models.User;
+import com.vbs.vbs.security.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.Collection;
 import java.util.Set;
 @CrossOrigin(origins = "*")
+@Builder
+@AllArgsConstructor
+@Getter
 public class ApplicationUser implements UserDetails {
-    private final User user;
 
-    public ApplicationUser(User user) {
-        this.user = user;
-    }
+
+    private Long id;
+    private String username;
+    transient private String password; //don't show up on serialized places
+    transient private User user; // user for only login operation, don't use in JST
+    private Set<GrantedAuthority> authorities;
 
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
-    }
-
-    @Override
-    public Set<? extends GrantedAuthority> getAuthorities() {
-        return user.getApplicationUserRole().getGrantedAuthorities();
+        return username;
     }
 
     @Override

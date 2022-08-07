@@ -1,15 +1,11 @@
 package com.vbs.vbs.models.admin;
 
 
-import com.vbs.vbs.auth.ApplicationUser;
-import com.vbs.vbs.security.ApplicationUserRole;
+import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 @Getter

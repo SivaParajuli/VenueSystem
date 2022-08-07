@@ -1,11 +1,11 @@
 package com.vbs.vbs.services.servicesImpl.client;
-import com.vbs.vbs.dto.client.ClientDto;
+import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.models.User;
 import com.vbs.vbs.models.client.Client;
 import com.vbs.vbs.models.venue.BookingRequest;
 import com.vbs.vbs.repo.UserRepo;
 import com.vbs.vbs.repo.client.ClientRepo;
-import com.vbs.vbs.security.ApplicationUserRole;
+import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.services.client.ClientService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

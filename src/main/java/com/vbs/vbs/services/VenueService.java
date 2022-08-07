@@ -1,9 +1,11 @@
 package com.vbs.vbs.services.venue;
 import com.vbs.vbs.dto.venue.VenueDto;
 import com.vbs.vbs.models.venue.BookingRequest;
+import com.vbs.vbs.models.venue.Venue;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface VenueService{
     VenueDto create(VenueDto venueDto) throws IOException;
@@ -14,7 +16,7 @@ public interface VenueService{
 
     VenueDto findById(Integer id);
 
-    VenueDto findVenueByEmail(String email);
+    Optional<Venue> findVenueByEmail(String email);
 
     void deleteBYId(Integer integer);
 

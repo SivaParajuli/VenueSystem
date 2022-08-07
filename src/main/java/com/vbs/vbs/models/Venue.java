@@ -1,7 +1,7 @@
 package com.vbs.vbs.models.venue;
 
 import com.vbs.vbs.enums.VenueStatus;
-import com.vbs.vbs.security.ApplicationUserRole;
+import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
 
 import javax.persistence.*;

@@ -2,7 +2,7 @@ package com.vbs.vbs.models.client;
 
 
 import com.vbs.vbs.models.venue.BookingRequest;
-import com.vbs.vbs.security.ApplicationUserRole;
+import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
 
 import javax.persistence.*;
