@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("venue-")
+@RequestMapping("venue-/{email}")
 @RestController
 @CrossOrigin(origins = "*")
 public class VenueController extends BaseController {
@@ -31,7 +31,7 @@ public class VenueController extends BaseController {
         this.bookingServices = bookingServices;
     }
 
-    @GetMapping(path="{email}")
+    @GetMapping
     public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
         Optional<Venue> venue =venueService.findVenueByEmail(email);
         if(venue.isPresent()) {

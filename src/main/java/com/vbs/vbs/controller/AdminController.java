@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("admin")
+@RequestMapping("admin-/{email}")
 public class  AdminController extends BaseController {
 
     private final VenueService venueService;
@@ -45,7 +45,7 @@ public class  AdminController extends BaseController {
         }
     }
 
-    @GetMapping(path="{email}")
+    @GetMapping
     public ResponseEntity<ResponseDto> findUser(@PathVariable String email){
                 AdminDto currentUser = adminService.findAdminByEmail(email);
         if(currentUser !=null){

@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(path="client-")
+@RequestMapping(path="client-/{email}")
 
 public class ClientController extends BaseController {
     private final BookingServices bookingServices;
@@ -30,17 +30,15 @@ public class ClientController extends BaseController {
         this.venueService = venueService;
         this.clientService = clientService;
     }
+//    @GetMapping
+//    public ResponseEntity<?> findAllForClientHomePage(@PathVariable String email){
+//        List<VenueDto> venueDtoList =venueService.findAll();
+//        return new ResponseEntity<>
+//                (successResponse("data is fetched", venueDtoList),HttpStatus.OK);
+//    }
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
-        List<VenueDto> venueDtoList =venueService.findAll();
-        return new ResponseEntity<>
-                (successResponse("Venue List Fetched", venueDtoList),HttpStatus.OK);
-    }
-
-    @GetMapping(path="{email}")
     public ResponseEntity<ResponseDto> findUser(@PathVariable String email){
-
         ClientDto currentUser = clientService.findClientByEmail(email);
         if(currentUser !=null){
             return new ResponseEntity<>
@@ -53,7 +51,7 @@ public class ClientController extends BaseController {
 
 
 
-    @PostMapping(path="book-venue/{email}")
+    @PostMapping(path="book-venue")
     public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable String email){
         CurrentUser user = new CurrentUser();
          String clientMail = user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
