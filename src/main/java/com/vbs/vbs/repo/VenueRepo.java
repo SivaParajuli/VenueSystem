@@ -1,4 +1,5 @@
 package com.vbs.vbs.repo;
+import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
@@ -18,18 +19,18 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "select  v from Venue v where  v.email= :e")
     Optional<Venue> findVenueByEmail(@Param("e") String email);
 
-    @Query(value="select v from Venue v where v.venueStatus= 'PENDING' ")
-    List<Venue>findPendingRegister();
+    @Query(value="select v from Venue v where v.venueStatus= :p ")
+    List<Venue>findPendingRegister(@Param("p") VenueStatus status);
 
-    @Query(value="select v from Venue v where v.venueStatus = 'VERIFY' ")
-    List<Venue>findAllVerifiedVenue();
+    @Query(value="select v from Venue v where v.venueStatus = :a ")
+    List<Venue>findAllVerifiedVenue(@Param("a")VenueStatus venueStatus);
 
 
     @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.email= :e")
     Date getBookedVenueDateByEmail(@Param("e")String email);
 
-    @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email= :e and r.bookingStatus='PENDING'")
-    List<Booking> getAllPendingBookingRequest(@Param("e") String email);
+    @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email= :e and r.bookingStatus= :p")
+    List<Booking> getAllPendingBookingRequest(@Param("e") String email, @Param("p")BookingStatus bookingStatus);
 
     @Modifying
     @Query(value = "UPDATE Venue v SET v.venueStatus= :s where v.email = :e")

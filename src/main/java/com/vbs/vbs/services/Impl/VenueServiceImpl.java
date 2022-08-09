@@ -1,6 +1,8 @@
 package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.enums.BookingStatus;
+import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.VenueRepo;
@@ -64,7 +66,7 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<Booking> getRequestedBooking(String email) {
-        List<Booking> requestList= venueRepo.getAllPendingBookingRequest(email);
+        List<Booking> requestList= venueRepo.getAllPendingBookingRequest(email, BookingStatus.PENDING);
         return requestList.stream().map(entity-> Booking.builder()
                 .id(entity.getId())
                 .bookingDate(entity.getBookingDate())
@@ -111,7 +113,7 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     public List<Venue> getAllVerifiedVenue() {
-        List<Venue> venueList= venueRepo.findAllVerifiedVenue();
+        List<Venue> venueList= venueRepo.findAllVerifiedVenue(VenueStatus.VERIFY);
         return venueList.stream().map(entity-> Venue.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())

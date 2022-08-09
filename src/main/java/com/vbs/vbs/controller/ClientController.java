@@ -35,7 +35,7 @@ public class ClientController extends BaseController {
         this.emailSenderService = emailSenderService;
     }
     @GetMapping()
-    public ResponseEntity<?> getAllVerifiedVenue(){
+    public ResponseEntity<ResponseDto> getAllVerifiedVenue(){
         List<Venue> venueList =venueService.getAllVerifiedVenue();
         return new ResponseEntity<>
                 (successResponse("Verified venue fetched", venueList),HttpStatus.OK);
