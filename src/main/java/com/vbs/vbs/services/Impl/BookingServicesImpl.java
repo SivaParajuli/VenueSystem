@@ -2,14 +2,12 @@ package com.vbs.vbs.services.Impl;
 
 
 import com.vbs.vbs.enums.BookingStatus;
-import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.BookingRepo;
 import com.vbs.vbs.repo.VenueRepo;
-import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.services.BookingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,9 +59,23 @@ public class BookingServicesImpl implements BookingServices {
         if(bookingStatus == 1 ){
             return bookingRepo.updateBookingStatus(BookingStatus.SUCCESSFUL,id);
         }
-       if(bookingStatus==2){
+       if(bookingStatus == 2){
            return bookingRepo.updateBookingStatus(BookingStatus.UNSUCCESSFUL,id);
        }
        return null;
+    }
+
+    @Override
+    public Booking findById(Integer id) {
+        Optional<Booking> optionalBooking =bookingRepo.findById(id);
+        if(optionalBooking.isPresent()){
+           Booking booking = optionalBooking.get();
+            return Booking.builder()
+                    .client(booking.getClient())
+                    .venue(booking.getVenue())
+                    .contactNumber(booking.getContactNumber())
+                    .build();
+        }
+        return null;
     }
 }

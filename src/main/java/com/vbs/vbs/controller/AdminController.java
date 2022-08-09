@@ -3,6 +3,7 @@ package com.vbs.vbs.controller;
 import com.vbs.vbs.dto.AdminDto;
 import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.AdminService;
@@ -35,7 +36,7 @@ public class  AdminController extends BaseController {
 
     @GetMapping("registerRequests")
     public ResponseEntity<ResponseDto>getAllRegisterRequests(){
-        List<Venue> venueList =registerService.getAllPendingRegister();
+        List<VenueDto> venueList =registerService.getAllPendingRegister();
         if(venueList !=null) {
             return new ResponseEntity<>
                     (successResponse("Requested Booking List  Fetched.",venueList), HttpStatus.OK);

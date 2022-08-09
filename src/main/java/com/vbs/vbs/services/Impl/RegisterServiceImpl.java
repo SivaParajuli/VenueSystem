@@ -11,8 +11,8 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.RegisterService;
-import com.vbs.vbs.utils.EmailSenderService;
 import com.vbs.vbs.utils.FileStorageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,22 +25,25 @@ import java.util.stream.Collectors;
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
+    @Autowired
     private final FileStorageUtils fileStorageUtils;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final ClientRepo clientRepo;
+    @Autowired
     private final VenueRepo venueRepo;
+    @Autowired
     private final UserRepo userRepo;
-    private final EmailSenderService emailSenderService;
 
-    public RegisterServiceImpl(FileStorageUtils fileStorageUtils,
-                               PasswordEncoder passwordEncoder, ClientRepo clientRepo,
-                               VenueRepo venueRepo, UserRepo userRepo, EmailSenderService emailSenderService) {
+    public RegisterServiceImpl(FileStorageUtils fileStorageUtils, PasswordEncoder passwordEncoder,
+                               ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo) {
         this.fileStorageUtils = fileStorageUtils;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
-        this.emailSenderService = emailSenderService;
+
     }
 
     @Override
@@ -91,7 +94,6 @@ public class RegisterServiceImpl implements RegisterService {
         entity.setApplicationUserRole(ApplicationUserRole.VENUE);
         entity.setFilePath(filepath);
         entity.setVenueStatus(VenueStatus.PENDING);
-
         entity = venueRepo.save(entity);
         return VenueDto.builder()
                 .id(entity.getId())
@@ -100,9 +102,9 @@ public class RegisterServiceImpl implements RegisterService {
                 .build();
     }
 
-    public List<Venue> getAllPendingRegister() {
-        List<Venue> venueList= venueRepo.findPendingRegister(VenueStatus.PENDING);
-        return venueList.stream().map(entity-> Venue.builder()
+    public List<VenueDto> getAllPendingRegister() {
+        List<VenueDto> venueList= venueRepo.findPendingRegister(VenueStatus.PENDING);
+        return venueList.stream().map(entity-> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
                 .contactNumber(entity.getContactNumber())
@@ -114,7 +116,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public Venue updateVenueStatus(Integer status,String email) {
         if (status == 0) {
-            Optional<Venue> venue = venueRepo.findVenueByEmail(email);
+           Optional<Venue> venue = venueRepo.findVenueByEmail(email);
             if (venue.isPresent()) {
                 Venue venue1 = venue.get();
                 User user = new User();

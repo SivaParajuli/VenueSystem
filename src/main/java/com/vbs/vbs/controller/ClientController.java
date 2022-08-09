@@ -1,6 +1,7 @@
 package com.vbs.vbs.controller;
 
 import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
@@ -36,7 +37,7 @@ public class ClientController extends BaseController {
     }
     @GetMapping()
     public ResponseEntity<ResponseDto> getAllVerifiedVenue(){
-        List<Venue> venueList =venueService.getAllVerifiedVenue();
+        List<VenueDto> venueList =venueService.getAllVerifiedVenue();
         return new ResponseEntity<>
                 (successResponse("Verified venue fetched", venueList),HttpStatus.OK);
     }

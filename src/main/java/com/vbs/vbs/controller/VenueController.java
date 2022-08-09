@@ -4,19 +4,16 @@ package com.vbs.vbs.controller;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
-import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.BookingServices;
+import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;
 import com.vbs.vbs.utils.CurrentUser;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("venue-")
 @RestController
@@ -25,18 +22,20 @@ public class VenueController extends BaseController {
 
     private final VenueService venueService;
     private final BookingServices bookingServices;
+    private final ClientService clientService;
     private final EmailSenderService emailSenderService;
 
-    public VenueController(VenueService venueService, BookingServices bookingServices, EmailSenderService emailSenderService) {
+    public VenueController(VenueService venueService, BookingServices bookingServices, ClientService clientService, EmailSenderService emailSenderService) {
         this.venueService = venueService;
         this.bookingServices = bookingServices;
+        this.clientService = clientService;
         this.emailSenderService = emailSenderService;
     }
 
     @GetMapping(path="{email}")
-    public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
-        Optional<Venue> venue =venueService.findVenueByEmail(email);
-        if(venue.isPresent()) {
+    public ResponseEntity<ResponseDto>findVenueByEmail(@PathVariable String email){
+        VenueDto venue =venueService.findVenueByEmail(email);
+        if(venue != null ){
             return new ResponseEntity<>
                     (successResponse("Venue   Fetched.", venue), HttpStatus.OK);
         }
@@ -62,25 +61,30 @@ public class VenueController extends BaseController {
         }
     }
 
-    @GetMapping("requests")
-    public ResponseEntity<ResponseDto>getBookingRequests(){
+    @GetMapping("requests/{email}")
+    public ResponseEntity<ResponseDto>getBookingRequests(@PathVariable String email){
         CurrentUser user = new CurrentUser();
-        List<Booking> booking =venueService.getRequestedBooking(user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+        List<Booking> booking =venueService.getRequestedBooking(email);
         if(booking !=null) {
             return new ResponseEntity<>
                     (successResponse("Requested Booking List  Fetched.", booking), HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>
-                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+                    (errorResponse("Requests Fetching Failed", null), HttpStatus.BAD_REQUEST);
         }
     }
 
    @PutMapping("response/{bookingStatus}/{id}")
     public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
                                                        @PathVariable("id")Integer id){
-       Booking bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
+        Booking bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
        if(bookingResponse != null){
+           Booking booking = bookingServices.findById(id);
+           emailSenderService.sendEmail(booking.getClient().getEmail(),
+                   "Booking Response",
+                   "Mr/Miss " + booking.getClient().getName()+" Your Booking is Successful."
+           );
         return new ResponseEntity<>
                 (successResponse("response sent",bookingResponse),HttpStatus.OK);
     }

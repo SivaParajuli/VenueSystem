@@ -1,17 +1,16 @@
 package com.vbs.vbs.services;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
-import com.vbs.vbs.models.Venue;
+
 
 import java.util.List;
-import java.util.Optional;
 
 public interface VenueService{
     List<VenueDto> findAll();
 
     VenueDto findById(Integer id);
 
-    Optional<Venue> findVenueByEmail(String email);
+    VenueDto findVenueByEmail(String email);
 
     void deleteBYId(Integer integer);
 
@@ -19,7 +18,7 @@ public interface VenueService{
 
     List<Booking> getRequestedBooking(String email);
 
-    List<Venue> getAllVerifiedVenue();
+    List<VenueDto> getAllVerifiedVenue();
 
 
 }

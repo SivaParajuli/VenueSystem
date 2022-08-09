@@ -1,5 +1,6 @@
 package com.vbs.vbs.dto;
 
+import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ public class VenueDto {
     private String userName;
     private String contactNumber;
     private String email;
+    private ApplicationUserRole applicationUserRole;
     private String address;
     private String password;
     private VenueStatus venueStatus;
@@ -25,6 +27,5 @@ public class VenueDto {
     private MultipartFile venueFile;
     //used while listing and sending data to front end
     private String filepath;
-
 
 }
