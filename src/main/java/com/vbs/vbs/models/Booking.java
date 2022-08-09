@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "VenueBookingRequest")
+@Table(name="VenueBookingRequest")
 @Getter
 @Setter
 @Builder

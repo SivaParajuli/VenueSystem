@@ -1,8 +1,11 @@
 package com.vbs.vbs.repo;
+import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -12,15 +15,25 @@ import java.util.Optional;
 @Repository
 public interface VenueRepo extends JpaRepository<Venue, Integer>{
 
-    @Query(value = "select  * from Venue where  email= ?1" ,nativeQuery = true)
-    Optional<Venue> findVenueByEmail(String email);
+    @Query(value = "select  v from Venue v where  v.email= :e")
+    Optional<Venue> findVenueByEmail(@Param("e") String email);
 
-    @Query(value="select * from Venue where venueUpdateStatus=PENDING",nativeQuery = true)
+    @Query(value="select v from Venue v where v.venueStatus= 'PENDING' ")
     List<Venue>findPendingRegister();
 
-    @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.email=?1")
-    Date getBookedVenueDateByEmail(String email);
+    @Query(value="select v from Venue v where v.venueStatus = 'VERIFY' ")
+    List<Venue>findAllVerifiedVenue();
 
-    @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email=?1 and r.bookingStatus='PENDING'")
-    List<Booking> getAllPendingBookingRequest(String email);
+
+    @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.email= :e")
+    Date getBookedVenueDateByEmail(@Param("e")String email);
+
+    @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email= :e and r.bookingStatus='PENDING'")
+    List<Booking> getAllPendingBookingRequest(@Param("e") String email);
+
+    @Modifying
+    @Query(value = "UPDATE Venue v SET v.venueStatus= :s where v.email = :e")
+    Venue updateVenueStatus(@Param("s") VenueStatus vStatus,@Param("e")String email);
+
+
 }

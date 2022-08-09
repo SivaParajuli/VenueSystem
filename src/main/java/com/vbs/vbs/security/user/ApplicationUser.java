@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 @CrossOrigin(origins = "*")
 @Builder
 @AllArgsConstructor
@@ -20,6 +19,7 @@ public class ApplicationUser implements UserDetails {
 
     private Long id;
     private String username;
+    private String uname;
     transient private String password; //don't show up on serialized places
     transient private User user; // user for only login operation, don't use in JST
     private HashSet<GrantedAuthority> authorities;

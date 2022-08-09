@@ -14,7 +14,11 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="tbl_client")
+@Table(name="tbl_client",uniqueConstraints = {
+        @UniqueConstraint(name="unique_client_email",columnNames = "email"),
+        @UniqueConstraint(name="unique_client_mobile_no",columnNames = "mobile_no"),
+
+})
 public class Client implements Serializable {
     @Id
     @SequenceGenerator(name="client_id_sequence",sequenceName="client_id_sequence")
@@ -24,7 +28,7 @@ public class Client implements Serializable {
     @Column(name="name",length=200)
     private String name;
 
-    @Column(name="moblie_no",length=10)
+    @Column(name="mobile_no",length=10)
     private String mobile_no;
 
     @Column(name="email")

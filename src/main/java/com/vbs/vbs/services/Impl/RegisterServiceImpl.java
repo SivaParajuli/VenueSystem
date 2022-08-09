@@ -4,7 +4,6 @@ import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
-import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.ClientRepo;
@@ -12,32 +11,36 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.RegisterService;
+import com.vbs.vbs.utils.EmailSenderService;
 import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
-
 
     private final FileStorageUtils fileStorageUtils;
     private final PasswordEncoder passwordEncoder;
     private final ClientRepo clientRepo;
     private final VenueRepo venueRepo;
     private final UserRepo userRepo;
+    private final EmailSenderService emailSenderService;
 
     public RegisterServiceImpl(FileStorageUtils fileStorageUtils,
                                PasswordEncoder passwordEncoder, ClientRepo clientRepo,
-                               VenueRepo venueRepo, UserRepo userRepo) {
+                               VenueRepo venueRepo, UserRepo userRepo, EmailSenderService emailSenderService) {
         this.fileStorageUtils = fileStorageUtils;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .build();
         User entity1= User.builder()
                 .email(clientDto.getEmail())
+                .uname(clientDto.getName())
                 .password(passwordEncoder.encode(clientDto.getPassword()))
                 .applicationUserRole(ApplicationUserRole.CLIENT).build();
         userRepo.save(entity1);
@@ -69,7 +73,10 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public VenueDto venueRegister(VenueDto venueDto) throws IOException {
-        MultipartFile multipartFile=venueDto.getVenueFile();
+        MultipartFile multipartFile = venueDto.getVenueFile();
+        if(multipartFile.isEmpty() && !(multipartFile.getContentType().equals("image/jpeg"))){
+            throw new InvalidPropertiesFormatException("invalid type");
+        }
         //need to save this file
         String filepath=fileStorageUtils.storeFile(multipartFile);
 
@@ -83,19 +90,9 @@ public class RegisterServiceImpl implements RegisterService {
         entity.setDescription(venueDto.getDescription());
         entity.setApplicationUserRole(ApplicationUserRole.VENUE);
         entity.setFilePath(filepath);
-        if(venueDto.getVenueStatus()==null) {
-            entity.setVenueStatus(VenueStatus.PENDING);
-        }
-        else {
-            entity.setVenueStatus(venueDto.getVenueStatus());
-            User user = new User();
-            user.setEmail(venueDto.getEmail());
-            user.setPassword(passwordEncoder.encode(venueDto.getPassword()));
-            user.setApplicationUserRole(ApplicationUserRole.VENUE);
-            userRepo.save(user);
-        }
-        entity = venueRepo.save(entity);
+        entity.setVenueStatus(VenueStatus.PENDING);
 
+        entity = venueRepo.save(entity);
         return VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
@@ -112,5 +109,23 @@ public class RegisterServiceImpl implements RegisterService {
                 .email(entity.getEmail())
                 .address(entity.getAddress())
                 .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public Venue updateVenueStatus(Integer status,String email) {
+        if (status == 0) {
+            Optional<Venue> venue = venueRepo.findVenueByEmail(email);
+            if (venue.isPresent()) {
+                Venue venue1 = venue.get();
+                User user = new User();
+                user.setEmail(venue1.getEmail());
+                user.setUname(venue1.getVenueName());
+                user.setPassword(venue1.getPassword());
+                user.setApplicationUserRole(venue1.getApplicationUserRole());
+                userRepo.save(user);
+                return venueRepo.updateVenueStatus(VenueStatus.VERIFY, email);
+            }
+        }
+        return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
     }
 }

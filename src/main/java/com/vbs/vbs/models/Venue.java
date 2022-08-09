@@ -14,6 +14,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="tbl_venue",uniqueConstraints = {
+        @UniqueConstraint(name="unique_venue_email",columnNames = "email"),
+        @UniqueConstraint(name="unique_venue_contact_no",columnNames = "contactNumber"),
+        @UniqueConstraint(name="unique_venue_userName",columnNames = "username"),
+
+})
 public class Venue implements Serializable {
     @Id
     @SequenceGenerator(name = "owner_id_sequence", sequenceName = "owner_id_sequence")
@@ -23,7 +29,7 @@ public class Venue implements Serializable {
     @Column(name = "v_name", length = 200)
     private String venueName;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String userName;
 
     @Column(name = "email")
@@ -35,7 +41,7 @@ public class Venue implements Serializable {
     @Enumerated(EnumType.STRING)
     private ApplicationUserRole applicationUserRole;
 
-    @Column(name = "contact", length = 10)
+    @Column(name = "contactNumber", length = 10)
     private String contactNumber;
 
     @Column(name = "address", length = 45)

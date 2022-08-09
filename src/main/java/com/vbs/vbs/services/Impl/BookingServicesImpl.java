@@ -2,12 +2,14 @@ package com.vbs.vbs.services.Impl;
 
 
 import com.vbs.vbs.enums.BookingStatus;
+import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.BookingRepo;
 import com.vbs.vbs.repo.VenueRepo;
+import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.services.BookingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +37,7 @@ public class BookingServicesImpl implements BookingServices {
         Booking entity = new Booking();
         if ( bookingDto.getBookingDate() !=venueRepo.getBookedVenueDateByEmail(email)) {
             Optional<Venue> venue = venueRepo.findVenueByEmail(email);
-            if(venue.isPresent()){
-                entity.setVenue(venue.get());
-            }
+            venue.ifPresent(entity::setVenue);
             Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
             entity.setBookingDate(bookingDto.getBookingDate());
             entity.setFunctionType(bookingDto.getFunctionType());
@@ -47,18 +47,23 @@ public class BookingServicesImpl implements BookingServices {
             entity.setRequiredCapacity(bookingDto.getRequiredCapacity());
             entity.setContactNumber(bookingDto.getContactNumber());
             bookingRepo.save(entity);
+            return Booking.builder()
+                    .venue(bookingDto.getVenue())
+                    .bookingDate(bookingDto.getBookingDate())
+                    .contactNumber(bookingDto.getContactNumber())
+                    .build();
         }
         return null;
     }
 
-    public Booking VenueBookingResponse(Integer bookingStatus, Integer id){
-         Booking booking = bookingRepo.findById(id).orElseThrow(()->new RuntimeException("invalid id"));
-        if(bookingStatus==1) {
-            booking.setBookingStatus(BookingStatus.BOOKED);
+    @Override
+    public Booking VenueBookingResponse(Integer bookingStatus, Integer id) {
+        if(bookingStatus == 1 ){
+            return bookingRepo.updateBookingStatus(BookingStatus.SUCCESSFUL,id);
         }
-        else
-            booking.setBookingStatus(BookingStatus.DELETED);
-        bookingRepo.save(booking);
-        return null;
+       if(bookingStatus==2){
+           return bookingRepo.updateBookingStatus(BookingStatus.UNSUCCESSFUL,id);
+       }
+       return null;
     }
 }

@@ -8,6 +8,7 @@ import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.VenueService;
 import com.vbs.vbs.utils.CurrentUser;
+import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,21 +18,22 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("venue-/{email}")
+@RequestMapping("venue-")
 @RestController
 @CrossOrigin(origins = "*")
 public class VenueController extends BaseController {
 
     private final VenueService venueService;
-
     private final BookingServices bookingServices;
+    private final EmailSenderService emailSenderService;
 
-    public VenueController(VenueService venueService, BookingServices bookingServices) {
+    public VenueController(VenueService venueService, BookingServices bookingServices, EmailSenderService emailSenderService) {
         this.venueService = venueService;
         this.bookingServices = bookingServices;
+        this.emailSenderService = emailSenderService;
     }
 
-    @GetMapping
+    @GetMapping(path="{email}")
     public ResponseEntity<ResponseDto>findUserByEmail(@PathVariable String email){
         Optional<Venue> venue =venueService.findVenueByEmail(email);
         if(venue.isPresent()) {
@@ -60,8 +62,6 @@ public class VenueController extends BaseController {
         }
     }
 
-
-
     @GetMapping("requests")
     public ResponseEntity<ResponseDto>getBookingRequests(){
         CurrentUser user = new CurrentUser();
@@ -79,8 +79,15 @@ public class VenueController extends BaseController {
    @PutMapping("response/{bookingStatus}/{id}")
     public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
                                                        @PathVariable("id")Integer id){
-       bookingServices.VenueBookingResponse(bookingStatus,id);
+       Booking bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
+       if(bookingResponse != null){
         return new ResponseEntity<>
-                (successResponse("venue booked",null),HttpStatus.OK);
+                (successResponse("response sent",bookingResponse),HttpStatus.OK);
+    }
+    else{
+        return  new ResponseEntity<>(
+                errorResponse("sending response unsuccessful",null),HttpStatus.BAD_REQUEST);
+       }
+
     }
 }

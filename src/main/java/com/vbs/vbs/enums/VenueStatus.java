@@ -1,5 +1,5 @@
 package com.vbs.vbs.enums;
 
 public enum VenueStatus {
-    VERIFY,PENDING;
+    VERIFY,PENDING,DELETED
 }

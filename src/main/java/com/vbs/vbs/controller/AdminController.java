@@ -3,6 +3,7 @@ package com.vbs.vbs.controller;
 import com.vbs.vbs.dto.AdminDto;
 import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.AdminService;
 import com.vbs.vbs.services.RegisterService;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("admin-/{email}")
+@RequestMapping("admin-")
 public class  AdminController extends BaseController {
 
     private final VenueService venueService;
@@ -45,9 +46,9 @@ public class  AdminController extends BaseController {
         }
     }
 
-    @GetMapping
+    @GetMapping(path="{email}")
     public ResponseEntity<ResponseDto> findUser(@PathVariable String email){
-                AdminDto currentUser = adminService.findAdminByEmail(email);
+                Admin currentUser = adminService.findAdminByEmail(email);
         if(currentUser !=null){
             return new ResponseEntity<>
                     (successResponse("CurrentUser", currentUser), HttpStatus.OK);
@@ -58,17 +59,19 @@ public class  AdminController extends BaseController {
     }
 
 
-//    @PostMapping("/updateStatus/{id}/{enums}")
-//    public void updateVenueStatus(@PathVariable("id") Integer id,VenueDto venueDto,@PathVariable("enums") String enums) throws IOException {
-//        venueDto=venueService.findById(id);
-//        if(enums=="VERIFY") {
-//            venueDto.setVenueStatus(VenueStatus.VERIFY);
-//            venueService.create(venueDto);
-//        }
-//        else{
-//            venueService.deleteBYId(id);
-//        }
-//    }
+    @PutMapping("update/{status}/{email}")
+    public ResponseEntity<ResponseDto>verifyVenue(@PathVariable("status") Integer status,@PathVariable("email") String email){
+        Venue venue= registerService.updateVenueStatus(status,email);
+        if(venue !=null) {
+            return new ResponseEntity<>
+                    (successResponse("Requested Booking List  Fetched.",venue), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
 

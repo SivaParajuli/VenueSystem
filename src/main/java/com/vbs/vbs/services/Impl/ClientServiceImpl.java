@@ -1,5 +1,4 @@
 package com.vbs.vbs.services.Impl;
-import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
@@ -19,11 +18,11 @@ public class  ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDto findClientByEmail(String email) {
+    public Client findClientByEmail(String email) {
         Optional<Client> clientOptional= clientRepo.findClientByEmail(email);
         if(clientOptional.isPresent()){
             Client entity=clientOptional.get();
-            return ClientDto.builder()
+            return Client.builder()
                     .name(entity.getName())
                     .email(entity.getEmail())
                     .mobile_no(entity.getMobile_no())
@@ -33,9 +32,9 @@ public class  ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientDto> findAll() {
+    public List<Client> findAll() {
         List<Client> clientList = clientRepo.findAll();
-        return clientList.stream().map(entity-> ClientDto.builder()
+        return clientList.stream().map(entity-> Client.builder()
                 .name(entity.getName())
                 .mobile_no(entity.getMobile_no())
                 .email(entity.getEmail())

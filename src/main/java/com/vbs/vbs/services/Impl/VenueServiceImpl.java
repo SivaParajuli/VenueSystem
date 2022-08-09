@@ -110,17 +110,17 @@ public class VenueServiceImpl  implements VenueService {
                 .build();
     }
 
-    //    @Override
-//    public List<VenueDto> findInMainPage() {
-//        List<Venue> venueList = venueRepo.findInMainPage();
-//        return venueList.stream().map(entity-> VenueDto.builder()
-//                .id(entity.getId())
-//                .v_name(entity.getV_name())
-//                .capacity(entity.getCapacity())
-//                .city_name(entity.getCity_name())
-//                .street_name(entity.getStreet_name())
-//                .build()).collect(Collectors.toList());
-//    }
-
+    public List<Venue> getAllVerifiedVenue() {
+        List<Venue> venueList= venueRepo.findAllVerifiedVenue();
+        return venueList.stream().map(entity-> Venue.builder()
+                .id(entity.getId())
+                .venueName(entity.getVenueName())
+                .contactNumber(entity.getContactNumber())
+                .email(entity.getEmail())
+                .address(entity.getAddress())
+                .userName(entity.getUserName())
+                .description(entity.getDescription())
+                .build()).collect(Collectors.toList());
+    }
 }
 

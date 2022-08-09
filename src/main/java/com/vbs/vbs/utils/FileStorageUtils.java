@@ -15,7 +15,7 @@ public class FileStorageUtils {
     private String venueFileStoragePath;
 
     //it gives users home
-    private String userHome = System.getProperty("user.home");
+    private final String userHome = System.getProperty("user.home");
 
     /**
      * This function takes multipart file as input parameter and

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashSet;
-import java.util.Set;
 
 
 @Service
@@ -36,6 +35,7 @@ public class ApplicationUserService implements UserDetailsService {
 
         return ApplicationUser.builder()
                 .user(user)
+                .uname(user.getUname())
                 .id(user.getId())
                 .username(user.getEmail())
                 .password(user.getPassword())

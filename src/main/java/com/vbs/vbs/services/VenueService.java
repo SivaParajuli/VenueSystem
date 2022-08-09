@@ -15,9 +15,11 @@ public interface VenueService{
 
     void deleteBYId(Integer integer);
 
-//    List<BookingRequestDto> getVenueBookingRequestByClient(Integer venueId);
-
     VenueDto update(Integer id,VenueDto venueDto);
 
     List<Booking> getRequestedBooking(String email);
+
+    List<Venue> getAllVerifiedVenue();
+
+
 }
