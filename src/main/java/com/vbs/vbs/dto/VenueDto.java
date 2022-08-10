@@ -26,6 +26,6 @@ public class VenueDto {
     //used while saving
     private MultipartFile venueFile;
     //used while listing and sending data to front end
-    private String filepath;
+    private String filePath;
 
 }

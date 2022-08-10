@@ -41,7 +41,7 @@ public class RegisterController extends BaseController {
     public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) throws IOException {
         venueDto =registerService.venueRegister(venueDto);
         if(venueDto !=null){
-            emailSenderService.sendEmail("svenuebooking.admin001@gmail.com",
+            emailSenderService.sendEmail("svenuebooking.spad01@gmail.com",
                     "Registration Request",
                     venueDto.getVenueName() +" wants to be registered with requirements in vbs.");
 

@@ -77,28 +77,30 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public VenueDto venueRegister(VenueDto venueDto) throws IOException {
         MultipartFile multipartFile = venueDto.getVenueFile();
-        if(multipartFile.isEmpty()){
-            throw new InvalidPropertiesFormatException("invalid type");
-        }
         //need to save this file
         String filepath=fileStorageUtils.storeFile(multipartFile);
 
-        Venue entity=new Venue();
-        entity.setVenueName(venueDto.getVenueName());
-        entity.setPassword(passwordEncoder.encode(venueDto.getPassword()));
-        entity.setUserName(venueDto.getUserName());
-        entity.setEmail(venueDto.getEmail());
-        entity.setAddress(venueDto.getAddress());
-        entity.setContactNumber(venueDto.getContactNumber());
-        entity.setDescription(venueDto.getDescription());
-        entity.setApplicationUserRole(ApplicationUserRole.VENUE);
-        entity.setFilePath(filepath);
-        entity.setVenueStatus(VenueStatus.PENDING);
+        Venue entity = new Venue().builder()
+                .id(venueDto.getId())
+                .venueName(venueDto.getVenueName())
+                .password(passwordEncoder.encode(venueDto.getPassword()))
+                .contactNumber(venueDto.getContactNumber())
+                .email(venueDto.getEmail())
+                .description(venueDto.getDescription())
+                .userName(venueDto.getUserName())
+                .applicationUserRole(ApplicationUserRole.VENUE)
+                .venueStatus(VenueStatus.PENDING)
+                .filePath(filepath)
+                .build();
         entity = venueRepo.save(entity);
         return VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
                 .email(entity.getEmail())
+                .userName(entity.getUserName())
+                .applicationUserRole(entity.getApplicationUserRole())
+                .venueStatus(entity.getVenueStatus())
+                .filePath(entity.getFilePath())
                 .build();
     }
 
