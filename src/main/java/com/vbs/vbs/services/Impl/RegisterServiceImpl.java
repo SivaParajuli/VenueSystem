@@ -11,11 +11,9 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.RegisterService;
-import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
-    private final FileStorageUtils fileStorageUtils;
     @Autowired
     private final PasswordEncoder passwordEncoder;
     @Autowired
@@ -35,9 +32,8 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private final UserRepo userRepo;
 
-    public RegisterServiceImpl(FileStorageUtils fileStorageUtils, PasswordEncoder passwordEncoder,
+    public RegisterServiceImpl(PasswordEncoder passwordEncoder,
                                ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo) {
-        this.fileStorageUtils = fileStorageUtils;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
@@ -75,9 +71,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public VenueDto venueRegister(VenueDto venueDto) throws IOException {
-        MultipartFile multipartFile = venueDto.getVenueFile();
-        //need to save this file
-        String filepath=fileStorageUtils.storeFile(multipartFile);
+//        MultipartFile multipartFile = venueDto.getVenueFile();
+//        //need to save this file
+//        String filepath=fileStorageUtils.storeFile(multipartFile);
 
         Venue entity = new Venue().builder()
                 .id(venueDto.getId())
@@ -89,7 +85,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .userName(venueDto.getUserName())
                 .applicationUserRole(ApplicationUserRole.VENUE)
                 .venueStatus(VenueStatus.PENDING)
-                .filePath(filepath)
+//                .filePath(filepath)
                 .build();
         entity = venueRepo.save(entity);
         return VenueDto.builder()

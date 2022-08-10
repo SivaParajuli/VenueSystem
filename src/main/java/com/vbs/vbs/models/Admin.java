@@ -3,6 +3,7 @@ package com.vbs.vbs.models;
 
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Table(name="tbl_admin",uniqueConstraints = {
         @UniqueConstraint(name="unique_admin_email",columnNames = "email")
 })
+@Component
 public class Admin implements Serializable {
     @Id
     @SequenceGenerator(name = "admin_id_sequence", sequenceName = "admin_id_sequence")

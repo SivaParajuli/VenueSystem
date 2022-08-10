@@ -4,4 +4,5 @@ import com.vbs.vbs.models.Admin;
 
 public interface AdminService{
     Admin findAdminByEmail(String adminMail);
+    Admin updateAdmin();
 }

@@ -2,6 +2,7 @@ package com.vbs.vbs.security.user;
 
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name="tbl_user")
+@Component
 public class User implements Serializable {
     @Id
     @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence")
