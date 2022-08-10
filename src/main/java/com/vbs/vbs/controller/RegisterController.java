@@ -6,7 +6,6 @@ import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +41,9 @@ public class RegisterController extends BaseController {
     public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) throws IOException {
         venueDto =registerService.venueRegister(venueDto);
         if(venueDto !=null){
-            emailSenderService.sendEmail("svenuebooking.spad01@gmail.com",
-                    "Registration Request",
-                    venueDto.getVenueName() +" wants to be registered with requirements in vbs.");
+//            emailSenderService.sendEmail("svenuebooking.spad01@gmail.com",
+//                    "Registration Request",
+//                    venueDto.getVenueName() +" wants to be registered with requirements in vbs.");
 
             return new ResponseEntity<>
                     (successResponse("Registration Request Sent Successfully.", venueDto), HttpStatus.CREATED);

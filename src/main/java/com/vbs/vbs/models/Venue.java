@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="tbl_venue",uniqueConstraints = {
         @UniqueConstraint(name="unique_venue_email",columnNames = "email"),
-        @UniqueConstraint(name="unique_venue_contact_no",columnNames = "contactNumber"),
+        @UniqueConstraint(name="unique_venue_contactNumber",columnNames = "contactNumber"),
         @UniqueConstraint(name="unique_venue_userName",columnNames = "userName"),
 
 })
