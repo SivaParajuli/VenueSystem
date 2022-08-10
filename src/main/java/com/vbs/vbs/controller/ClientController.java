@@ -4,7 +4,7 @@ import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Client;
-import com.vbs.vbs.models.Venue;
+
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;

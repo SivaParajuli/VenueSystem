@@ -7,12 +7,10 @@ import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,12 +19,10 @@ import java.util.stream.Collectors;
 public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
-    private final FileStorageUtils fileStorageUtils;
 
     @Autowired
-    public VenueServiceImpl(VenueRepo venueRepo, FileStorageUtils fileStorageUtils) {
+    public VenueServiceImpl(VenueRepo venueRepo) {
         this.venueRepo = venueRepo;
-        this.fileStorageUtils = fileStorageUtils;
     }
 
     @Override
@@ -38,7 +34,7 @@ public class VenueServiceImpl  implements VenueService {
                 .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
                 .address(entity.getAddress())
-                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
+//                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
                 .build()).collect(Collectors.toList());
     }
 
@@ -54,7 +50,7 @@ public class VenueServiceImpl  implements VenueService {
                     .email(venue1.getEmail())
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
-                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath()))
+//                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath()))
                     .build();
         }
         return null;
@@ -71,7 +67,8 @@ public class VenueServiceImpl  implements VenueService {
                     .contactNumber(venue1.getContactNumber())
                     .email(venue1.getEmail())
                     .userName(venue1.getUserName())
-                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath())).build();
+//                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath()))
+                    .build();
         }
         return null;
     }
@@ -139,7 +136,7 @@ public class VenueServiceImpl  implements VenueService {
                 .address(entity.getAddress())
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
-                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
+//                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
                 .build()).collect(Collectors.toList());
     }
 }
