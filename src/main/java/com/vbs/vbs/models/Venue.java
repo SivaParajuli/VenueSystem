@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name="tbl_venue",uniqueConstraints = {
         @UniqueConstraint(name="unique_venue_email",columnNames = "email"),
         @UniqueConstraint(name="unique_venue_contact_no",columnNames = "contactNumber"),
-        @UniqueConstraint(name="unique_venue_userName",columnNames = "username"),
+        @UniqueConstraint(name="unique_venue_userName",columnNames = "userName"),
 
 })
 public class Venue implements Serializable {
@@ -29,7 +29,7 @@ public class Venue implements Serializable {
     @Column(name = "v_name", length = 200)
     private String venueName;
 
-    @Column(name = "username")
+    @Column(name = "userName")
     private String userName;
 
     @Column(name = "email")
