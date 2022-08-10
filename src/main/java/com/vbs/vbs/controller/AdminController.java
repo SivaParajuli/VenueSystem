@@ -1,7 +1,5 @@
 package com.vbs.vbs.controller;
 
-import com.vbs.vbs.dto.AdminDto;
-import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
@@ -9,13 +7,9 @@ import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.AdminService;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.CurrentUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
