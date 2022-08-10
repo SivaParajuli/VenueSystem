@@ -77,7 +77,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public VenueDto venueRegister(VenueDto venueDto) throws IOException {
         MultipartFile multipartFile = venueDto.getVenueFile();
-        if(multipartFile.isEmpty() && !(multipartFile.getContentType().equals("image/jpeg"))){
+        if(multipartFile.isEmpty()){
             throw new InvalidPropertiesFormatException("invalid type");
         }
         //need to save this file
