@@ -17,7 +17,6 @@ import java.io.Serializable;
 @Table(name="tbl_admin",uniqueConstraints = {
         @UniqueConstraint(name="unique_admin_email",columnNames = "email")
 })
-@Component
 public class Admin implements Serializable {
     @Id
     @SequenceGenerator(name = "admin_id_sequence", sequenceName = "admin_id_sequence")

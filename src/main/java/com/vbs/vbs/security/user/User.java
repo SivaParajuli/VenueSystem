@@ -14,7 +14,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name="tbl_user")
-@Component
 public class User implements Serializable {
     @Id
     @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence")
