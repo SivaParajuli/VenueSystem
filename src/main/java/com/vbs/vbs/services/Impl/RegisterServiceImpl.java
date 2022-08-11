@@ -132,23 +132,23 @@ public class RegisterServiceImpl implements RegisterService {
         return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
     }
 
-    @Override
-    public Admin registerAdmin() {
-        Admin entity= Admin.builder()
-                .name("admin001")
-                .email("svenuebooking.spad001@gmail.com")
-                .password(passwordEncoder.encode("Zxcvbnm@1234"))
-                .applicationUserRole(ApplicationUserRole.ADMIN)
-                .build();
-        User entity1= User.builder()
-                .email("svenuebooking.spad001@gmail.com")
-                .uname("admin001")
-                .password(passwordEncoder.encode("Zxcvbnm@1234"))
-                .applicationUserRole(ApplicationUserRole.CLIENT).build();
-        userRepo.save(entity1);
-        adminRepo.save(entity);
-        return Admin.builder()
-                .email(entity.getEmail())
-                .build();
-    }
+//    @Override
+//    public Admin registerAdmin() {
+//        Admin entity= Admin.builder()
+//                .name("admin001")
+//                .email("svenuebooking.spad001@gmail.com")
+//                .password(passwordEncoder.encode("Zxcvbnm@1234"))
+//                .applicationUserRole(ApplicationUserRole.ADMIN)
+//                .build();
+//        User entity1= User.builder()
+//                .email("svenuebooking.spad001@gmail.com")
+//                .uname("admin001")
+//                .password(passwordEncoder.encode("Zxcvbnm@1234"))
+//                .applicationUserRole(ApplicationUserRole.CLIENT).build();
+//        userRepo.save(entity1);
+//        adminRepo.save(entity);
+//        return Admin.builder()
+//                .email(entity.getEmail())
+//                .build();
+//    }
 }

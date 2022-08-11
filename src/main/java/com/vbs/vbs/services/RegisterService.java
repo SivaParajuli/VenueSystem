@@ -14,7 +14,7 @@ public interface RegisterService {
     VenueDto venueRegister(VenueDto venueDto) throws IOException;
     List<VenueDto> getAllPendingRegister();
     Venue updateVenueStatus(Integer status, String email);
-    Admin registerAdmin();
+//    Admin registerAdmin();
 
 
 }
