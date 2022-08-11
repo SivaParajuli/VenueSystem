@@ -3,6 +3,7 @@ package com.vbs.vbs.controller;
 import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,19 @@ public class RegisterController extends BaseController {
         else{
             return new ResponseEntity<>
                     (errorResponse("Venue Creation Failed",null),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path="admin")
+    public ResponseEntity<ResponseDto> registerAdmin(@RequestBody Admin admin) {
+        admin =registerService.registerAdmin(admin);
+        if(admin !=null){
+            return new ResponseEntity<>
+                    (successResponse("Client Created.", admin), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Client Creation Failed",null),HttpStatus.BAD_REQUEST);
         }
     }
 }
