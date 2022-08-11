@@ -4,8 +4,10 @@ import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
+import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
+import com.vbs.vbs.repo.AdminRepo;
 import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
+    private final AdminRepo adminRepo;
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
@@ -32,8 +35,9 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private final UserRepo userRepo;
 
-    public RegisterServiceImpl(PasswordEncoder passwordEncoder,
+    public RegisterServiceImpl(AdminRepo adminRepo, PasswordEncoder passwordEncoder,
                                ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo) {
+        this.adminRepo = adminRepo;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
@@ -126,5 +130,25 @@ public class RegisterServiceImpl implements RegisterService {
             }
         }
         return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
+    }
+
+    @Override
+    public Admin registerAdmin() {
+        Admin entity= Admin.builder()
+                .name("admin001")
+                .email("svenuebooking.spad001@gmail.com")
+                .password(passwordEncoder.encode("Zxcvbnm@1234"))
+                .applicationUserRole(ApplicationUserRole.ADMIN)
+                .build();
+        User entity1= User.builder()
+                .email("svenuebooking.spad001@gmail.com")
+                .uname("admin001")
+                .password(passwordEncoder.encode("Zxcvbnm@1234"))
+                .applicationUserRole(ApplicationUserRole.CLIENT).build();
+        userRepo.save(entity1);
+        adminRepo.save(entity);
+        return Admin.builder()
+                .email(entity.getEmail())
+                .build();
     }
 }

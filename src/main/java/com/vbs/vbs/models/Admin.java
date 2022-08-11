@@ -3,6 +3,8 @@ package com.vbs.vbs.models;
 
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -10,7 +12,6 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,6 +19,7 @@ import java.io.Serializable;
         @UniqueConstraint(name="unique_admin_email",columnNames = "email")
 })
 public class Admin implements Serializable {
+
     @Id
     @SequenceGenerator(name = "admin_id_sequence", sequenceName = "admin_id_sequence")
     @GeneratedValue(generator = "admin_id_sequence", strategy = GenerationType.SEQUENCE)
