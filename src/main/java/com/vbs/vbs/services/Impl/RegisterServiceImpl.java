@@ -104,7 +104,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     public List<VenueDto> getAllPendingRegister() {
-        List<VenueDto> venueList= venueRepo.findPendingRegister(VenueStatus.PENDING);
+        List<Venue> venueList= venueRepo.findPendingRegister(VenueStatus.PENDING);
         return venueList.stream().map(entity -> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())

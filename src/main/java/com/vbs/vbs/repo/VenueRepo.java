@@ -21,10 +21,10 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     Optional<Venue> findVenueByEmail(@Param("e") String email);
 
     @Query(value="select v from Venue v where v.venueStatus= :p ")
-    List<VenueDto>findPendingRegister(@Param("p") VenueStatus status);
+    List<Venue>findPendingRegister(@Param("p") VenueStatus status);
 
     @Query(value="select v from Venue v where v.venueStatus = :a ")
-    List<VenueDto>findAllVerifiedVenue(@Param("a")VenueStatus venueStatus);
+    List<Venue>findAllVerifiedVenue(@Param("a")VenueStatus venueStatus);
 
 
     @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.email= :e")
