@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("admin-")
-public class  AdminController extends BaseController {
+public class AdminController extends BaseController {
 
     private final VenueService venueService;
     private final RegisterService registerService;
