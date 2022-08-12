@@ -127,7 +127,7 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     public List<VenueDto> getAllVerifiedVenue() {
-        List<VenueDto> venueList= venueRepo.findAllVerifiedVenue(VenueStatus.VERIFY);
+        List<VenueDto> venueList= venueRepo.findAllVerifiedVenue(VenueStatus.PENDING);
         return venueList.stream().map(entity-> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())

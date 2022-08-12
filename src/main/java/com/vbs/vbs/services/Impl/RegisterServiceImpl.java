@@ -105,12 +105,17 @@ public class RegisterServiceImpl implements RegisterService {
 
     public List<VenueDto> getAllPendingRegister() {
         List<VenueDto> venueList= venueRepo.findPendingRegister(VenueStatus.PENDING);
-        return venueList.stream().map(entity-> VenueDto.builder()
+        return venueList.stream().map(entity -> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
                 .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
                 .address(entity.getAddress())
+                .applicationUserRole(entity.getApplicationUserRole())
+                .venueStatus(entity.getVenueStatus())
+                .userName(entity.getUserName())
+                .description(entity.getDescription())
+//                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
                 .build()).collect(Collectors.toList());
     }
 
