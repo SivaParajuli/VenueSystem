@@ -120,7 +120,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public Venue updateVenueStatus(Integer status,String email) {
+    public Integer updateVenueStatus(Integer status,String email) {
         if (status == 0) {
            Optional<Venue> venue = venueRepo.findVenueByEmail(email);
             if (venue.isPresent()) {

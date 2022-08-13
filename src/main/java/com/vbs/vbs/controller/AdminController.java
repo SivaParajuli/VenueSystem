@@ -56,7 +56,7 @@ public class AdminController extends BaseController {
 
     @PutMapping("update/{status}/{email}")
     public ResponseEntity<ResponseDto>verifyVenue(@PathVariable("status") Integer status,@PathVariable("email") String email){
-        Venue venue= registerService.updateVenueStatus(status,email);
+        Integer venue= registerService.updateVenueStatus(status,email);
         if(venue !=null) {
             return new ResponseEntity<>
                     (successResponse("Updating Sucessfull.",venue), HttpStatus.OK);

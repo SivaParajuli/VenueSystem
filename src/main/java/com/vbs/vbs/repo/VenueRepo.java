@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -33,9 +34,10 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email= :e and r.bookingStatus= :p")
     List<Booking> getAllPendingBookingRequest(@Param("e") String email, @Param("p")BookingStatus bookingStatus);
 
+    @Transactional
     @Modifying
     @Query(value = "UPDATE Venue v SET v.venueStatus= :s where v.email = :e")
-    Venue updateVenueStatus(@Param("s") VenueStatus vStatus,@Param("e")String email);
+    Integer updateVenueStatus(@Param("s") VenueStatus vStatus,@Param("e")String email);
 
 
 }

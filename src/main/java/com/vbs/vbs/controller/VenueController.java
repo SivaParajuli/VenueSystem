@@ -78,7 +78,7 @@ public class VenueController extends BaseController {
    @PutMapping("response/{bookingStatus}/{id}")
     public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
                                                        @PathVariable("id")Integer id){
-        Booking bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
+       Integer bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
        if(bookingResponse != null){
            Booking booking = bookingServices.findById(id);
            emailSenderService.sendEmail(booking.getClient().getEmail(),

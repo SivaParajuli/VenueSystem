@@ -11,5 +11,4 @@ public interface AdminRepo extends JpaRepository<Admin,Integer> {
  @Query(value="select a from Admin a where a.email= :e")
  Admin findAdminByEmail(@Param("e")String email);
 
-
 }

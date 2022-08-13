@@ -55,7 +55,7 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public Booking VenueBookingResponse(Integer bookingStatus, Integer id) {
+    public Integer VenueBookingResponse(Integer bookingStatus, Integer id) {
         if(bookingStatus == 1 ){
             return bookingRepo.updateBookingStatus(BookingStatus.SUCCESSFUL,id);
         }
