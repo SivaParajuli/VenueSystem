@@ -136,6 +136,7 @@ public class VenueServiceImpl  implements VenueService {
                 .address(entity.getAddress())
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
+                .venueStatus(entity.getVenueStatus())
 //                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
                 .build()).collect(Collectors.toList());
     }
