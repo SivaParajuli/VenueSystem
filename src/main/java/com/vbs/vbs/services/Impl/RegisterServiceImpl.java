@@ -134,7 +134,10 @@ public class RegisterServiceImpl implements RegisterService {
                 return venueRepo.updateVenueStatus(VenueStatus.VERIFY, email);
             }
         }
-        return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
+        if(status ==1){
+            return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
+        }
+        return null;
     }
 
     @Override

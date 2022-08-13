@@ -59,11 +59,11 @@ public class AdminController extends BaseController {
         Venue venue= registerService.updateVenueStatus(status,email);
         if(venue !=null) {
             return new ResponseEntity<>
-                    (successResponse("Requested Booking List  Fetched.",venue), HttpStatus.OK);
+                    (successResponse("Updating Sucessfull.",venue), HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>
-                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+                    (errorResponse("Updating venue verification status failed.", null), HttpStatus.BAD_REQUEST);
         }
     }
 
