@@ -54,17 +54,20 @@ public class AdminController extends BaseController {
     }
 
 
-    @PutMapping("update/{status}/{email}")
-    public ResponseEntity<ResponseDto>verifyVenue(@PathVariable("status") Integer status,@PathVariable("email") String email){
+    @PutMapping("update/{email}")
+    public ResponseEntity<ResponseDto>verifyVenue(@RequestParam("status") Integer status,@PathVariable("email") String email){
         Integer venue= registerService.updateVenueStatus(status,email);
-        if(venue == 1 ) {
+        if(venue == 0 ) {
             return new ResponseEntity<>
-                    (successResponse("Updating Sucessfull.",venue), HttpStatus.OK);
+                    (successResponse("Updating Sucessfull.", venue), HttpStatus.OK);
         }
+
         else{
             return new ResponseEntity<>
                     (errorResponse("Updating venue verification status failed.", null), HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }
 
