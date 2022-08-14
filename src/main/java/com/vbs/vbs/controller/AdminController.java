@@ -55,7 +55,7 @@ public class AdminController extends BaseController {
     }
 
 
-    @PutMapping("update/{email}")
+    @GetMapping("update/{email}")
     public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
       Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
         if(venue != null) {
