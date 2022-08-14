@@ -1,6 +1,7 @@
 package com.vbs.vbs.controller;
 
 import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.models.Venue;
@@ -55,9 +56,9 @@ public class AdminController extends BaseController {
 
 
     @PutMapping("update/{email}")
-    public ResponseEntity<ResponseDto>verifyVenue(@RequestParam("status") Integer status,@PathVariable("email") String email){
-        Integer venue= registerService.updateVenueStatus(status,email);
-        if(venue == 0 ) {
+    public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
+      Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
+        if(venue != null) {
             return new ResponseEntity<>
                     (successResponse("Updating Sucessfull.", venue), HttpStatus.OK);
         }

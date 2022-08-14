@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class StatusChangeReq {
-    String status;
+    Integer status;
 }
