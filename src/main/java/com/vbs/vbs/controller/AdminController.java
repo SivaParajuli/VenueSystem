@@ -55,9 +55,9 @@ public class AdminController extends BaseController {
     }
 
 
-    @GetMapping("update/{email}")
-    public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
-      Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
+    @GetMapping("update/{status}/{email}")
+    public ResponseEntity<ResponseDto>verifyVenue(@PathVariable("status") Integer status, @PathVariable("email") String email){
+      Integer venue= registerService.updateVenueStatus(status,email);
         if(venue != null) {
             return new ResponseEntity<>
                     (successResponse("Updating Sucessfull.", venue), HttpStatus.OK);
