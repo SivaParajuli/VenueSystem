@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",maxAge = 86400,allowedHeaders = "*")
 @RestController
 @RequestMapping("admin-")
 public class AdminController extends BaseController {
@@ -55,6 +55,7 @@ public class AdminController extends BaseController {
     }
 
 
+    @CrossOrigin(methods = RequestMethod.PUT)
     @GetMapping("update/{email}")
     public ResponseEntity<ResponseDto>verifyVenue(@RequestParam("status") Integer status, @PathVariable("email") String email){
       Integer venue= registerService.updateVenueStatus(status,email);
