@@ -69,7 +69,6 @@ public class AdminController extends BaseController {
 //        }
 //    }
 
-    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
     @PutMapping("update/{id}")
     public ResponseEntity<ResponseDto>verifyVenue(@RequestBody Venue venue ,@PathVariable("id") Integer id){
         venue= registerService.updateVenueStatus(venue,id);
