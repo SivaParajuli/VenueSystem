@@ -1,10 +1,8 @@
 package com.vbs.vbs.controller;
 
 import com.vbs.vbs.dto.ResponseDto;
-import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
-import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.AdminService;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.services.VenueService;
@@ -55,7 +53,6 @@ public class AdminController extends BaseController {
     }
 
 
-    @CrossOrigin(methods = RequestMethod.PUT)
     @GetMapping("update/{email}")
     public ResponseEntity<ResponseDto>verifyVenue(@RequestParam("status") Integer status, @PathVariable("email") String email){
       Integer venue= registerService.updateVenueStatus(status,email);
