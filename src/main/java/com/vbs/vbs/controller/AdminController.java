@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = "*",maxAge = 86400,allowedHeaders = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 @RestController
 @RequestMapping("admin-")
 public class AdminController extends BaseController {

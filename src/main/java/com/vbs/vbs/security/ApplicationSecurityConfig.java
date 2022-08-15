@@ -66,7 +66,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 registry.addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*")
-                        .maxAge(86400)
                         .allowedHeaders("*");
             }
         };
