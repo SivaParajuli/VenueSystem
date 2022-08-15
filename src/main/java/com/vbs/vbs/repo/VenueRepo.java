@@ -34,10 +34,10 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "SELECT v.bookingList from Venue v join v.bookingList r where v.email= :e and r.bookingStatus= :p")
     List<Booking> getAllPendingBookingRequest(@Param("e") String email, @Param("p")BookingStatus bookingStatus);
 
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE Venue v SET v.venueStatus= :s where v.email = :e")
-    Integer updateVenueStatus(@Param("s") VenueStatus vStatus,@Param("e")String email);
+//    @Transactional
+//    @Modifying
+//    @Query(value = "UPDATE Venue v SET v.venueStatus= :s where v.email = :e")
+//    Integer updateVenueStatus(@Param("s") VenueStatus vStatus,@Param("e")String email);
 
 
 }

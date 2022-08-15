@@ -4,6 +4,7 @@ import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
+import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.services.AdminService;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.services.VenueService;
@@ -53,13 +54,28 @@ public class AdminController extends BaseController {
                     (errorResponse("sorry",null),HttpStatus.BAD_REQUEST);
     }
 
+//    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
+//    @PutMapping("update/{email}")
+//    public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
+//      Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
+//        if(venue != null) {
+//            return new ResponseEntity<>
+//                    (successResponse("Updating Sucessfull.", venue), HttpStatus.OK);
+//        }
+//
+//        else{
+//            return new ResponseEntity<>
+//                    (errorResponse("Updating venue verification status failed.", null), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
     @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
-    @PutMapping("update/{email}")
-    public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
-      Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
+    @PutMapping("update/{id}")
+    public ResponseEntity<ResponseDto>verifyVenue(@RequestBody Venue venue ,@PathVariable("id") Integer id){
+        venue= registerService.updateVenueStatus(venue,id);
         if(venue != null) {
             return new ResponseEntity<>
-                    (successResponse("Updating Sucessfull.", venue), HttpStatus.OK);
+                    (successResponse("accept updated.", venue), HttpStatus.OK);
         }
 
         else{
@@ -67,6 +83,7 @@ public class AdminController extends BaseController {
                     (errorResponse("Updating venue verification status failed.", null), HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
 }

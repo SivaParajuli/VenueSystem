@@ -13,7 +13,8 @@ public interface RegisterService {
     ClientDto clientRegister(ClientDto clientDto);
     VenueDto venueRegister(VenueDto venueDto) throws IOException;
     List<VenueDto> getAllPendingRegister();
-   Integer updateVenueStatus(Integer status, String email);
+//   Integer updateVenueStatus(Integer status, String email);
+     Venue updateVenueStatus(Venue venue,Integer id);
     Admin registerAdmin(Admin admin);
 
 

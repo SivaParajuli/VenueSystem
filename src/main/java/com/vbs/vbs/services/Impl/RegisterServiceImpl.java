@@ -1,6 +1,7 @@
 package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.ClientDto;
+import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
@@ -119,26 +120,53 @@ public class RegisterServiceImpl implements RegisterService {
                 .build()).collect(Collectors.toList());
     }
 
+//    @Override
+//    public Integer updateVenueStatus(Integer status, String email) {
+//        if (status == 0) {
+//           Optional<Venue> venue = venueRepo.findVenueByEmail(email);
+//            if (venue.isPresent()) {
+//                Venue venue1 = venue.get();
+//                User user = new User();
+//                user.setEmail(venue1.getEmail());
+//                user.setUname(venue1.getVenueName());
+//                user.setPassword(venue1.getPassword());
+//                user.setApplicationUserRole(venue1.getApplicationUserRole());
+//                userRepo.save(user);
+//                return venueRepo.updateVenueStatus(VenueStatus.VERIFY, email);
+//            }
+//        }
+//        if(status ==1){
+//            return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
+//        }
+//        return null;
+//    }
+
     @Override
-    public Integer updateVenueStatus(Integer status,String email) {
-        if (status == 0) {
-           Optional<Venue> venue = venueRepo.findVenueByEmail(email);
-            if (venue.isPresent()) {
-                Venue venue1 = venue.get();
-                User user = new User();
-                user.setEmail(venue1.getEmail());
-                user.setUname(venue1.getVenueName());
-                user.setPassword(venue1.getPassword());
-                user.setApplicationUserRole(venue1.getApplicationUserRole());
-                userRepo.save(user);
-                return venueRepo.updateVenueStatus(VenueStatus.VERIFY, email);
-            }
-        }
-        if(status ==1){
-            return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
-        }
-        return null;
+    public Venue updateVenueStatus(Venue venue,Integer id) {
+         List<Venue> venueList = venueRepo.findAll();
+         venueList.stream().map(v->{
+             if(v.getId() == id) {
+                 v.setVenueName(venue.getVenueName());
+                 v.setVenueStatus(VenueStatus.VERIFY);
+                 v.setEmail(venue.getEmail());
+                 v.setAddress(venue.getAddress());
+                 v.setApplicationUserRole(ApplicationUserRole.VENUE);
+                 v.setPassword(v.getPassword());
+                 v.setBookingList(v.getBookingList());
+                 v.setContactNumber(venue.getContactNumber());
+                 v.setDescription(venue.getDescription());
+             }
+             User user = new User();
+             user.setEmail(venue.getEmail());
+             user.setUname(venue.getVenueName());
+             user.setPassword(venue.getPassword());
+             user.setApplicationUserRole(v.getApplicationUserRole());
+             userRepo.save(user);
+             return v;
+         }).collect(Collectors.toList());
+         return venue;
     }
+
 
     @Override
     public Admin registerAdmin(Admin admin) {
