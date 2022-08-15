@@ -53,7 +53,7 @@ public class AdminController extends BaseController {
                     (errorResponse("sorry",null),HttpStatus.BAD_REQUEST);
     }
 
-
+    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
     @PutMapping("update/{email}")
     public ResponseEntity<ResponseDto>verifyVenue(@RequestBody StatusChangeReq statusChangeReq, @PathVariable("email") String email){
       Integer venue= registerService.updateVenueStatus(statusChangeReq.getStatus(),email);
