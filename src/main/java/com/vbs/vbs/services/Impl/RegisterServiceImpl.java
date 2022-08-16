@@ -120,51 +120,25 @@ public class RegisterServiceImpl implements RegisterService {
                 .build()).collect(Collectors.toList());
     }
 
-//    @Override
-//    public Integer updateVenueStatus(Integer status, String email) {
-//        if (status == 0) {
-//           Optional<Venue> venue = venueRepo.findVenueByEmail(email);
-//            if (venue.isPresent()) {
-//                Venue venue1 = venue.get();
-//                User user = new User();
-//                user.setEmail(venue1.getEmail());
-//                user.setUname(venue1.getVenueName());
-//                user.setPassword(venue1.getPassword());
-//                user.setApplicationUserRole(venue1.getApplicationUserRole());
-//                userRepo.save(user);
-//                return venueRepo.updateVenueStatus(VenueStatus.VERIFY, email);
-//            }
-//        }
-//        if(status ==1){
-//            return venueRepo.updateVenueStatus(VenueStatus.DELETED, email);
-//        }
-//        return null;
-//    }
-
     @Override
-    public Venue updateVenueStatus(Venue venue,Integer id) {
-         List<Venue> venueList = venueRepo.findAll();
-         venueList.stream().map(v->{
-             if(v.getId() == id) {
-                 v.setVenueName(venue.getVenueName());
-                 v.setVenueStatus(VenueStatus.VERIFY);
-                 v.setEmail(venue.getEmail());
-                 v.setAddress(venue.getAddress());
-                 v.setApplicationUserRole(ApplicationUserRole.VENUE);
-                 v.setPassword(v.getPassword());
-                 v.setBookingList(v.getBookingList());
-                 v.setContactNumber(venue.getContactNumber());
-                 v.setDescription(venue.getDescription());
-             }
-             User user = new User();
-             user.setEmail(venue.getEmail());
-             user.setUname(venue.getVenueName());
-             user.setPassword(venue.getPassword());
-             user.setApplicationUserRole(v.getApplicationUserRole());
-             userRepo.save(user);
-             return v;
-         }).collect(Collectors.toList());
-         return venue;
+    public Integer updateVenueStatus(Integer status, Integer id) {
+        if (status == 0) {
+           Optional<Venue> venue = venueRepo.findById(id);
+            if (venue.isPresent()) {
+                Venue venue1 = venue.get();
+                User user = new User();
+                user.setEmail(venue1.getEmail());
+                user.setUname(venue1.getVenueName());
+                user.setPassword(venue1.getPassword());
+                user.setApplicationUserRole(venue1.getApplicationUserRole());
+                userRepo.save(user);
+                return venueRepo.updateVenueStatus(VenueStatus.VERIFY, id);
+            }
+        }
+        if(status ==1){
+            return venueRepo.updateVenueStatus(VenueStatus.DELETED, id);
+        }
+        return null;
     }
 
 
