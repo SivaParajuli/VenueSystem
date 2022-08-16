@@ -34,9 +34,7 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking VenueBookingRequest(Booking bookingDto, String email, Integer id) {
         Booking entity = new Booking();
-        if (bookingDto.getBookingDate().compareTo(venueRepo.getBookedVenueDateByEmail(email))!=0 &&
-        bookingDto.getBookingDate().after(new Date())) {
-            Optional<Venue> venue = venueRepo.findVenueByEmail(email);
+        Optional<Venue> venue = venueRepo.findVenueByEmail(email);
             venue.ifPresent(entity::setVenue);
             Client client1 = clientRepo.findById(id).orElseThrow(()->new RuntimeException("clientNotFound"));
             entity.setBookingDate(bookingDto.getBookingDate());
@@ -46,7 +44,8 @@ public class BookingServicesImpl implements BookingServices {
             entity.setClient(client1);
             entity.setRequiredCapacity(bookingDto.getRequiredCapacity());
             entity.setContactNumber(bookingDto.getContactNumber());
-            bookingRepo.save(entity);
+           Booking  booking = bookingRepo.save(entity);
+           if(booking!= null){
             return Booking.builder()
                     .venue(bookingDto.getVenue())
                     .bookingDate(bookingDto.getBookingDate())
@@ -80,4 +79,6 @@ public class BookingServicesImpl implements BookingServices {
         }
         return null;
     }
+
+
 }

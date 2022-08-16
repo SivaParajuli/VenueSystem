@@ -4,17 +4,13 @@ import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Client;
-
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.CurrentUser;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
 import java.util.List;
 
 
@@ -70,5 +66,12 @@ public class ClientController extends BaseController {
         else
             return new ResponseEntity<>
                     (errorResponse("There is some error to send request .please try again",null),HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(path="bookedDate/{id}")
+    public ResponseEntity<ResponseDto> getAllBookedDate(@PathVariable("id")Integer id){
+        List<?> dateList =venueService.getAllBookedDate(id);
+        return new ResponseEntity<>
+                (successResponse("Date List fetched.", dateList),HttpStatus.OK);
     }
 }

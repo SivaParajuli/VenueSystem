@@ -10,7 +10,7 @@ import com.vbs.vbs.services.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -139,6 +139,12 @@ public class VenueServiceImpl  implements VenueService {
                 .venueStatus(entity.getVenueStatus())
 //                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
                 .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<?> getAllBookedDate(Integer id) {
+        List<?> dateList = venueRepo.getBookedVenueDateById(id, BookingStatus.UNSUCCESSFUL);
+        return new ArrayList<>(dateList);
     }
 }
 

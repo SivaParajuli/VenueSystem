@@ -3,6 +3,7 @@ import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 
 
+import java.util.Date;
 import java.util.List;
 
 public interface VenueService{
@@ -19,6 +20,8 @@ public interface VenueService{
     List<Booking> getRequestedBooking(String email);
 
     List<VenueDto> getAllVerifiedVenue();
+
+    List<?> getAllBookedDate(Integer id);
 
 
 }

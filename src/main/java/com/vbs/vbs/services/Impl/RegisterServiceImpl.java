@@ -1,7 +1,6 @@
 package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.ClientDto;
-import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
@@ -14,6 +13,9 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.RegisterService;
+import com.vbs.vbs.services.VenueService;
+import com.vbs.vbs.utils.EmailSenderService;
+import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,15 +37,21 @@ public class RegisterServiceImpl implements RegisterService {
     private final VenueRepo venueRepo;
     @Autowired
     private final UserRepo userRepo;
+    private  final FileStorageUtils fileStorageUtils;
+    private final VenueService venueService;
+    private final EmailSenderService emailSenderService;
 
     public RegisterServiceImpl(AdminRepo adminRepo, PasswordEncoder passwordEncoder,
-                               ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo) {
+                               ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo, FileStorageUtils fileStorageUtils, VenueService venueService, EmailSenderService emailSenderService) {
         this.adminRepo = adminRepo;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
 
+        this.fileStorageUtils = fileStorageUtils;
+        this.venueService = venueService;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -76,9 +84,6 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public VenueDto venueRegister(VenueDto venueDto) throws IOException {
-//        MultipartFile multipartFile = venueDto.getVenueFile();
-//        //need to save this file
-//        String filepath=fileStorageUtils.storeFile(multipartFile);
 
         Venue entity = new Venue().builder()
                 .id(venueDto.getId())
@@ -135,8 +140,14 @@ public class RegisterServiceImpl implements RegisterService {
                 userRepo.save(user);
                 return venueRepo.updateVenueStatus(VenueStatus.VERIFY, id);
             }
+            emailSenderService.sendEmail(venueService.findById(id).getEmail(),
+                    "Registration Response",
+                    "Your Registration is Successful login with your credentials.");
         }
-        if(status ==1){
+        if(status == 1 ){
+            emailSenderService.sendEmail(venueService.findById(id).getEmail(),
+                    "Registration Response",
+                    "Your Registration is UnSuccessful Register again with valid information");
             return venueRepo.updateVenueStatus(VenueStatus.DELETED, id);
         }
         return null;
