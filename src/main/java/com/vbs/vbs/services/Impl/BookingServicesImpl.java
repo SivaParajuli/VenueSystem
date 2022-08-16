@@ -12,6 +12,7 @@ import com.vbs.vbs.services.BookingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -31,12 +32,13 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public Booking VenueBookingRequest(Booking bookingDto, String email, String client) {
+    public Booking VenueBookingRequest(Booking bookingDto, String email, Integer id) {
         Booking entity = new Booking();
-        if ( bookingDto.getBookingDate() !=venueRepo.getBookedVenueDateByEmail(email)) {
+        if (bookingDto.getBookingDate().compareTo(venueRepo.getBookedVenueDateByEmail(email))!=0 &&
+        bookingDto.getBookingDate().after(new Date())) {
             Optional<Venue> venue = venueRepo.findVenueByEmail(email);
             venue.ifPresent(entity::setVenue);
-            Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
+            Client client1 = clientRepo.findById(id).orElseThrow(()->new RuntimeException("clientNotFound"));
             entity.setBookingDate(bookingDto.getBookingDate());
             entity.setFunctionType(bookingDto.getFunctionType());
             entity.setBookingStatus(BookingStatus.PENDING);

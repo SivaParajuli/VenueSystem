@@ -86,6 +86,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .password(passwordEncoder.encode(venueDto.getPassword()))
                 .contactNumber(venueDto.getContactNumber())
                 .email(venueDto.getEmail())
+                .address(venueDto.getAddress())
                 .description(venueDto.getDescription())
                 .userName(venueDto.getUserName())
                 .applicationUserRole(ApplicationUserRole.VENUE)

@@ -55,11 +55,10 @@ public class ClientController extends BaseController {
     }
 
 
-    @PostMapping(path="book-venue/{email}")
-    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable String email){
-        CurrentUser user = new CurrentUser();
-         String clientMail = user.CurrentUserName((Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        booking = bookingServices.VenueBookingRequest(booking,email,clientMail);
+    @PostMapping(path="book-venue/{email}/{id}")
+    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable("email") String email,
+                                                      @PathVariable("id") Integer id){
+        booking = bookingServices.VenueBookingRequest(booking,email,id);
         if(booking !=null){
             emailSenderService.sendEmail(email,
                     "Registration Request",

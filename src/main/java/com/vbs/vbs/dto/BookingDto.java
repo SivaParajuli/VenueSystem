@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Builder
 public class BookingDto {
     private Integer id;
-    private Timestamp date;
     private String function;
     private Date bookedDate;
     private Number requiredCapacity;
