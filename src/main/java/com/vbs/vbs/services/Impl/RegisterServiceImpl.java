@@ -137,21 +137,20 @@ public class RegisterServiceImpl implements RegisterService {
                 user.setPassword(venue1.getPassword());
                 user.setApplicationUserRole(venue1.getApplicationUserRole());
                 userRepo.save(user);
-                emailSenderService.sendEmail(venue1.getEmail(),
-                        "Registration Response",
-                        "Your Registration is Successful login with your credentials.");
+//                emailSenderService.sendEmail(venue1.getEmail(),
+//                        "Registration Response",
+//                        "Your Registration is Successful login with your credentials.");
                 return venueRepo.updateVenueStatus(VenueStatus.VERIFY, id);
             }
             }
         if(status == 1 ) {
-            if (venue.isPresent()) {
-                Venue venue1 = venue.get();
-                emailSenderService.sendEmail(venue1.getEmail(),
-                        "Registration Response",
-                        "Your Registration is UnSuccessful Register again with valid information");
+//            if (venue.isPresent()) {
+//                Venue venue1 = venue.get();
+//                emailSenderService.sendEmail(venue1.getEmail(),
+//                        "Registration Response",
+//                        "Your Registration is UnSuccessful Register again with valid information");
                 return venueRepo.updateVenueStatus(VenueStatus.DELETED, id);
             }
-        }
         return null;
     }
 
