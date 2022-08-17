@@ -20,10 +20,10 @@ public class FileServiceImpl  implements FileService {
     }
 
     @Override
-    public String uploadImage(Integer id , MultipartFile file) throws IOException {
+    public String uploadImage(String email, MultipartFile file) throws IOException {
 //        need to save this file
         String filepath=fileStorageUtils.storeFile(file);
-        venueRepo.updateVenueImage(id,filepath);
+        venueRepo.updateVenueImage(email,filepath);
         return filepath;
     }
 }

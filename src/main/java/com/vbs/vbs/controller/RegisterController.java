@@ -57,9 +57,9 @@ public class RegisterController extends BaseController {
     }
 
     @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
-    @PutMapping(path="uploadImage/{id}")
-    public ResponseEntity<ResponseDto> uploadImage(@PathVariable("id")Integer id , @RequestPart MultipartFile file) throws IOException {
-         String filepath = fileService.uploadImage(id,file);
+    @PutMapping(path="uploadImage/{email}")
+    public ResponseEntity<ResponseDto> uploadImage(@PathVariable("email")String email , @RequestPart MultipartFile file) throws IOException {
+         String filepath = fileService.uploadImage(email,file);
         if(filepath !=null){
 
             return new ResponseEntity<>
