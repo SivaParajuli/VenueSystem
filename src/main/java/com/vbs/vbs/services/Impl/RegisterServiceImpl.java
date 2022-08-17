@@ -127,8 +127,8 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public Integer updateVenueStatus(Integer status, Integer id) {
+        Optional<Venue> venue = venueRepo.findById(id);
         if (status == 0) {
-           Optional<Venue> venue = venueRepo.findById(id);
             if (venue.isPresent()) {
                 Venue venue1 = venue.get();
                 User user = new User();
@@ -137,17 +137,20 @@ public class RegisterServiceImpl implements RegisterService {
                 user.setPassword(venue1.getPassword());
                 user.setApplicationUserRole(venue1.getApplicationUserRole());
                 userRepo.save(user);
-                emailSenderService.sendEmail(venueService.findById(id).getEmail(),
+                emailSenderService.sendEmail(venue1.getEmail(),
                         "Registration Response",
                         "Your Registration is Successful login with your credentials.");
                 return venueRepo.updateVenueStatus(VenueStatus.VERIFY, id);
             }
-        }
-        if(status == 1 ){
-            emailSenderService.sendEmail(venueService.findById(id).getEmail(),
-                    "Registration Response",
-                    "Your Registration is UnSuccessful Register again with valid information");
-            return venueRepo.updateVenueStatus(VenueStatus.DELETED, id);
+            }
+        if(status == 1 ) {
+            if (venue.isPresent()) {
+                Venue venue1 = venue.get();
+                emailSenderService.sendEmail(venue1.getEmail(),
+                        "Registration Response",
+                        "Your Registration is UnSuccessful Register again with valid information");
+                return venueRepo.updateVenueStatus(VenueStatus.DELETED, id);
+            }
         }
         return null;
     }
