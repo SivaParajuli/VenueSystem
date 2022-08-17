@@ -137,11 +137,11 @@ public class RegisterServiceImpl implements RegisterService {
                 user.setPassword(venue1.getPassword());
                 user.setApplicationUserRole(venue1.getApplicationUserRole());
                 userRepo.save(user);
+                emailSenderService.sendEmail(venueService.findById(id).getEmail(),
+                        "Registration Response",
+                        "Your Registration is Successful login with your credentials.");
                 return venueRepo.updateVenueStatus(VenueStatus.VERIFY, id);
             }
-            emailSenderService.sendEmail(venueService.findById(id).getEmail(),
-                    "Registration Response",
-                    "Your Registration is Successful login with your credentials.");
         }
         if(status == 1 ){
             emailSenderService.sendEmail(venueService.findById(id).getEmail(),
