@@ -40,7 +40,7 @@ public class RegisterController extends BaseController {
     }
 
     @PostMapping(path="venue")
-    public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) throws IOException {
+    public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) {
         venueDto =registerService.venueRegister(venueDto);
         if(venueDto !=null){
 //            emailSenderService.sendEmail("svenuebooking.spad01@gmail.com",

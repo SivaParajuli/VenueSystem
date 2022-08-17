@@ -83,7 +83,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public VenueDto venueRegister(VenueDto venueDto) throws IOException {
+    public VenueDto venueRegister(VenueDto venueDto){
         Venue entity = Venue.builder()
                 .id(venueDto.getId())
                 .venueName(venueDto.getVenueName())
