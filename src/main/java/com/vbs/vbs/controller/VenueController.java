@@ -60,6 +60,7 @@ public class VenueController extends BaseController {
         }
     }
 
+    @CrossOrigin(origins = "*",methods = RequestMethod.GET,maxAge = 86400,allowedHeaders = "*")
     @GetMapping("requests/{email}")
     public ResponseEntity<ResponseDto>getBookingRequests(@PathVariable("email") String email){
         List<Booking> booking =venueService.getRequestedBooking(email);
