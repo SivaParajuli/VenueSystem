@@ -7,7 +7,6 @@ import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.CurrentUser;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
