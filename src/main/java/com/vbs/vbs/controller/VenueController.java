@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequestMapping("venue-")
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*" )
 public class VenueController extends BaseController {
 
     private final VenueService venueService;
@@ -63,7 +63,6 @@ public class VenueController extends BaseController {
 
     @GetMapping("requests/{email}")
     public ResponseEntity<ResponseDto>getBookingRequests(@PathVariable String email){
-        CurrentUser user = new CurrentUser();
         List<Booking> booking =venueService.getRequestedBooking(email);
         if(booking !=null) {
             return new ResponseEntity<>
@@ -75,6 +74,7 @@ public class VenueController extends BaseController {
         }
     }
 
+    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
    @PutMapping("response/{bookingStatus}/{id}")
     public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
                                                        @PathVariable("id")Integer id){
