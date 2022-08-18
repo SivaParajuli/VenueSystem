@@ -87,7 +87,7 @@ public class VenueServiceImpl  implements VenueService {
                 .client(entity.getClient())
                 .contactNumber(entity.getContactNumber())
                 .functionType(entity.getFunctionType())
-                .offeredPayment(entity.getOfferedPayment())
+                .calculatedPayment(entity.getCalculatedPayment())
                 .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());
     }

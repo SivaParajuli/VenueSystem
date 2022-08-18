@@ -26,7 +26,7 @@ public class Booking implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date bookingDate;
 
-    private Double offeredPayment;
+    private Double calculatedPayment;
 
     @Column(name="functionType")
     private String functionType;
