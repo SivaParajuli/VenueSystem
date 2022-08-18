@@ -32,16 +32,16 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public Booking VenueBookingRequest(Booking bookingDto, String email, Integer id) {
+    public Booking VenueBookingRequest(Booking bookingDto,Integer id, String email ) {
         Booking entity = new Booking();
-        Optional<Venue> venue = venueRepo.findVenueByEmail(email);
-            venue.ifPresent(entity::setVenue);
-            Client client1 = clientRepo.findById(id).orElseThrow(()->new RuntimeException("clientNotFound"));
+        Optional<Client> client = clientRepo.findClientByEmail(email);
+            client.ifPresent(entity::setClient);
+            Venue venue = venueRepo.findById(id).orElseThrow(()->new RuntimeException("venueNotFound"));
             entity.setBookingDate(bookingDto.getBookingDate());
             entity.setFunctionType(bookingDto.getFunctionType());
             entity.setBookingStatus(BookingStatus.PENDING);
             entity.setOfferedPayment(bookingDto.getOfferedPayment());
-            entity.setClient(client1);
+            entity.setVenue(venue);
             entity.setRequiredCapacity(bookingDto.getRequiredCapacity());
             entity.setContactNumber(bookingDto.getContactNumber());
            Booking  booking = bookingRepo.save(entity);

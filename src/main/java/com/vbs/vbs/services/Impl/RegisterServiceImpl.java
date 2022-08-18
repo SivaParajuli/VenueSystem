@@ -29,13 +29,9 @@ import java.util.stream.Collectors;
 public class RegisterServiceImpl implements RegisterService {
     private final AdminRepo adminRepo;
 
-    @Autowired
     private final PasswordEncoder passwordEncoder;
-    @Autowired
     private final ClientRepo clientRepo;
-    @Autowired
     private final VenueRepo venueRepo;
-    @Autowired
     private final UserRepo userRepo;
     private  final FileStorageUtils fileStorageUtils;
     private final VenueService venueService;
@@ -48,7 +44,6 @@ public class RegisterServiceImpl implements RegisterService {
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
-
         this.fileStorageUtils = fileStorageUtils;
         this.venueService = venueService;
         this.emailSenderService = emailSenderService;
