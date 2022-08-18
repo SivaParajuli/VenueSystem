@@ -43,7 +43,7 @@ public class Booking implements Serializable {
     @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))
     private Client client;
 
-    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
+    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;
 

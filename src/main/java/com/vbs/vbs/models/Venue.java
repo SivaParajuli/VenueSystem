@@ -3,7 +3,6 @@ package com.vbs.vbs.models;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.enums.ApplicationUserRole;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -56,6 +55,6 @@ public class Venue implements Serializable {
     @Column(name="filePath")
     private String filePath;
 
-    @OneToMany(targetEntity = Booking.class,mappedBy = "venue")
+    @OneToMany(targetEntity = Booking.class,mappedBy = "venue",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Booking> bookingList;
 }
