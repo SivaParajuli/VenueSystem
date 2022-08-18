@@ -26,18 +26,18 @@ public class Booking implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date bookingDate;
 
-    private Double calculatedPayment;
+    private String calculatedPayment;
 
     @Column(name="functionType")
     private String functionType;
 
     @Column(name="requiredCapacity")
-    private Integer requiredCapacity;
+    private String requiredCapacity;
 
     private BookingStatus bookingStatus;
 
     @Column(name="contactNumber")
-    private Integer contactNumber;
+    private String contactNumber;
 
     @ManyToOne(targetEntity = Client.class,fetch =FetchType.LAZY)
     @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))

@@ -1,6 +1,7 @@
 package com.vbs.vbs.services.Impl;
 
 
+import com.vbs.vbs.dto.BookingDto;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
@@ -32,7 +33,7 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public Booking VenueBookingRequest(Booking bookingDto,Integer id, String email ) {
+    public Booking VenueBookingRequest(BookingDto bookingDto, Integer id, String email ) {
         Booking entity = new Booking();
         Optional<Client> client = clientRepo.findClientByEmail(email);
             client.ifPresent(entity::setClient);

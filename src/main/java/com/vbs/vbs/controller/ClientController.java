@@ -1,5 +1,6 @@
 package com.vbs.vbs.controller;
 
+import com.vbs.vbs.dto.BookingDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
@@ -52,13 +53,13 @@ public class ClientController extends BaseController {
 
 
     @PostMapping(path="book-venue/{id}/{email}")
-    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable("id") Integer id,
+    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingDto bookingDto, @PathVariable("id") Integer id,
                                                       @PathVariable("email") String email){
-        booking = bookingServices.VenueBookingRequest(booking,id,email);
+       Booking booking = bookingServices.VenueBookingRequest(bookingDto,id,email);
         if(booking !=null){
             emailSenderService.sendEmail(venueService.findById(id).getEmail(),
                     "Registration Request",
-                    "You have Booking for "+booking.getBookingDate()+". Please response in time .");
+                    "You have Booking for "+bookingDto.getBookingDate()+". Please response in time .");
 
             return new ResponseEntity<>
                     (successResponse("Request Sent", booking), HttpStatus.OK);
