@@ -62,7 +62,7 @@ public class VenueController extends BaseController {
     }
 
     @GetMapping("requests/{email}")
-    public ResponseEntity<ResponseDto>getBookingRequests(@PathVariable String email){
+    public ResponseEntity<ResponseDto>getBookingRequests(@PathVariable("email") String email){
         List<Booking> booking =venueService.getRequestedBooking(email);
         if(booking !=null) {
             return new ResponseEntity<>

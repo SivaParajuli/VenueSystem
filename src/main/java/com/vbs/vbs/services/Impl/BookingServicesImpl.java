@@ -34,27 +34,25 @@ public class BookingServicesImpl implements BookingServices {
 
     @Override
     public Booking VenueBookingRequest(Booking booking, Integer id, String email ) {
-        Booking entity = new Booking();
-        Optional<Client> client = clientRepo.findClientByEmail(email);
-            client.ifPresent(entity::setClient);
-            Venue venue = venueRepo.findById(id).orElseThrow(()->new RuntimeException("venueNotFound"));
-            entity.setBookingDate(booking.getBookingDate());
-            entity.setFunctionType(booking.getFunctionType());
-            entity.setBookingStatus(BookingStatus.PENDING);
-            entity.setCalculatedPayment(booking.getCalculatedPayment());
-            entity.setVenue(venue);
-            entity.setRequiredCapacity(booking.getRequiredCapacity());
-            entity.setContactNumber(booking.getContactNumber());
-
-            entity = bookingRepo.save(entity);
-
-            return Booking.builder()
-                    .venue(entity.getVenue())
-                    .bookingDate(entity.getBookingDate())
-                    .functionType(entity.getFunctionType())
-                    .bookingStatus(entity.getBookingStatus())
-                    .contactNumber(entity.getContactNumber())
-                    .build();
+        Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
+        Venue venue1 = venueRepo.findById(id).orElseThrow(()->new RuntimeException("venueNotFound"));
+        Booking entity = Booking.builder()
+                .bookingDate(booking.getBookingDate())
+                .functionType(booking.getFunctionType())
+                .bookingStatus(BookingStatus.PENDING)
+                .calculatedPayment(booking.getCalculatedPayment())
+                .requiredCapacity(booking.getRequiredCapacity())
+                .contactNumber(booking.getContactNumber())
+                .client(client1)
+                .venue(venue1).build();
+        entity = bookingRepo.save(entity);
+        return Booking.builder()
+                .venue(entity.getVenue())
+                .bookingDate(entity.getBookingDate())
+                .functionType(entity.getFunctionType())
+                .bookingStatus(entity.getBookingStatus())
+                .contactNumber(entity.getContactNumber())
+                .build();
 
     }
 
