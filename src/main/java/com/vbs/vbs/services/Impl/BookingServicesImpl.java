@@ -48,11 +48,11 @@ public class BookingServicesImpl implements BookingServices {
            Booking  booking = bookingRepo.save(entity);
            if(booking!= null){
             return Booking.builder()
-                    .venue(booking.getVenue())
-                    .bookingDate(booking.getBookingDate())
-                    .functionType(booking.getFunctionType())
-                    .bookingStatus(booking.getBookingStatus())
-                    .contactNumber(booking.getContactNumber())
+                    .venue(entity.getVenue())
+                    .bookingDate(entity.getBookingDate())
+                    .functionType(entity.getFunctionType())
+                    .bookingStatus(entity.getBookingStatus())
+                    .contactNumber(entity.getContactNumber())
                     .build();
         }
         return null;
