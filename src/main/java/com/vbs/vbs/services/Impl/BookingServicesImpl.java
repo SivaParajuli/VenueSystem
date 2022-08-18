@@ -45,8 +45,9 @@ public class BookingServicesImpl implements BookingServices {
             entity.setVenue(venue);
             entity.setRequiredCapacity(bookingDto.getRequiredCapacity());
             entity.setContactNumber(bookingDto.getContactNumber());
-           Booking  booking = bookingRepo.save(entity);
-           if(booking!= null){
+
+            entity = bookingRepo.save(entity);
+
             return Booking.builder()
                     .venue(entity.getVenue())
                     .bookingDate(entity.getBookingDate())
@@ -54,8 +55,7 @@ public class BookingServicesImpl implements BookingServices {
                     .bookingStatus(entity.getBookingStatus())
                     .contactNumber(entity.getContactNumber())
                     .build();
-        }
-        return null;
+
     }
 
     @Override
