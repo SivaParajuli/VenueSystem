@@ -31,7 +31,7 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.id= :i and r.bookingStatus <> :d")
     List<?> getBookedVenueDateById(@Param("i")Integer id,@Param("d")BookingStatus bookingStatus);
 
-    @Query(value = "SELECT r from Venue v join fetch v.bookingList r where v.email= :e and r.bookingStatus= :p")
+    @Query(value = "SELECT r from Venue v join  v.bookingList r where v.email= :e and r.bookingStatus= :p")
     List<Booking> getAllPendingBookingRequest(@Param("e") String email, @Param("p")BookingStatus bookingStatus);
 
     @Transactional
