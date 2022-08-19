@@ -55,6 +55,6 @@ public class Venue implements Serializable {
     @Column(name="filePath")
     private String filePath;
 
-    @OneToMany(targetEntity = Booking.class,mappedBy = "venue")
+    @OneToMany(targetEntity = Booking.class,mappedBy = "venue",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Booking> bookingList;
 }
