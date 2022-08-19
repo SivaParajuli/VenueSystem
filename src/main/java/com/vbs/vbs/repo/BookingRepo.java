@@ -10,9 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 public interface BookingRepo extends JpaRepository<Booking,Integer> {
+
+    @Query(value = "SELECT r from Booking r where r.venue= :i and r.bookingStatus= :p")
+    List<Booking> getAllPendingBookingRequest(@Param("i") Integer venueId, @Param("p")BookingStatus bookingStatus);
 
     @Transactional
     @Modifying

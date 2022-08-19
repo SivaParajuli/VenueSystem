@@ -5,9 +5,10 @@ import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
+import com.vbs.vbs.repo.BookingRepo;
+import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.services.VenueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -19,10 +20,14 @@ import java.util.stream.Collectors;
 public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
+    private final BookingRepo bookingRepo;
+    private final ClientRepo clientRepo;
 
-    @Autowired
-    public VenueServiceImpl(VenueRepo venueRepo) {
+
+    public VenueServiceImpl(VenueRepo venueRepo, BookingRepo bookingRepo, ClientRepo clientRepo) {
         this.venueRepo = venueRepo;
+        this.bookingRepo = bookingRepo;
+        this.clientRepo = clientRepo;
     }
 
     @Override
@@ -80,16 +85,20 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<Booking> getRequestedBooking(String email) {
-        List<Booking> requestList= venueRepo.getAllPendingBookingRequest(email, BookingStatus.PENDING);
-        return requestList.stream().map(entity-> Booking.builder()
-                .id(entity.getId())
-                .bookingDate(entity.getBookingDate())
-                .client(entity.getClient())
-                .contactNumber(entity.getContactNumber())
-                .functionType(entity.getFunctionType())
-                .calculatedPayment(entity.getCalculatedPayment())
-                .requiredCapacity(entity.getRequiredCapacity())
-                .build()).collect(Collectors.toList());
+        Optional<Venue> venue1 = venueRepo.findVenueByEmail(email);
+        if (venue1.isPresent()) {
+            List<Booking> requestList = bookingRepo.getAllPendingBookingRequest(venue1.get().getId(), BookingStatus.PENDING);
+            return requestList.stream().map(entity -> Booking.builder()
+                    .id(entity.getId())
+                    .bookingDate(entity.getBookingDate())
+                    .client(entity.getClient())
+                    .contactNumber(entity.getContactNumber())
+                    .functionType(entity.getFunctionType())
+                    .calculatedPayment(entity.getCalculatedPayment())
+                    .requiredCapacity(entity.getRequiredCapacity())
+                    .build()).collect(Collectors.toList());
+        }
+        return null;
     }
 
     //TODO
