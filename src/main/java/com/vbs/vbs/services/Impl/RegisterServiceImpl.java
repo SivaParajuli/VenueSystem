@@ -78,7 +78,8 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public VenueDto venueRegister(VenueDto venueDto){
+    public VenueDto venueRegister(VenueDto venueDto) throws IOException {
+        String filepath=fileStorageUtils.storeFile(venueDto.getVenueFile());
         Venue entity = Venue.builder()
                 .id(venueDto.getId())
                 .venueName(venueDto.getVenueName())
@@ -90,7 +91,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .userName(venueDto.getUserName())
                 .applicationUserRole(ApplicationUserRole.VENUE)
                 .venueStatus(VenueStatus.PENDING)
-//                .filePath(filepath)
+                .filePath(filepath)
                 .build();
         entity = venueRepo.save(entity);
         return VenueDto.builder()

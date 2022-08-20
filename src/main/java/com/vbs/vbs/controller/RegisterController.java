@@ -7,6 +7,7 @@ import com.vbs.vbs.models.Admin;
 import com.vbs.vbs.services.FileService;
 import com.vbs.vbs.services.RegisterService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,8 +40,8 @@ public class RegisterController extends BaseController {
         }
     }
 
-    @PostMapping(path="venue")
-    public ResponseEntity<ResponseDto> createVenue(@RequestBody VenueDto venueDto) {
+    @PostMapping(path="venue",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ResponseDto> createVenue(@ModelAttribute VenueDto venueDto) throws IOException {
         venueDto =registerService.venueRegister(venueDto);
         if(venueDto !=null){
 //            emailSenderService.sendEmail("svenuebooking.spad01@gmail.com",

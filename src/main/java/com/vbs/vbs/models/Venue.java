@@ -49,6 +49,9 @@ public class Venue implements Serializable {
     @Column(name = "venueStatus")
     private VenueStatus venueStatus;
 
+    @Column(name = "capacity")
+    private String capacity;
+
     @Column (columnDefinition = "Text")
     private String description;
 

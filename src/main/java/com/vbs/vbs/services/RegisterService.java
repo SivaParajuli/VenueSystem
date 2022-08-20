@@ -12,7 +12,7 @@ import java.util.List;
 public interface RegisterService {
 
     ClientDto clientRegister(ClientDto clientDto);
-    VenueDto venueRegister(VenueDto venueDto);
+    VenueDto venueRegister(VenueDto venueDto) throws IOException;
     List<VenueDto> getAllPendingRegister();
    Integer updateVenueStatus(Integer status, Integer id);
     Admin registerAdmin(Admin admin);
