@@ -2,6 +2,7 @@ package com.vbs.vbs.controller;
 
 
 import com.vbs.vbs.dto.ResponseDto;
+import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.services.BookingServices;
@@ -75,16 +76,11 @@ public class VenueController extends BaseController {
     }
 
     @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
-   @PutMapping("response/{bookingStatus}/{id}")
-    public ResponseEntity<ResponseDto> BookingResponse(@PathVariable("bookingStatus") Integer bookingStatus,
+   @PutMapping("response/{id}")
+    public ResponseEntity<ResponseDto> BookingResponse(@RequestBody StatusChangeReq statusChangeReq,
                                                        @PathVariable("id")Integer id){
-       Integer bookingResponse = bookingServices.VenueBookingResponse(bookingStatus,id);
+       Integer bookingResponse = bookingServices.VenueBookingResponse(statusChangeReq.getStatus(),id);
        if(bookingResponse != null){
-           Booking booking = bookingServices.findById(id);
-           emailSenderService.sendEmail(booking.getClient().getEmail(),
-                   "Booking Response",
-                   "Mr/Miss " + booking.getClient().getName()+" Your Booking is Successful."
-           );
         return new ResponseEntity<>
                 (successResponse("response sent",bookingResponse),HttpStatus.OK);
     }

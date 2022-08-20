@@ -13,7 +13,6 @@ public class  ClientServiceImpl implements ClientService {
     private final ClientRepo clientRepo;
 
     public ClientServiceImpl(ClientRepo clientRepo) {
-
         this.clientRepo = clientRepo;
     }
 
