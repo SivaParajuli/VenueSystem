@@ -1,5 +1,5 @@
 package com.vbs.vbs.repo;
-import com.vbs.vbs.dto.VenueDto;
+
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 

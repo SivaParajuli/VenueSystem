@@ -65,7 +65,7 @@ public class BookingServicesImpl implements BookingServices {
                 Booking booking1 = booking.get();
                 emailSenderService.sendEmail(booking1.getClient().getEmail(),
                         "Booking Response",
-                        "Mr/Miss " + booking1.getClient().getName() + " Your Booking is Successful."
+                        "Mr/Miss " + booking1.getClient().getName() +" Your Booking is Successful for "+booking1.getBookingDate()
                 );
                 return bookingRepo.updateBookingStatus(BookingStatus.SUCCESSFUL, id);
             }
