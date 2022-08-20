@@ -1,6 +1,7 @@
 package com.vbs.vbs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
@@ -40,12 +41,12 @@ public class Booking implements Serializable {
     @Column(name="contactNumber")
     private String contactNumber;
 
-    @JsonIgnore
-    @ManyToOne(targetEntity = Client.class,fetch =FetchType.LAZY)
+    @JsonIgnoreProperties({"password","bookingList","id","applicationUserRole"})
+    @ManyToOne(targetEntity = Client.class,fetch =FetchType.EAGER)
     @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))
     private Client client;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"password","description","bookingList"})
     @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
     @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;

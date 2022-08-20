@@ -20,10 +20,12 @@ import java.util.stream.Collectors;
 public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
+    private final ClientRepo clientRepo;
 
 
     public VenueServiceImpl(VenueRepo venueRepo, BookingRepo bookingRepo, ClientRepo clientRepo) {
         this.venueRepo = venueRepo;
+        this.clientRepo = clientRepo;
     }
 
     @Override
