@@ -37,7 +37,7 @@ public class VenueServiceImpl  implements VenueService {
                 .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
                 .address(entity.getAddress())
-                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
+                .filePath(entity.getFilePath())
                 .build()).collect(Collectors.toList());
     }
 
@@ -54,7 +54,7 @@ public class VenueServiceImpl  implements VenueService {
                     .email(venue1.getEmail())
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
-                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath()))
+                    .filePath(venue1.getFilePath())
                     .build();
         }
         return null;
@@ -72,7 +72,7 @@ public class VenueServiceImpl  implements VenueService {
                     .contactNumber(venue1.getContactNumber())
                     .email(venue1.getEmail())
                     .userName(venue1.getUserName())
-                    .filePath(fileStorageUtils.getBase64FileFromFilePath(venue1.getFilePath()))
+                    .filePath(venue1.getFilePath())
                     .build();
         }
         return null;
@@ -143,7 +143,7 @@ public class VenueServiceImpl  implements VenueService {
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
                 .venueStatus(entity.getVenueStatus())
-                .filePath(fileStorageUtils.getBase64FileFromFilePath(entity.getFilePath()))
+                .filePath(entity.getFilePath())
                 .build()).collect(Collectors.toList());
     }
 
