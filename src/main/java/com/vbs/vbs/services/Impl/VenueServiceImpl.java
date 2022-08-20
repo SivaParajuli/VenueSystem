@@ -20,14 +20,10 @@ import java.util.stream.Collectors;
 public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
-    private final BookingRepo bookingRepo;
-    private final ClientRepo clientRepo;
 
 
     public VenueServiceImpl(VenueRepo venueRepo, BookingRepo bookingRepo, ClientRepo clientRepo) {
         this.venueRepo = venueRepo;
-        this.bookingRepo = bookingRepo;
-        this.clientRepo = clientRepo;
     }
 
     @Override
@@ -85,9 +81,7 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<Booking> getRequestedBooking(String email) {
-        Optional<Venue> venue1 = venueRepo.findVenueByEmail(email);
-        if (venue1.isPresent()) {
-            List<Booking> requestList = bookingRepo.getAllPendingBookingRequest(venue1.get().getId(), BookingStatus.PENDING);
+            List<Booking> requestList = venueRepo.getAllPendingBookingRequest(email, BookingStatus.PENDING);
             return requestList.stream().map(entity -> Booking.builder()
                     .id(entity.getId())
                     .bookingDate(entity.getBookingDate())
@@ -97,8 +91,6 @@ public class VenueServiceImpl  implements VenueService {
                     .calculatedPayment(entity.getCalculatedPayment())
                     .requiredCapacity(entity.getRequiredCapacity())
                     .build()).collect(Collectors.toList());
-        }
-        return null;
     }
 
     //TODO

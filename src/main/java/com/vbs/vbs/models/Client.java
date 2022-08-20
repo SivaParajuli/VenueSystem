@@ -46,7 +46,7 @@ public class Client implements Serializable {
     @Column(name="street_address",length=34)
     private String street_name;
 
-    @OneToMany(targetEntity = Booking.class,mappedBy = "client",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Booking.class,mappedBy = "client",cascade = CascadeType.ALL)
     private List<Booking> bookingList;
 
 

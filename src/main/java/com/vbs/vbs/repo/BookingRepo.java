@@ -16,9 +16,6 @@ import java.util.List;
 @Repository
 public interface BookingRepo extends JpaRepository<Booking,Integer> {
 
-    @Query(value = "SELECT r from Booking r where r.venue= :i and r.bookingStatus= :p")
-    List<Booking> getAllPendingBookingRequest(@Param("i") Integer venueId, @Param("p")BookingStatus bookingStatus);
-
     @Transactional
     @Modifying
     @Query(value = "UPDATE Booking b SET b.bookingStatus = :s where b.id = :i")
