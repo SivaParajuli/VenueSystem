@@ -15,7 +15,7 @@ public class FileStorageUtils {
     private String venueFileStoragePath;
 
     //it gives users home
-    private String userHome ;
+    private final String userHome = System.getProperty("user.home");
 
 
 
@@ -28,7 +28,6 @@ public class FileStorageUtils {
      */
 
     public String storeFile(MultipartFile multipartFile) throws IOException {
-        userHome="C:/Server";
         String directoryPath = userHome + venueFileStoragePath;
         File directoryFile = new File(directoryPath);
         if (!directoryFile.exists()) {
