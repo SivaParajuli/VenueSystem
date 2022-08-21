@@ -6,13 +6,10 @@ import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.services.BookingServices;
-import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("venue-")
@@ -22,14 +19,10 @@ public class VenueController extends BaseController {
 
     private final VenueService venueService;
     private final BookingServices bookingServices;
-    private final ClientService clientService;
-    private final EmailSenderService emailSenderService;
 
-    public VenueController(VenueService venueService, BookingServices bookingServices, ClientService clientService, EmailSenderService emailSenderService) {
+    public VenueController(VenueService venueService, BookingServices bookingServices) {
         this.venueService = venueService;
         this.bookingServices = bookingServices;
-        this.clientService = clientService;
-        this.emailSenderService = emailSenderService;
     }
 
     @GetMapping(path="{email}")
@@ -46,18 +39,17 @@ public class VenueController extends BaseController {
     }
 
 
-    @PutMapping(path="updateDetails")
-    public ResponseEntity<ResponseDto> updateVenue(@PathVariable("venueId") Integer id ,@RequestBody VenueDto venueDto){
-        venueDto =venueService.update(id,venueDto);
-        if(venueDto !=null){
-
-
+    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
+    @PutMapping(path="update/{email}")
+    public ResponseEntity<ResponseDto> updateVenue(@RequestBody VenueDto venueDto,@PathVariable("email") String email){
+        Integer venue =venueService.update(venueDto,email);
+        if(venue!=null){
             return new ResponseEntity<>
-                    (successResponse("Venue Created.", venueDto), HttpStatus.CREATED);
+                    (successResponse("data Updated.", venue), HttpStatus.CREATED);
         }
         else{
             return new ResponseEntity<>
-                    (errorResponse("Venue Creation Failed",null),HttpStatus.BAD_REQUEST);
+                    (errorResponse("Update failed.",null),HttpStatus.BAD_REQUEST);
         }
     }
 

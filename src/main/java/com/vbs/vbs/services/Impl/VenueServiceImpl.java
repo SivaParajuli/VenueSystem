@@ -6,8 +6,8 @@ import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.VenueRepo;
+import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
-    private final FileStorageUtils fileStorageUtils;
+    private final UserRepo userRepo;
 
 
-    public VenueServiceImpl(VenueRepo venueRepo, FileStorageUtils fileStorageUtils) {
+    public VenueServiceImpl(VenueRepo venueRepo, UserRepo userRepo) {
         this.venueRepo = venueRepo;
-        this.fileStorageUtils = fileStorageUtils;
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -98,38 +98,23 @@ public class VenueServiceImpl  implements VenueService {
                     .build()).collect(Collectors.toList());
     }
 
-    //TODO
     @Override
-    public VenueDto update(Integer id ,VenueDto venueDto) {
-        Venue entity =venueRepo.findById(id).orElseThrow(()->new RuntimeException("Invalid id"));
-        if(venueDto.getVenueName()==null)
-            entity.setVenueName(entity.getVenueName());
-        else
-            entity.setVenueName(venueDto.getVenueName());
-        if(venueDto.getUserName()==null)
-            entity.setUserName(entity.getUserName());
-        else
-            entity.setUserName(venueDto.getUserName());
-        if(venueDto.getAddress()==null)
-            entity.setAddress(entity.getAddress());
-        else
-            entity.setAddress(venueDto.getAddress());
-        if(venueDto.getEmail()==null)
-            entity.setEmail(entity.getEmail());
-        else
-            entity.setEmail(venueDto.getEmail());
-        if(venueDto.getContactNumber()==null)
-            entity.setContactNumber(entity.getContactNumber());
-        else
-            entity.setContactNumber(venueDto.getContactNumber());
-        entity = venueRepo.save(entity);
-        return VenueDto.builder()
-                .id(entity.getId())
-                .venueName(entity.getVenueName())
-                .email(entity.getEmail())
-                .contactNumber(entity.getContactNumber())
-                .address(venueDto.getAddress())
-                .build();
+    public Integer update(VenueDto venueDto , String email) {
+        Integer venue = venueRepo.update(
+                venueDto.getVenueName(),
+                venueDto.getUserName(),
+                venueDto.getAddress(),
+                venueDto.getContactNumber(),
+                venueDto.getPassword(),
+                venueDto.getDescription(),
+                email);
+        if(venue != null){
+            Integer user = userRepo.update(
+                    venueDto.getUserName(),
+                    venueDto.getPassword(),
+                    email);
+        }
+        return venue;
     }
 
     public List<VenueDto> getAllVerifiedVenue() {

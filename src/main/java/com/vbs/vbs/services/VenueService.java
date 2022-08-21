@@ -3,7 +3,6 @@ import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 
 
-import java.util.Date;
 import java.util.List;
 
 public interface VenueService{
@@ -15,7 +14,7 @@ public interface VenueService{
 
     void deleteBYId(Integer integer);
 
-    VenueDto update(Integer id,VenueDto venueDto);
+   Integer update(VenueDto venueDto , String email);
 
     List<Booking> getRequestedBooking(String email);
 

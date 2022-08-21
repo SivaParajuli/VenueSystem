@@ -1,5 +1,7 @@
 package com.vbs.vbs.services;
 
+import com.vbs.vbs.dto.ClientDto;
+import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.Client;
 
@@ -9,5 +11,5 @@ public interface ClientService {
   Client findClientByEmail(String email);
   List<Client> findAll();
   List<Booking> getAllRequests(String email);
-
+  Integer updateClient(ClientDto clientDto, String email);
 }

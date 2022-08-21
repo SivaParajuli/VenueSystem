@@ -1,5 +1,6 @@
 package com.vbs.vbs.controller;
 
+import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
@@ -74,4 +75,19 @@ public class ClientController extends BaseController {
         return new ResponseEntity<>
                 (successResponse("Date List fetched.", dateList),HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*",methods = RequestMethod.PUT,maxAge = 86400,allowedHeaders = "*")
+    @PutMapping(path="update/{email}")
+    public ResponseEntity<ResponseDto> updateVenue(@RequestBody ClientDto clientDto,@PathVariable("email") String email){
+        Integer client =clientService.updateClient(clientDto,email);
+        if(client!=null){
+            return new ResponseEntity<>
+                    (successResponse("data Updated.",client), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Update failed.",null),HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
