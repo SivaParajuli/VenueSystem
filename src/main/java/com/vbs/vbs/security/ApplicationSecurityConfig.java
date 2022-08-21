@@ -39,9 +39,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/login/**","/register/**").permitAll()
-                .antMatchers("/client-").hasRole(ApplicationUserRole.CLIENT.name())
-                .antMatchers("/venue-").hasRole(ApplicationUserRole.VENUE.name())
-                .antMatchers("/admin-").hasRole(ApplicationUserRole.ADMIN.name())
+                .antMatchers("/client-/**").hasRole(ApplicationUserRole.CLIENT.name())
+                .antMatchers("/venue-/**").hasRole(ApplicationUserRole.VENUE.name())
+                .antMatchers("/admin-/**").hasRole(ApplicationUserRole.ADMIN.name())
                 .anyRequest().authenticated();
 
     }
