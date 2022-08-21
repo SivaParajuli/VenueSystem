@@ -60,6 +60,7 @@ public class  ClientServiceImpl implements ClientService {
                 .bookingDate(entity.getBookingDate())
                 .venue(entity.getVenue())
                 .contactNumber(entity.getContactNumber())
+                .bookingStatus(entity.getBookingStatus())
                 .functionType(entity.getFunctionType())
                 .calculatedPayment(entity.getCalculatedPayment())
                 .requiredCapacity(entity.getRequiredCapacity())
