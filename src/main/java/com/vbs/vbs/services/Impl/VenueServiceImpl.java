@@ -49,6 +49,7 @@ public class VenueServiceImpl  implements VenueService {
             return VenueDto.builder()
                     .id(venue1.getId())
                     .userName(venue1.getUserName())
+                    .description(venue1.getDescription())
                     .venueName(venue1.getVenueName())
                     .capacity(venue1.getCapacity())
                     .email(venue1.getEmail())
