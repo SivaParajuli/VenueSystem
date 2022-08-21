@@ -13,7 +13,6 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.User;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.RegisterService;
-import com.vbs.vbs.services.VenueService;
 import com.vbs.vbs.utils.EmailSenderService;
 import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,18 +31,17 @@ public class RegisterServiceImpl implements RegisterService {
     private final VenueRepo venueRepo;
     private final UserRepo userRepo;
     private  final FileStorageUtils fileStorageUtils;
-    private final VenueService venueService;
     private final EmailSenderService emailSenderService;
 
     public RegisterServiceImpl(AdminRepo adminRepo, PasswordEncoder passwordEncoder,
-                               ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo, FileStorageUtils fileStorageUtils, VenueService venueService, EmailSenderService emailSenderService) {
+                               ClientRepo clientRepo, VenueRepo venueRepo, UserRepo userRepo,
+                               FileStorageUtils fileStorageUtils, EmailSenderService emailSenderService) {
         this.adminRepo = adminRepo;
         this.passwordEncoder = passwordEncoder;
         this.clientRepo = clientRepo;
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
         this.fileStorageUtils = fileStorageUtils;
-        this.venueService = venueService;
         this.emailSenderService = emailSenderService;
     }
 

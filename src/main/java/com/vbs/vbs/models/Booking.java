@@ -1,12 +1,8 @@
 package com.vbs.vbs.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vbs.vbs.enums.BookingStatus;
-import com.vbs.vbs.models.Client;
-import com.vbs.vbs.models.Venue;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -47,7 +43,7 @@ public class Booking implements Serializable {
     private Client client;
 
     @JsonIgnoreProperties({"password","description","bookingList"})
-    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
+    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.EAGER)
     @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;
 

@@ -6,6 +6,7 @@ import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.ClientService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class  ClientServiceImpl implements ClientService {
     private final ClientRepo clientRepo;
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public ClientServiceImpl(ClientRepo clientRepo, UserRepo userRepo) {
+    public ClientServiceImpl(ClientRepo clientRepo, UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.clientRepo = clientRepo;
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -50,12 +53,12 @@ public class  ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Booking> getAllRequests(String email) {
+    public List<Booking> getBooking(String email) {
         List<Booking> requestList= clientRepo.getAllBookingRequests(email);
         return requestList.stream().map(entity-> Booking.builder()
                 .id(entity.getId())
                 .bookingDate(entity.getBookingDate())
-                .client(entity.getClient())
+                .venue(entity.getVenue())
                 .contactNumber(entity.getContactNumber())
                 .functionType(entity.getFunctionType())
                 .calculatedPayment(entity.getCalculatedPayment())
@@ -68,12 +71,12 @@ public class  ClientServiceImpl implements ClientService {
         Integer client = clientRepo.updateClient(
                 clientDto.getUsername(),
                 clientDto.getMobile_no(),
-                clientDto.getPassword(),
+                passwordEncoder.encode(clientDto.getPassword()),
                 email);
         if(client != null){
             Integer user = userRepo.update(
                     clientDto.getUsername(),
-                    clientDto.getPassword(),
+                    passwordEncoder.encode(clientDto.getPassword()),
                     email);
         }
         return client;

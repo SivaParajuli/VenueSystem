@@ -9,6 +9,7 @@ import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.VenueService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,13 @@ public class VenueServiceImpl  implements VenueService {
 
     private final VenueRepo venueRepo;
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public VenueServiceImpl(VenueRepo venueRepo, UserRepo userRepo) {
+    public VenueServiceImpl(VenueRepo venueRepo, UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -105,13 +108,13 @@ public class VenueServiceImpl  implements VenueService {
                 venueDto.getUserName(),
                 venueDto.getAddress(),
                 venueDto.getContactNumber(),
-                venueDto.getPassword(),
+                passwordEncoder.encode(venueDto.getPassword()),
                 venueDto.getDescription(),
                 email);
         if(venue != null){
             Integer user = userRepo.update(
                     venueDto.getUserName(),
-                    venueDto.getPassword(),
+                    passwordEncoder.encode(venueDto.getPassword()),
                     email);
         }
         return venue;

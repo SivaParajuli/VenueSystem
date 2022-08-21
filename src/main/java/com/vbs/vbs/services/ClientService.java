@@ -10,6 +10,6 @@ import java.util.List;
 public interface ClientService {
   Client findClientByEmail(String email);
   List<Client> findAll();
-  List<Booking> getAllRequests(String email);
+  List<Booking> getBooking(String email);
   Integer updateClient(ClientDto clientDto, String email);
 }
