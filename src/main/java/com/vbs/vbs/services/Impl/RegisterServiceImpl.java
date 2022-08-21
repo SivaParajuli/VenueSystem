@@ -50,7 +50,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public ClientDto clientRegister(ClientDto clientDto) {
         Client entity= Client.builder()
-                .name(clientDto.getName())
+                .name(clientDto.getUsername())
                 .mobile_no(clientDto.getMobile_no())
                 .email(clientDto.getEmail())
                 .city_name(clientDto.getCity_name())
@@ -60,14 +60,14 @@ public class RegisterServiceImpl implements RegisterService {
                 .build();
         User entity1= User.builder()
                 .email(clientDto.getEmail())
-                .uname(clientDto.getName())
+                .uname(clientDto.getUsername())
                 .password(passwordEncoder.encode(clientDto.getPassword()))
                 .applicationUserRole(ApplicationUserRole.CLIENT).build();
         userRepo.save(entity1);
         entity= clientRepo.save(entity);
         return ClientDto.builder()
                 .id(entity.getId())
-                .name(entity.getName())
+                .username(entity.getName())
                 .mobile_no(entity.getMobile_no())
                 .email(entity.getEmail())
                 .city_name(entity.getCity_name())
@@ -127,7 +127,7 @@ public class RegisterServiceImpl implements RegisterService {
                 Venue venue1 = venue.get();
                 User user = new User();
                 user.setEmail(venue1.getEmail());
-                user.setUname(venue1.getVenueName());
+                user.setUname(venue1.getUserName());
                 user.setPassword(venue1.getPassword());
                 user.setApplicationUserRole(venue1.getApplicationUserRole());
                 userRepo.save(user);
