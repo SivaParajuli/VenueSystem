@@ -1,6 +1,6 @@
 package com.vbs.vbs.services.Impl;
+
 import com.vbs.vbs.dto.ClientDto;
-import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
@@ -27,8 +27,11 @@ public class  ClientServiceImpl implements ClientService {
         if(clientOptional.isPresent()){
             Client entity=clientOptional.get();
             return Client.builder()
+                    .id(entity.getId())
                     .name(entity.getName())
                     .email(entity.getEmail())
+                    .city_name(entity.getCity_name())
+                    .street_name(entity.getStreet_name())
                     .mobile_no(entity.getMobile_no())
                     .build();
         }
