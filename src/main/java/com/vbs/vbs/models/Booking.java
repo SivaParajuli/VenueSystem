@@ -42,7 +42,7 @@ public class Booking implements Serializable {
     @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))
     private Client client;
 
-    @JsonIgnoreProperties({"password","description","bookingList"})
+    @JsonIgnoreProperties({"password","description","bookingList","applicationUserRole"})
     @ManyToOne(targetEntity = Venue.class,fetch =FetchType.EAGER)
     @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;

@@ -3,7 +3,6 @@ package com.vbs.vbs.utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -17,6 +16,8 @@ public class FileStorageUtils {
     //it gives users home
     private final String userHome = System.getProperty("user.home");
 
+    public FileStorageUtils() throws IOException {
+    }
 
 
     /**

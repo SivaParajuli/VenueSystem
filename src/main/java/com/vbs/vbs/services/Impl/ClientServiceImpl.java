@@ -82,5 +82,4 @@ public class  ClientServiceImpl implements ClientService {
         }
         return client;
     }
-
 }
