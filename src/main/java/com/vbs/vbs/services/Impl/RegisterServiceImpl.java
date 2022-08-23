@@ -112,7 +112,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .applicationUserRole(entity.getApplicationUserRole())
                 .venueStatus(entity.getVenueStatus())
                 .userName(entity.getUserName())
-                .filePath("data:image/jpeg;base64,"+ entity.getImage())
+//                .filePath("data:image/jpeg;base64,"+ entity.getImage())
                 .description(entity.getDescription())
                 .build()).collect(Collectors.toList());
     }
