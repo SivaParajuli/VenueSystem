@@ -67,7 +67,7 @@ public class BookingServicesImpl implements BookingServices {
                         "Booking Response",
                         "Mr/Miss " + booking1.getClient().getName() +" Your Booking is Successful for "+booking1.getBookingDate()
                 );
-                return bookingRepo.updateBookingStatus(BookingStatus.SUCCESSFUL, id);
+                return bookingRepo.updateBookingStatus(BookingStatus.ACCEPTED, id);
             }
         }
         if (bookingStatus == 2) {
@@ -78,7 +78,7 @@ public class BookingServicesImpl implements BookingServices {
                         "Booking Response",
                         "Mr/Miss " + booking1.getClient().getName() + " Your Booking Request is Denied.please with another."
                 );
-                return bookingRepo.updateBookingStatus(BookingStatus.UNSUCCESSFUL, id);
+                return bookingRepo.updateBookingStatus(BookingStatus.CANCELED, id);
             }
         }
         return null;

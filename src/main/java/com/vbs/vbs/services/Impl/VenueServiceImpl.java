@@ -151,7 +151,7 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<?> getAllBookedDate(Integer id) {
-        List<?> dateList = venueRepo.getBookedVenueDateById(id, BookingStatus.UNSUCCESSFUL);
+        List<?> dateList = venueRepo.getBookedVenueDateById(id, BookingStatus.CANCELED);
         return new ArrayList<>(dateList);
     }
 }

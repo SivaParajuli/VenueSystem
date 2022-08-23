@@ -18,17 +18,13 @@ import java.util.List;
 @RequestMapping("admin-")
 public class AdminController extends BaseController {
 
-    private final VenueService venueService;
     private final RegisterService registerService;
     private final AdminService adminService;
-    private final EmailSenderService emailSenderService;
 
 
-    public AdminController(VenueService venueService, RegisterService registerService, AdminService adminService, EmailSenderService emailSenderService) {
-        this.venueService = venueService;
+    public AdminController( RegisterService registerService, AdminService adminService) {
         this.registerService = registerService;
         this.adminService = adminService;
-        this.emailSenderService = emailSenderService;
     }
 
     @GetMapping("registerRequests")
