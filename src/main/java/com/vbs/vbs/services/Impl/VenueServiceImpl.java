@@ -57,7 +57,7 @@ public class VenueServiceImpl  implements VenueService {
                     .email(venue1.getEmail())
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
-                    .filePath(venue1.getImage())
+                    .filePath("data:image/jpeg;base64,"+ venue1.getImage())
                     .build();
         }
         return null;
@@ -130,7 +130,22 @@ public class VenueServiceImpl  implements VenueService {
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
                 .venueStatus(entity.getVenueStatus())
-                .filePath(entity.getImage())
+                .filePath("data:image/jpeg;base64,"+ entity.getImage())
+                .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> getBookingList(String email) {
+        List<Booking> requestList= venueRepo.getAllBookingList(email);
+        return requestList.stream().map(entity-> Booking.builder()
+                .id(entity.getId())
+                .bookingDate(entity.getBookingDate())
+                .client(entity.getClient())
+                .contactNumber(entity.getContactNumber())
+                .bookingStatus(entity.getBookingStatus())
+                .functionType(entity.getFunctionType())
+                .calculatedPayment(entity.getCalculatedPayment())
+                .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());
     }
 

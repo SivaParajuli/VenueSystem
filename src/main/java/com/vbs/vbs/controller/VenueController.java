@@ -82,4 +82,17 @@ public class VenueController extends BaseController {
        }
 
     }
+
+    @GetMapping("booking/{email}")
+    public ResponseEntity<ResponseDto>getBooking(@PathVariable("email") String email){
+        List<Booking> booking =venueService.getBookingList(email);
+        if(booking !=null) {
+            return new ResponseEntity<>
+                    (successResponse("Requested Booking List  Fetched.", booking), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Requests Fetching Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

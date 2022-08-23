@@ -17,7 +17,7 @@ public interface ClientRepo extends JpaRepository<Client, Integer> {
   @Query(value = "SELECT c from Client c where c.email = :e")
   Optional<Client> findClientByEmail(@Param("e") String email);
 
-  @Query(value = "SELECT c.bookingList from Client c where c.email= :e")
+  @Query(value = "SELECT r from Client c join c.bookingList r where c.email= :e order by r.id desc")
   List<Booking> getAllBookingRequests(@Param("e") String email);
 
   @Transactional

@@ -49,4 +49,7 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
                    @Param("p") String password,
                    @Param("d") String description,
                    @Param("e")String email);
+
+    @Query(value = "SELECT r from Venue v join v.bookingList r where v.email= :e order by r.id desc")
+    List<Booking> getAllBookingList(@Param("e") String email);
 }

@@ -20,6 +20,8 @@ public interface VenueService{
 
     List<VenueDto> getAllVerifiedVenue();
 
+    List<Booking> getBookingList(String email);
+
     List<?> getAllBookedDate(Integer id);
 
 
