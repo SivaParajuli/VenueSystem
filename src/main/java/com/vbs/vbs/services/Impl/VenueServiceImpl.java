@@ -40,7 +40,6 @@ public class VenueServiceImpl  implements VenueService {
                 .contactNumber(entity.getContactNumber())
                 .email(entity.getEmail())
                 .address(entity.getAddress())
-                .filePath(entity.getFilePath())
                 .build()).collect(Collectors.toList());
     }
 
@@ -58,7 +57,7 @@ public class VenueServiceImpl  implements VenueService {
                     .email(venue1.getEmail())
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
-                    .filePath(venue1.getFilePath())
+                    .filePath(venue1.getImage())
                     .build();
         }
         return null;
@@ -76,7 +75,6 @@ public class VenueServiceImpl  implements VenueService {
                     .contactNumber(venue1.getContactNumber())
                     .email(venue1.getEmail())
                     .userName(venue1.getUserName())
-                    .filePath(venue1.getFilePath())
                     .build();
         }
         return null;
@@ -132,7 +130,7 @@ public class VenueServiceImpl  implements VenueService {
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
                 .venueStatus(entity.getVenueStatus())
-                .filePath(entity.getFilePath())
+                .filePath(entity.getImage())
                 .build()).collect(Collectors.toList());
     }
 

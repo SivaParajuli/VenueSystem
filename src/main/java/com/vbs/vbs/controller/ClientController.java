@@ -58,8 +58,8 @@ public class ClientController extends BaseController {
         Booking booking1 = bookingServices.VenueBookingRequest(booking,id,email);
         if(booking1 !=null){
             emailSenderService.sendEmail(venueService.findById(id).getEmail(),
-                    "Registration Request",
-                    "You have Booking for "+booking.getBookingDate()+". Please response in time .");
+                    "Booking Request",
+                    "You have Booking request for "+booking.getBookingDate()+". Please response in time .");
 
             return new ResponseEntity<>
                     (successResponse("Request Sent", booking), HttpStatus.OK);

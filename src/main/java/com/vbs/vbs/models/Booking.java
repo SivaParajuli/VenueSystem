@@ -38,12 +38,12 @@ public class Booking implements Serializable {
     private String contactNumber;
 
     @JsonIgnoreProperties({"password","bookingList","id","applicationUserRole"})
-    @ManyToOne(targetEntity = Client.class,fetch =FetchType.EAGER)
+    @ManyToOne(targetEntity = Client.class,fetch =FetchType.LAZY)
     @JoinColumn(name="client_id",foreignKey = @ForeignKey(name ="Fk_BR_clientId"))
     private Client client;
 
     @JsonIgnoreProperties({"password","description","bookingList","applicationUserRole"})
-    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.EAGER)
+    @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
     @JoinColumn(name="venue_id",foreignKey = @ForeignKey(name ="Fk_BR_venueId"))
     private Venue venue;
 

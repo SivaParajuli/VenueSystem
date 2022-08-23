@@ -52,11 +52,12 @@ public class Venue implements Serializable {
     @Column(name = "capacity")
     private String capacity;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
+
     @Column (columnDefinition = "Text")
     private String description;
-
-    @Column(name="filePath")
-    private String filePath;
 
     @OneToMany(targetEntity = Booking.class,mappedBy = "venue",cascade = CascadeType.ALL)
     private List<Booking> bookingList;
