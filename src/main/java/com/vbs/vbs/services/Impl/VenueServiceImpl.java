@@ -57,7 +57,7 @@ public class VenueServiceImpl  implements VenueService {
                     .email(venue1.getEmail())
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
-                    .filePath("data:image/jpeg;base64,"+ venue1.getImage())
+                    .filePath(venue1.getImage())
                     .build();
         }
         return null;
@@ -130,7 +130,7 @@ public class VenueServiceImpl  implements VenueService {
                 .userName(entity.getUserName())
                 .description(entity.getDescription())
                 .venueStatus(entity.getVenueStatus())
-                .filePath("data:image/jpeg;base64,"+ entity.getImage())
+                .filePath(entity.getImage())
                 .build()).collect(Collectors.toList());
     }
 
