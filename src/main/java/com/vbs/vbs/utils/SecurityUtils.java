@@ -1,10 +1,12 @@
 package com.vbs.vbs.utils;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Service
 public class SecurityUtils {
     public static final String ROLE_PREFIX = "ROLE_";
     public static final String AUTH_HEADER = "authorization";

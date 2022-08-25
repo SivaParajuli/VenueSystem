@@ -4,10 +4,11 @@ import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.StatusChangeReq;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Admin;
+import com.vbs.vbs.models.Client;
 import com.vbs.vbs.services.AdminService;
+import com.vbs.vbs.services.ClientService;
 import com.vbs.vbs.services.RegisterService;
 import com.vbs.vbs.services.VenueService;
-import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,15 @@ public class AdminController extends BaseController {
 
     private final RegisterService registerService;
     private final AdminService adminService;
+    private final VenueService venueService;
+    private final ClientService clientService;
 
 
-    public AdminController( RegisterService registerService, AdminService adminService) {
+    public AdminController(RegisterService registerService, AdminService adminService, VenueService venueService, ClientService clientService) {
         this.registerService = registerService;
         this.adminService = adminService;
+        this.venueService = venueService;
+        this.clientService = clientService;
     }
 
     @GetMapping("registerRequests")
@@ -64,5 +69,20 @@ public class AdminController extends BaseController {
                     (errorResponse("Updating venue verification status failed.", null), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("allVenue")
+    public ResponseEntity<ResponseDto> getAllVerifiedVenue(){
+        List<VenueDto> venueList =venueService.getAllVerifiedVenue();
+        return new ResponseEntity<>
+                (successResponse("Verified venue fetched", venueList),HttpStatus.OK);
+    }
+
+    @GetMapping("allClient")
+    public ResponseEntity<ResponseDto> getAllClient(){
+        List<Client> clientList =clientService.findAll();
+        return new ResponseEntity<>
+                (successResponse("All Client fetched", clientList),HttpStatus.OK);
+    }
+
 }
 

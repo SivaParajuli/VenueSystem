@@ -16,6 +16,4 @@ public class BookingDto {
     private Date bookingDate;
     private String requiredCapacity;
     private String contactNumber;
-    private String calculatedPayment;
-
 }

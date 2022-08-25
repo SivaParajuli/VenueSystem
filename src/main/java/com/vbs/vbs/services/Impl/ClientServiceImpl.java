@@ -48,6 +48,7 @@ public class  ClientServiceImpl implements ClientService {
                 .name(entity.getName())
                 .mobile_no(entity.getMobile_no())
                 .email(entity.getEmail())
+                .bookingList(entity.getBookingList())
                 .street_name(entity.getStreet_name())
                 .build()).collect(Collectors.toList());
     }
@@ -61,7 +62,7 @@ public class  ClientServiceImpl implements ClientService {
                 .venue(entity.getVenue())
                 .contactNumber(entity.getContactNumber())
                 .bookingStatus(entity.getBookingStatus())
-                .functionType(entity.getFunctionType())
+                .eventType(entity.getEventType())
                 .calculatedPayment(entity.getCalculatedPayment())
                 .requiredCapacity(entity.getRequiredCapacity())
                 .build()).collect(Collectors.toList());

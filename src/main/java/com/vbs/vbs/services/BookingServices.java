@@ -1,10 +1,13 @@
 package com.vbs.vbs.services;
 
+import com.vbs.vbs.dto.BookingDto;
 import com.vbs.vbs.models.Booking;
+
+import java.io.IOException;
 
 public interface BookingServices {
 
-    Booking VenueBookingRequest(Booking booking, Integer id, String email);
+    Booking VenueBookingRequest(BookingDto bookingDto, Integer id, String email) throws IOException;
 
     Integer VenueBookingResponse(Integer bookingStatus, Integer id);
 

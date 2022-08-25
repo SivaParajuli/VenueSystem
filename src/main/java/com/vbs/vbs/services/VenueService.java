@@ -1,4 +1,5 @@
 package com.vbs.vbs.services;
+import com.vbs.vbs.dto.EventDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
 
@@ -25,4 +26,5 @@ public interface VenueService{
     List<?> getAllBookedDate(Integer id);
 
 
+    EventDto uploadEventDetails(EventDto eventDto, String email);
 }

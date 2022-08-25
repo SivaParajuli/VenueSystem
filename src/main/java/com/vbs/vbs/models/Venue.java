@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name="tbl_venue",uniqueConstraints = {
         @UniqueConstraint(name="unique_venue_email",columnNames = "email"),
         @UniqueConstraint(name="unique_venue_contactNumber",columnNames = "contactNumber"),
-        @UniqueConstraint(name="unique_venue_userName",columnNames = "userName"),
+        @UniqueConstraint(name="unique_venue_userName",columnNames = "userName")
 
 })
 public class Venue implements Serializable {
@@ -55,11 +55,13 @@ public class Venue implements Serializable {
     @Column (columnDefinition = "Text")
     private String description;
 
-
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
     @OneToMany(targetEntity = Booking.class,mappedBy = "venue",cascade = CascadeType.ALL)
     private List<Booking> bookingList;
+
+    @OneToMany(targetEntity = FunctionType.class,mappedBy = "venue1",cascade = CascadeType.ALL)
+    private List<FunctionType> functionList;
 }

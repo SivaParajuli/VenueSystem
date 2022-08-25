@@ -1,7 +1,10 @@
 package com.vbs.vbs.services.Impl;
 
 
+import com.vbs.vbs.dto.BookingDto;
+import com.vbs.vbs.dto.RateAndCost;
 import com.vbs.vbs.enums.BookingStatus;
+import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.models.Client;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.models.Booking;
@@ -9,10 +12,11 @@ import com.vbs.vbs.repo.ClientRepo;
 import com.vbs.vbs.repo.BookingRepo;
 import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.services.BookingServices;
+import com.vbs.vbs.utils.BookingUtils;
 import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -22,35 +26,44 @@ public class BookingServicesImpl implements BookingServices {
     private final VenueRepo venueRepo;
     private final ClientRepo clientRepo;
     private final EmailSenderService emailSenderService;
+    private final BookingUtils bookingUtils;
 
 
     @Autowired
     public BookingServicesImpl(BookingRepo bookingRepo,
-                               VenueRepo venueRepo, ClientRepo clientRepo, EmailSenderService emailSenderService) {
+                               VenueRepo venueRepo, ClientRepo clientRepo, EmailSenderService emailSenderService, BookingUtils bookingUtils) {
         this.bookingRepo = bookingRepo;
         this.venueRepo = venueRepo;
         this.clientRepo = clientRepo;
         this.emailSenderService = emailSenderService;
+        this.bookingUtils = bookingUtils;
     }
 
     @Override
-    public Booking VenueBookingRequest(Booking booking, Integer id, String email ) {
+    public Booking VenueBookingRequest(BookingDto bookingDto, Integer id, String email ) throws IOException {
         Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
         Venue venue1 = venueRepo.findById(id).orElseThrow(()->new RuntimeException("venueNotFound"));
+        if(Integer.parseInt(bookingDto.getRequiredCapacity()) > Integer.parseInt(venue1.getCapacity())){
+           throw new IOException("invalid requirement");
+        }
+        EventType eventType = bookingUtils.getEvent(bookingDto.getFunctionType());
+        RateAndCost rateAndCost = venueRepo.getRateAndCost(id,eventType);
         Booking entity = Booking.builder()
-                .bookingDate(booking.getBookingDate())
-                .functionType(booking.getFunctionType())
+                .bookingDate(bookingDto.getBookingDate())
+                .eventType(bookingUtils.getEvent(bookingDto.getFunctionType()))
                 .bookingStatus(BookingStatus.PENDING)
-                .calculatedPayment(booking.getCalculatedPayment())
-                .requiredCapacity(booking.getRequiredCapacity())
-                .contactNumber(booking.getContactNumber())
+                .calculatedPayment(bookingUtils.calculatePayment(rateAndCost.getRate(),
+                                rateAndCost.getCost(),
+                                Integer.parseInt(bookingDto.getRequiredCapacity())))
+                .requiredCapacity(bookingDto.getRequiredCapacity())
+                .contactNumber(bookingDto.getContactNumber())
                 .client(client1)
                 .venue(venue1).build();
         entity = bookingRepo.save(entity);
         return Booking.builder()
                 .venue(entity.getVenue())
                 .bookingDate(entity.getBookingDate())
-                .functionType(entity.getFunctionType())
+                .eventType(entity.getEventType())
                 .bookingStatus(entity.getBookingStatus())
                 .contactNumber(entity.getContactNumber())
                 .build();

@@ -41,7 +41,5 @@ public class ApplicationUserService implements UserDetailsService {
                 .password(user.getPassword())
                 .authorities(authorities)
                 .build();
-
     }
-
 }

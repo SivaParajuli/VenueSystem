@@ -2,6 +2,7 @@ package com.vbs.vbs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vbs.vbs.enums.BookingStatus;
+import com.vbs.vbs.enums.EventType;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,10 +25,8 @@ public class Booking implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date bookingDate;
 
-    private String calculatedPayment;
-
     @Column(name="functionType")
-    private String functionType;
+    private EventType eventType;
 
     @Column(name="requiredCapacity")
     private String requiredCapacity;
@@ -36,6 +35,8 @@ public class Booking implements Serializable {
 
     @Column(name="contactNumber")
     private String contactNumber;
+
+    private Double calculatedPayment;
 
     @JsonIgnoreProperties({"password","bookingList","id","applicationUserRole"})
     @ManyToOne(targetEntity = Client.class,fetch =FetchType.EAGER)

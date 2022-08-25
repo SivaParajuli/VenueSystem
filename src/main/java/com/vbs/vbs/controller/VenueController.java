@@ -1,9 +1,7 @@
 package com.vbs.vbs.controller;
 
 
-import com.vbs.vbs.dto.ResponseDto;
-import com.vbs.vbs.dto.StatusChangeReq;
-import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.dto.*;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.VenueService;
@@ -93,6 +91,19 @@ public class VenueController extends BaseController {
         else{
             return new ResponseEntity<>
                     (errorResponse("Requests Fetching Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path="updateEventDetails/{email}")
+    public ResponseEntity<ResponseDto> createClient(@RequestBody EventDto eventDto ,@PathVariable("email") String email) {
+        eventDto =venueService.uploadEventDetails(eventDto,email);
+        if(eventDto !=null){
+            return new ResponseEntity<>
+                    (successResponse("Event Updated on "+email, eventDto), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Event Updation Failed",null),HttpStatus.BAD_REQUEST);
         }
     }
 }

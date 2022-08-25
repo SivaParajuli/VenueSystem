@@ -1,5 +1,6 @@
 package com.vbs.vbs.controller;
 
+import com.vbs.vbs.dto.BookingDto;
 import com.vbs.vbs.dto.ClientDto;
 import com.vbs.vbs.dto.ResponseDto;
 import com.vbs.vbs.dto.VenueDto;
@@ -12,6 +13,8 @@ import com.vbs.vbs.utils.EmailSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -53,16 +56,16 @@ public class ClientController extends BaseController {
 
 
     @PostMapping(path="book-venue/{id}/{email}")
-    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody Booking booking, @PathVariable("id") Integer id,
-                                                      @PathVariable("email") String email){
-        Booking booking1 = bookingServices.VenueBookingRequest(booking,id,email);
+    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingDto bookingDto, @PathVariable("id") Integer id,
+                                                      @PathVariable("email") String email) throws IOException {
+        Booking booking1 = bookingServices.VenueBookingRequest(bookingDto,id,email);
         if(booking1 !=null){
             emailSenderService.sendEmail(venueService.findById(id).getEmail(),
                     "Booking Request",
-                    "You have Booking request for "+booking.getBookingDate()+". Please response in time .");
+                    "You have Booking request for "+bookingDto.getBookingDate()+". Please response in time .");
 
             return new ResponseEntity<>
-                    (successResponse("Request Sent", booking), HttpStatus.OK);
+                    (successResponse("Request Sent", bookingDto), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>
