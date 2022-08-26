@@ -105,4 +105,18 @@ public class ClientController extends BaseController {
                     (errorResponse("Requests Fetching Failed", null), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(path="venue/{email}")
+    public ResponseEntity<ResponseDto>findVenueByEmail(@PathVariable String email){
+        VenueDto venue =venueService.findVenueByEmail(email);
+        if(venue != null ){
+            return new ResponseEntity<>
+                    (successResponse("Venue   Fetched.", venue), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>
+                    (errorResponse("Venue Fetched Failed", null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
