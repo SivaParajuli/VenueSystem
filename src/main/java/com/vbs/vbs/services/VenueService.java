@@ -23,7 +23,7 @@ public interface VenueService{
 
     List<Booking> getBookingList(String email);
 
-    List<?> getAllBookedDate(Integer id);
+    List<?> getAllBookedDate(String email);
 
 
     EventDto uploadEventDetails(EventDto eventDto, String email);

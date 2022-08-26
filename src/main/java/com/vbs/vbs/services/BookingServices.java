@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface BookingServices {
 
-    Booking VenueBookingRequest(BookingDto bookingDto, Integer id, String email) throws IOException;
+    Booking VenueBookingRequest(BookingDto bookingDto, String vEmail, String email) throws IOException;
 
     Integer VenueBookingResponse(Integer bookingStatus, Integer id);
 

@@ -55,12 +55,12 @@ public class ClientController extends BaseController {
     }
 
 
-    @PostMapping(path="book-venue/{id}/{email}")
-    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingDto bookingDto, @PathVariable("id") Integer id,
+    @PostMapping(path="book-venue/{vEmail}/{email}")
+    public ResponseEntity<ResponseDto> BookingRequest(@RequestBody BookingDto bookingDto, @PathVariable("vEmail") String vEmail,
                                                       @PathVariable("email") String email) throws IOException {
-        Booking booking1 = bookingServices.VenueBookingRequest(bookingDto,id,email);
+        Booking booking1 = bookingServices.VenueBookingRequest(bookingDto,vEmail,email);
         if(booking1 !=null){
-            emailSenderService.sendEmail(venueService.findById(id).getEmail(),
+            emailSenderService.sendEmail(venueService.findVenueByEmail(vEmail).getEmail(),
                     "Booking Request",
                     "You have Booking request for "+bookingDto.getBookingDate()+". Please response in time .");
 
@@ -72,9 +72,9 @@ public class ClientController extends BaseController {
                     (errorResponse("There is some error to send request .please try again",null),HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(path="bookedDate/{id}")
-    public ResponseEntity<ResponseDto> getAllBookedDate(@PathVariable("id")Integer id){
-        List<?> dateList =venueService.getAllBookedDate(id);
+    @GetMapping(path="bookedDate/{email}")
+    public ResponseEntity<ResponseDto> getAllBookedDate(@PathVariable("email")String email){
+        List<?> dateList =venueService.getAllBookedDate(email);
         return new ResponseEntity<>
                 (successResponse("Date List fetched.", dateList),HttpStatus.OK);
     }

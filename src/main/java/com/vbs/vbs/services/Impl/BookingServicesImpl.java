@@ -40,14 +40,14 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public Booking VenueBookingRequest(BookingDto bookingDto, Integer id, String email ) throws IOException {
+    public Booking VenueBookingRequest(BookingDto bookingDto, String vEmail, String email ) throws IOException {
         Client client1 = clientRepo.findClientByEmail(email).orElseThrow(()->new RuntimeException("clientNotFound"));
-        Venue venue1 = venueRepo.findById(id).orElseThrow(()->new RuntimeException("venueNotFound"));
+        Venue venue1 = venueRepo.findVenueByEmail(vEmail).orElseThrow(()->new RuntimeException("venueNotFound"));
         if(Integer.parseInt(bookingDto.getRequiredCapacity()) > Integer.parseInt(venue1.getCapacity())){
            throw new IOException("invalid requirement");
         }
         EventType eventType = bookingUtils.getEvent(bookingDto.getFunctionType());
-        RateAndCost rateAndCost = venueRepo.getRateAndCost(id,eventType);
+        RateAndCost rateAndCost = venueRepo.getRateAndCost(vEmail,eventType);
         Booking entity = Booking.builder()
                 .bookingDate(bookingDto.getBookingDate())
                 .eventType(bookingUtils.getEvent(bookingDto.getFunctionType()))

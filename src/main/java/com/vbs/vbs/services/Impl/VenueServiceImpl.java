@@ -63,6 +63,7 @@ public class VenueServiceImpl  implements VenueService {
                     .contactNumber(venue1.getContactNumber())
                     .address(venue1.getAddress())
                     .filePath(venue1.getImage())
+                    .functionList(venue1.getFunctionList())
                     .build();
         }
         return null;
@@ -156,8 +157,8 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     @Override
-    public List<?> getAllBookedDate(Integer id) {
-        List<?> dateList = venueRepo.getBookedVenueDateById(id, BookingStatus.CANCELED);
+    public List<?> getAllBookedDate(String email) {
+        List<?> dateList = venueRepo.getBookedVenueDateById(email, BookingStatus.CANCELED);
         return new ArrayList<>(dateList);
     }
 

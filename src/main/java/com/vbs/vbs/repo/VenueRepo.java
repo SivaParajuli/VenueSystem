@@ -20,7 +20,7 @@ import java.util.Optional;
 @Repository
 public interface VenueRepo extends JpaRepository<Venue, Integer>{
 
-    @Query(value = "select  v from Venue v where  v.email= :e")
+    @Query(value = "select  v from Venue v  where  v.email= :e")
     Optional<Venue> findVenueByEmail(@Param("e") String email);
 
     @Query(value="select v from Venue v where v.venueStatus= :p ")
@@ -30,8 +30,8 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     List<Venue>findAllVerifiedVenue(@Param("a")VenueStatus venueStatus);
 
 
-    @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.id= :i and r.bookingStatus <> :d")
-    List<?> getBookedVenueDateById(@Param("i")Integer id,@Param("d")BookingStatus bookingStatus);
+    @Query(value="SELECT r.bookingDate from Venue v join v.bookingList r where v.email= :e and r.bookingStatus <> :d")
+    List<?> getBookedVenueDateById(@Param("e")String email,@Param("d")BookingStatus bookingStatus);
 
     @Query(value = "SELECT r from Venue v join v.bookingList r where v.email= :e and r.bookingStatus= :p")
     List<Booking> getAllPendingBookingRequest(@Param("e") String email, @Param("p")BookingStatus bookingStatus);
@@ -55,6 +55,6 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "SELECT r from Venue v join v.bookingList r where v.email= :e order by r.id desc")
     List<Booking> getAllBookingList(@Param("e") String email);
 
-    @Query(value = "SELECT new com.vbs.vbs.dto.RateAndCost(f.rate , f.baseCost) from Venue v join v.functionList f where v.id= :i and f.event = :e")
-     RateAndCost getRateAndCost(@Param("i") Integer id , @Param("e") EventType eventType);
+    @Query(value = "SELECT new com.vbs.vbs.dto.RateAndCost(f.rate , f.baseCost) from Venue v join v.functionList f where v.email= :e and f.event = :f")
+     RateAndCost getRateAndCost(@Param("e") String vEmail, @Param("f") EventType eventType);
 }
