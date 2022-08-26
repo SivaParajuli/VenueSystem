@@ -55,8 +55,8 @@ public class Venue implements Serializable {
     @Column (columnDefinition = "Text")
     private String description;
 
-//    @Lob @Basic(fetch = FetchType.LAZY)
-//    @Column(columnDefinition = "MEDIUMBLOB")
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
     @OneToMany(targetEntity = Booking.class,mappedBy = "venue",cascade = CascadeType.ALL)
