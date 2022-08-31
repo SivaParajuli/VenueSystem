@@ -3,6 +3,7 @@ package com.vbs.vbs.controller;
 
 import com.vbs.vbs.dto.*;
 import com.vbs.vbs.models.Booking;
+import com.vbs.vbs.models.EventsCostAndRate;
 import com.vbs.vbs.services.BookingServices;
 import com.vbs.vbs.services.VenueService;
 import org.springframework.http.HttpStatus;
@@ -96,10 +97,10 @@ public class VenueController extends BaseController {
 
     @PostMapping(path="updateEventDetails/{email}")
     public ResponseEntity<ResponseDto> createClient(@RequestBody EventDto eventDto ,@PathVariable("email") String email) {
-        eventDto =venueService.uploadEventDetails(eventDto,email);
+        EventsCostAndRate eventsCostAndRate =venueService.uploadEventDetails(eventDto,email);
         if(eventDto !=null){
             return new ResponseEntity<>
-                    (successResponse("Event Updated on "+email, eventDto), HttpStatus.CREATED);
+                    (successResponse("Event Updated on "+email, eventsCostAndRate), HttpStatus.CREATED);
         }
         else{
             return new ResponseEntity<>

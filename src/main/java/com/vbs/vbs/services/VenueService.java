@@ -2,6 +2,7 @@ package com.vbs.vbs.services;
 import com.vbs.vbs.dto.EventDto;
 import com.vbs.vbs.dto.VenueDto;
 import com.vbs.vbs.models.Booking;
+import com.vbs.vbs.models.EventsCostAndRate;
 
 
 import java.util.List;
@@ -25,6 +26,5 @@ public interface VenueService{
 
     List<?> getAllBookedDate(String email);
 
-
-    EventDto uploadEventDetails(EventDto eventDto, String email);
+    EventsCostAndRate uploadEventDetails(EventDto eventDto, String email);
 }

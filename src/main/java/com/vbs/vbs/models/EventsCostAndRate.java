@@ -1,7 +1,6 @@
 package com.vbs.vbs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.vbs.vbs.enums.EventType;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,20 +13,26 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Table(name="tbl_function")
 
-public class FunctionType implements Serializable {
+public class EventsCostAndRate implements Serializable {
     @Id
+    @SequenceGenerator(name = "function_id_sequence", sequenceName = "function_id_sequence")
+    @GeneratedValue(generator = "function_id_sequence", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name = "eventType")
-    private EventType event;
+    private Double marriageCost;
+
+    private Double conclaveCost;
+
+    private Double familyFunctionCost;
+
+    private Double collegeEventCost;
+
+    private Double annualMeetCost;
 
     private Double rate;
-
-    private Double baseCost;
 
     @JsonIgnoreProperties({"password","description","bookingList","functionList","applicationUserRole"})
     @ManyToOne(targetEntity = Venue.class,fetch =FetchType.LAZY)
     @JoinColumn(name="v_id",foreignKey = @ForeignKey(name ="Fk_FR_venueId"))
     private Venue venue1;
-
 }

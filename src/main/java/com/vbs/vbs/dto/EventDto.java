@@ -1,6 +1,5 @@
 package com.vbs.vbs.dto;
 
-import com.vbs.vbs.models.FunctionType;
 import lombok.*;
 
 
@@ -10,9 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class EventDto {
-    private FunctionType marriage;
-    private FunctionType conclave;
-    private FunctionType collegeEvent;
-    private FunctionType annualMeet;
-    private FunctionType familyParty;
+    private String marriage;
+    private String conclave;
+    private String collegeEvent;
+    private String annualMeet;
+    private String familyParty;
+    private String rate;
 }

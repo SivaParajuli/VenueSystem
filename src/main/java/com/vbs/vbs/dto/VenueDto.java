@@ -2,7 +2,7 @@ package com.vbs.vbs.dto;
 
 import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.VenueStatus;
-import com.vbs.vbs.models.FunctionType;
+import com.vbs.vbs.models.EventsCostAndRate;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +31,6 @@ public class VenueDto {
     //used while listing and sending data to front end
     private String filePath;
     private String capacity;
-    private List<FunctionType> functionList;
+    private List<EventsCostAndRate> functionList;
 
 }

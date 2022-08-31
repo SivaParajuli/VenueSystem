@@ -1,10 +1,17 @@
 package com.vbs.vbs.utils;
 
 import com.vbs.vbs.enums.EventType;
+import com.vbs.vbs.models.EventsCostAndRate;
+import com.vbs.vbs.repo.VenueRepo;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookingUtils {
+   private final VenueRepo venueRepo;
+
+    public BookingUtils(VenueRepo venueRepo) {
+        this.venueRepo = venueRepo;
+    }
 
     public EventType getEvent(String event){
         if(event.equals("Marriage")){
@@ -55,5 +62,25 @@ public class BookingUtils {
             return (baseCost + (baseCost * (rate +120) / 100));
         }
         return (baseCost + (baseCost * (rate +200) / 100));
+    }
+
+    public Double getCost(String event,String vEmail){
+        EventsCostAndRate eventsCostAndRate = venueRepo.getRateAndCost(vEmail);
+        if(event.equals("Marriage")){
+            return eventsCostAndRate.getMarriageCost();
+        }
+        if(event.equals("Conclave")){
+            return eventsCostAndRate.getConclaveCost();
+        }
+        if(event.equals("College Function")){
+            return eventsCostAndRate.getCollegeEventCost();
+        }
+        if(event.equals("Annual Meet")){
+            return eventsCostAndRate.getAnnualMeetCost();
+        }
+        if(event.equals("Family Party")){
+            return eventsCostAndRate.getFamilyFunctionCost();
+        }
+        return null;
     }
 }

@@ -1,11 +1,10 @@
 package com.vbs.vbs.services.Impl;
 
-
 import com.vbs.vbs.dto.BookingDto;
-import com.vbs.vbs.dto.RateAndCost;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.models.Client;
+import com.vbs.vbs.models.EventsCostAndRate;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.repo.ClientRepo;
@@ -47,14 +46,13 @@ public class BookingServicesImpl implements BookingServices {
            throw new IOException("invalid requirement");
         }
         EventType eventType = bookingUtils.getEvent(bookingDto.getFunctionType());
-        RateAndCost rateAndCost = venueRepo.getRateAndCost(vEmail,eventType);
+        EventsCostAndRate rateAndCost = venueRepo.getRateAndCost(vEmail);
+        Integer cPayment = Integer.parseInt(bookingDto.getRequiredCapacity());
         Booking entity = Booking.builder()
                 .bookingDate(bookingDto.getBookingDate())
-                .eventType(bookingUtils.getEvent(bookingDto.getFunctionType()))
+                .eventType(eventType)
+                .calculatedPayment(bookingUtils.calculatePayment(rateAndCost.getRate(), bookingUtils.getCost(bookingDto.getFunctionType(),vEmail),cPayment))
                 .bookingStatus(BookingStatus.PENDING)
-                .calculatedPayment(bookingUtils.calculatePayment(rateAndCost.getRate(),
-                                rateAndCost.getCost(),
-                                Integer.parseInt(bookingDto.getRequiredCapacity())))
                 .requiredCapacity(bookingDto.getRequiredCapacity())
                 .contactNumber(bookingDto.getContactNumber())
                 .client(client1)

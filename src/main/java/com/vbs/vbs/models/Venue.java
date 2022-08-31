@@ -62,6 +62,6 @@ public class Venue implements Serializable {
     @OneToMany(targetEntity = Booking.class,mappedBy = "venue",cascade = CascadeType.ALL)
     private List<Booking> bookingList;
 
-    @OneToMany(targetEntity = FunctionType.class,mappedBy = "venue1",cascade = CascadeType.ALL)
-    private List<FunctionType> functionList;
+    @OneToMany(targetEntity = EventsCostAndRate.class,mappedBy = "venue1",cascade = CascadeType.ALL)
+    private List<EventsCostAndRate> functionList;
 }

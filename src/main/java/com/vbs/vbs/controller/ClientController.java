@@ -60,7 +60,7 @@ public class ClientController extends BaseController {
                                                       @PathVariable("email") String email) throws IOException {
         Booking booking1 = bookingServices.VenueBookingRequest(bookingDto,vEmail,email);
         if(booking1 !=null){
-            emailSenderService.sendEmail(venueService.findVenueByEmail(vEmail).getEmail(),
+            emailSenderService.sendEmail(vEmail,
                     "Booking Request",
                     "You have Booking request for "+bookingDto.getBookingDate()+". Please response in time .");
 

@@ -2,16 +2,18 @@ package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.EventDto;
 import com.vbs.vbs.dto.VenueDto;
+import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
-import com.vbs.vbs.models.FunctionType;
+import com.vbs.vbs.models.EventsCostAndRate;
 import com.vbs.vbs.models.Venue;
 import com.vbs.vbs.repo.FunctionRepo;
 import com.vbs.vbs.repo.VenueRepo;
 import com.vbs.vbs.security.user.UserRepo;
 import com.vbs.vbs.services.VenueService;
+import com.vbs.vbs.utils.FileStorageUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,19 +28,21 @@ public class VenueServiceImpl  implements VenueService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final FunctionRepo functionRepo;
+    private final FileStorageUtils fileStorageUtils;
 
 
-    public VenueServiceImpl(VenueRepo venueRepo, UserRepo userRepo, PasswordEncoder passwordEncoder, FunctionRepo functionRepo) {
+    public VenueServiceImpl(VenueRepo venueRepo, UserRepo userRepo, PasswordEncoder passwordEncoder, FunctionRepo functionRepo, FileStorageUtils fileStorageUtils) {
         this.venueRepo = venueRepo;
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
         this.functionRepo = functionRepo;
+        this.fileStorageUtils = fileStorageUtils;
     }
 
     @Override
     public List<VenueDto> findAll() {
         List<Venue> venueList = venueRepo.findAll();
-        return venueList.stream().map(entity-> VenueDto.builder()
+        return venueList.stream().map(entity -> VenueDto.builder()
                 .venueName(entity.getVenueName())
                 .userName(entity.getUserName())
                 .capacity(entity.getCapacity())
@@ -50,8 +54,8 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public VenueDto findVenueByEmail(String email) throws UsernameNotFoundException {
-        Optional<Venue> venue= venueRepo.findVenueByEmail(email);
-        if(venue.isPresent()){
+        Optional<Venue> venue = venueRepo.findVenueByEmail(email);
+        if (venue.isPresent()) {
             Venue venue1 = venue.get();
             return VenueDto.builder()
                     .id(venue1.getId())
@@ -71,8 +75,8 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public VenueDto findById(Integer id) {
-        Optional<Venue> venue =venueRepo.findById(id);
-        if(venue.isPresent()){
+        Optional<Venue> venue = venueRepo.findById(id);
+        if (venue.isPresent()) {
             Venue venue1 = venue.get();
             return VenueDto.builder()
                     .venueName(venue1.getVenueName())
@@ -93,20 +97,20 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<Booking> getRequestedBooking(String email) {
-            List<Booking> requestList = venueRepo.getAllPendingBookingRequest(email, BookingStatus.PENDING);
-            return requestList.stream().map(entity -> Booking.builder()
-                    .id(entity.getId())
-                    .bookingDate(entity.getBookingDate())
-                    .client(entity.getClient())
-                    .contactNumber(entity.getContactNumber())
-                    .eventType(entity.getEventType())
-                    .calculatedPayment(entity.getCalculatedPayment())
-                    .requiredCapacity(entity.getRequiredCapacity())
-                    .build()).collect(Collectors.toList());
+        List<Booking> requestList = venueRepo.getAllPendingBookingRequest(email, BookingStatus.PENDING);
+        return requestList.stream().map(entity -> Booking.builder()
+                .id(entity.getId())
+                .bookingDate(entity.getBookingDate())
+                .client(entity.getClient())
+                .contactNumber(entity.getContactNumber())
+                .eventType(entity.getEventType())
+                .calculatedPayment(entity.getCalculatedPayment())
+                .requiredCapacity(entity.getRequiredCapacity())
+                .build()).collect(Collectors.toList());
     }
 
     @Override
-    public Integer update(VenueDto venueDto , String email) {
+    public Integer update(VenueDto venueDto, String email) {
         Integer venue = venueRepo.update(
                 venueDto.getVenueName(),
                 venueDto.getUserName(),
@@ -115,7 +119,7 @@ public class VenueServiceImpl  implements VenueService {
                 passwordEncoder.encode(venueDto.getPassword()),
                 venueDto.getDescription(),
                 email);
-        if(venue != null){
+        if (venue != null) {
             Integer user = userRepo.update(
                     venueDto.getUserName(),
                     passwordEncoder.encode(venueDto.getPassword()),
@@ -125,8 +129,8 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     public List<VenueDto> getAllVerifiedVenue() {
-        List<Venue> venueList= venueRepo.findAllVerifiedVenue(VenueStatus.VERIFY);
-        return venueList.stream().map(entity-> VenueDto.builder()
+        List<Venue> venueList = venueRepo.findAllVerifiedVenue(VenueStatus.VERIFY);
+        return venueList.stream().map(entity -> VenueDto.builder()
                 .id(entity.getId())
                 .venueName(entity.getVenueName())
                 .contactNumber(entity.getContactNumber())
@@ -143,8 +147,8 @@ public class VenueServiceImpl  implements VenueService {
 
     @Override
     public List<Booking> getBookingList(String email) {
-        List<Booking> requestList= venueRepo.getAllBookingList(email);
-        return requestList.stream().map(entity-> Booking.builder()
+        List<Booking> requestList = venueRepo.getAllBookingList(email);
+        return requestList.stream().map(entity -> Booking.builder()
                 .id(entity.getId())
                 .bookingDate(entity.getBookingDate())
                 .client(entity.getClient())
@@ -163,54 +167,25 @@ public class VenueServiceImpl  implements VenueService {
     }
 
     @Override
-    public EventDto uploadEventDetails(EventDto eventDto, String email) {
-        Venue venue = venueRepo.findVenueByEmail(email).orElseThrow(()->new RuntimeException("venueNotFound"));
-        FunctionType marriage = eventDto.getMarriage();
-        FunctionType f1 = FunctionType.builder()
-                .id(101)
-                .event(EventType.MARRIAGE)
-                .baseCost(marriage.getBaseCost())
-                .rate(marriage.getRate())
+    public EventsCostAndRate uploadEventDetails(EventDto eventDto, String email) {
+        Venue venue = venueRepo.findVenueByEmail(email).orElseThrow(() -> new RuntimeException("venueNotFound"));
+        EventsCostAndRate entity = EventsCostAndRate.builder()
+                .marriageCost(Double.parseDouble(eventDto.getMarriage()))
+                .annualMeetCost(Double.parseDouble(eventDto.getAnnualMeet()))
+                .collegeEventCost(Double.parseDouble(eventDto.getCollegeEvent()))
+                .conclaveCost(Double.parseDouble(eventDto.getConclave()))
+                .familyFunctionCost(Double.parseDouble(eventDto.getFamilyParty()))
+                .rate(Double.parseDouble(eventDto.getRate()))
                 .venue1(venue)
                 .build();
-        FunctionType conclave = eventDto.getConclave();
-        FunctionType f2 = FunctionType.builder()
-                .id(102)
-                .event(EventType.CONCLAVE)
-                .baseCost(conclave.getBaseCost())
-                .rate(conclave.getRate())
-                .venue1(venue)
+        entity = functionRepo.save(entity);
+        return EventsCostAndRate.builder()
+                .familyFunctionCost(entity.getFamilyFunctionCost())
+                .id(entity.getId())
+                .collegeEventCost(entity.getCollegeEventCost())
+                .marriageCost(entity.getMarriageCost())
+                .annualMeetCost(entity.getAnnualMeetCost())
                 .build();
-        FunctionType collegeEvent = eventDto.getCollegeEvent();
-        FunctionType f3 = FunctionType.builder()
-                .id(103)
-                .event(EventType.COLLEGE_EVENT)
-                .baseCost(collegeEvent.getBaseCost())
-                .rate(collegeEvent.getRate())
-                .venue1(venue)
-                .build();
-        FunctionType annualMeet = eventDto.getAnnualMeet();
-        FunctionType f4 = FunctionType.builder()
-                .id(104)
-                .event(EventType.ANNUAL_MEET)
-                .baseCost(annualMeet.getBaseCost())
-                .rate(annualMeet.getRate())
-                .venue1(venue)
-                .build();
-        FunctionType familyParty = eventDto.getFamilyParty();
-        FunctionType f5 = FunctionType.builder()
-                .id(105)
-                .event(EventType.FAMILY_PARTY)
-                .baseCost(familyParty.getBaseCost())
-                .rate(familyParty.getRate())
-                .venue1(venue)
-                .build();
-        List<FunctionType> functions = Arrays.asList(f1, f2, f3, f4, f5);
-        Iterable<FunctionType> persistedFunctions = functionRepo.saveAll(functions);
-        if(persistedFunctions != null){
-            return eventDto;
-        }
-        return null;
     }
 }
 
