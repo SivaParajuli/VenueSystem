@@ -56,6 +56,6 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     @Query(value = "SELECT r from Venue v join v.bookingList r where v.email= :e order by r.id desc")
     List<Booking> getAllBookingList(@Param("e") String email);
 
-    @Query(value = "SELECT f.marriageCost,f.annualMeetCost,f.conclaveCost,f.collegeEventCost,f.familyFunctionCost from Venue v join v.functionList f where v.email= :e")
+    @Query(value = "SELECT new com.vbs.vbs.dto.EventsCostCalculation(f.marriageCost,f.annualMeetCost,f.conclaveCost,f.collegeEventCost,f.familyFunctionCost,f.rate) from Venue v join v.functionList f where v.email= :e")
     EventsCostAndRate getRateAndCost(@Param("e") String vEmail);
 }

@@ -21,7 +21,7 @@ public class MainController extends BaseController{
     }
     @GetMapping
     public ResponseEntity findInMainPage(){
-        List<VenueDto> venueDtoList = venueService.findAll();
+        List<VenueDto> venueDtoList = venueService.getAllVerifiedVenue();
         return new ResponseEntity<>
                 (successResponse("Venue List for main page Fetched", venueDtoList), HttpStatus.OK);
 

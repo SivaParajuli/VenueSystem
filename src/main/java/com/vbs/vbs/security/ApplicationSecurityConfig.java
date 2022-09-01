@@ -1,7 +1,5 @@
 package com.vbs.vbs.security;
 
-
-import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.security.service.ApplicationUserService;
 import com.vbs.vbs.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/login/**","/register/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/login/**","/register/**","/").permitAll()
                 .anyRequest().authenticated();
 
     }
