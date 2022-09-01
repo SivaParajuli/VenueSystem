@@ -39,9 +39,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/login/**","/register/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/home-").permitAll()
-                .antMatchers("/client-/**").hasRole(ApplicationUserRole.CLIENT.name())
-                .antMatchers("/venue-/**").hasRole(ApplicationUserRole.VENUE.name())
-                .antMatchers("/admin-/**").hasRole(ApplicationUserRole.ADMIN.name())
+                .antMatchers(HttpMethod.POST,"/client-/**").hasRole(ApplicationUserRole.CLIENT.name())
+                .antMatchers(HttpMethod.GET,"/client-/**").hasRole(ApplicationUserRole.CLIENT.name())
+                .antMatchers(HttpMethod.POST,"/venue-/**").hasRole(ApplicationUserRole.VENUE.name())
+                .antMatchers(HttpMethod.GET,"/venue-/**").hasRole(ApplicationUserRole.VENUE.name())
+                .antMatchers(HttpMethod.POST,"/admin-/**").hasRole(ApplicationUserRole.ADMIN.name())
+                .antMatchers(HttpMethod.GET,"/admin-/**").hasRole(ApplicationUserRole.ADMIN.name())
                 .anyRequest().authenticated();
 
     }
