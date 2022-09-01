@@ -1,5 +1,6 @@
 package com.vbs.vbs.utils;
 
+import com.vbs.vbs.dto.EventsCostCalculation;
 import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.models.EventsCostAndRate;
 import com.vbs.vbs.repo.VenueRepo;
@@ -65,21 +66,21 @@ public class BookingUtils {
     }
 
     public Double getCost(String event,String vEmail){
-        EventsCostAndRate eventsCostAndRate = venueRepo.getRateAndCost(vEmail);
+       EventsCostCalculation eventsCostAndRate = venueRepo.getRateAndCost(vEmail);
         if(event.equals("Marriage")){
-            return eventsCostAndRate.getMarriageCost();
+            return eventsCostAndRate.getMarriage();
         }
         if(event.equals("Conclave")){
-            return eventsCostAndRate.getConclaveCost();
+            return eventsCostAndRate.getConclave();
         }
         if(event.equals("College Function")){
-            return eventsCostAndRate.getCollegeEventCost();
+            return eventsCostAndRate.getCollegeEvent();
         }
         if(event.equals("Annual Meet")){
-            return eventsCostAndRate.getAnnualMeetCost();
+            return eventsCostAndRate.getAnnualMeet();
         }
         if(event.equals("Family Party")){
-            return eventsCostAndRate.getFamilyFunctionCost();
+            return eventsCostAndRate.getFamilyParty();
         }
         return null;
     }

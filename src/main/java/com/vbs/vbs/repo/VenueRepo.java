@@ -1,6 +1,7 @@
 package com.vbs.vbs.repo;
 
 import com.vbs.vbs.dto.EventDto;
+import com.vbs.vbs.dto.EventsCostCalculation;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.enums.VenueStatus;
@@ -57,5 +58,5 @@ public interface VenueRepo extends JpaRepository<Venue, Integer>{
     List<Booking> getAllBookingList(@Param("e") String email);
 
     @Query(value = "SELECT new com.vbs.vbs.dto.EventsCostCalculation(f.marriageCost,f.annualMeetCost,f.conclaveCost,f.collegeEventCost,f.familyFunctionCost,f.rate) from Venue v join v.functionList f where v.email= :e")
-    EventsCostAndRate getRateAndCost(@Param("e") String vEmail);
+    EventsCostCalculation getRateAndCost(@Param("e") String vEmail);
 }

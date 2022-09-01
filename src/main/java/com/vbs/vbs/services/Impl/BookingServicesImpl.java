@@ -1,6 +1,7 @@
 package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.BookingDto;
+import com.vbs.vbs.dto.EventsCostCalculation;
 import com.vbs.vbs.enums.BookingStatus;
 import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.models.Client;
@@ -46,7 +47,7 @@ public class BookingServicesImpl implements BookingServices {
            throw new IOException("invalid requirement");
         }
         EventType eventType = bookingUtils.getEvent(bookingDto.getFunctionType());
-        EventsCostAndRate rateAndCost = venueRepo.getRateAndCost(vEmail);
+        EventsCostCalculation rateAndCost = venueRepo.getRateAndCost(vEmail);
         Integer cPayment = Integer.parseInt(bookingDto.getRequiredCapacity());
         Booking entity = Booking.builder()
                 .bookingDate(bookingDto.getBookingDate())
