@@ -35,7 +35,7 @@ public class ClientController extends BaseController {
         this.clientService = clientService;
         this.emailSenderService = emailSenderService;
     }
-    @GetMapping()
+    @GetMapping("clientHome")
     public ResponseEntity<ResponseDto> getAllVerifiedVenue(){
         List<VenueDto> venueList =venueService.getAllVerifiedVenue();
         return new ResponseEntity<>
