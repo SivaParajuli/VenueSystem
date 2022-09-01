@@ -85,6 +85,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .address(venueDto.getAddress())
                 .description(venueDto.getDescription())
                 .userName(venueDto.getUserName())
+                .capacity(venueDto.getCapacity())
                 .applicationUserRole(ApplicationUserRole.VENUE)
                 .venueStatus(VenueStatus.PENDING)
                 .image(file)
@@ -96,6 +97,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .email(entity.getEmail())
                 .userName(entity.getUserName())
                 .filePath(entity.getImage())
+                .capacity(entity.getCapacity())
                 .applicationUserRole(entity.getApplicationUserRole())
                 .venueStatus(entity.getVenueStatus())
                 .build();
@@ -112,6 +114,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .applicationUserRole(entity.getApplicationUserRole())
                 .venueStatus(entity.getVenueStatus())
                 .userName(entity.getUserName())
+                .capacity(entity.getCapacity())
                 .filePath(entity.getImage())
                 .description(entity.getDescription())
                 .build()).collect(Collectors.toList());
