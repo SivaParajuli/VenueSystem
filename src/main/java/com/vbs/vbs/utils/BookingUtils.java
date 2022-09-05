@@ -14,74 +14,88 @@ public class BookingUtils {
         this.venueRepo = venueRepo;
     }
 
-    public EventType getEvent(String event){
-        if(event.equals("Marriage")){
-            return EventType.MARRIAGE;
+    public EventType getEvent(String event) {
+        EventType eventType = null;
+        switch (event) {
+            case "Marriage":
+                eventType = EventType.MARRIAGE;
+            break;
+
+            case "Conclave":
+                eventType = EventType.CONCLAVE;
+            break;
+
+            case "College Function":
+               eventType = EventType.COLLEGE_EVENT;
+            break;
+
+            case "Annual Meet":
+                eventType = EventType.ANNUAL_MEET;
+            break;
+
+            case "Family Party":
+                eventType = EventType.FAMILY_PARTY;
+            break;
         }
-        if(event.equals("Conclave")){
-            return EventType.CONCLAVE;
-        }
-        if(event.equals("College Function")){
-            return EventType.COLLEGE_EVENT;
-        }
-        if(event.equals("Annual Meet")){
-            return EventType.MARRIAGE;
-        }
-        if(event.equals("Family Party")){
-            return EventType.MARRIAGE;
-        }
-        return null;
+        return eventType;
     }
 
-    public Double calculatePayment(Double rate , Double baseCost , Integer requiredCapacity){
 
-        if(requiredCapacity <= 100){
-            return baseCost;
-        }
-        if(requiredCapacity <= 150){
-            return (baseCost + (baseCost *rate / 100));
-        }
-        if(requiredCapacity <= 200){
-            return (baseCost + (baseCost * (rate +15) / 100));
-        }
-        if(requiredCapacity <= 250){
-            return (baseCost + (baseCost * (rate +30) / 100));
-        }
-        if(requiredCapacity <= 300){
-            return (baseCost + (baseCost * (rate +40) / 100));
-        }
-        if(requiredCapacity <= 350){
-            return (baseCost + (baseCost * (rate +50) / 100));
-        }
-        if(requiredCapacity <= 400){
-            return (baseCost + (baseCost * (rate +70) / 100));
-        }
-        if(requiredCapacity <= 450){
-            return (baseCost + (baseCost * (rate +90) / 100));
-        }
-        if(requiredCapacity <= 500){
-            return (baseCost + (baseCost * (rate +120) / 100));
-        }
-        return (baseCost + (baseCost * (rate +200) / 100));
-    }
+    public Double calculatePayment(Double rate , Double baseCost , Integer requiredCapacity) {
 
-    public Double getCost(String event,String vEmail){
-       EventsCostCalculation eventsCostAndRate = venueRepo.getRateAndCost(vEmail);
-        if(event.equals("Marriage")){
-            return eventsCostAndRate.getMarriage();
+
+            if (requiredCapacity <= 100){
+                return baseCost;
+            }
+            else if (requiredCapacity <= 150) {
+                return (baseCost + (baseCost * rate / 100));
+            }
+            else if (requiredCapacity <= 200) {
+                return (baseCost + (baseCost * (rate + 15) / 100));
+            }
+            else if (requiredCapacity <= 250) {
+                return (baseCost + (baseCost * (rate + 30) / 100));
+            }
+            else if (requiredCapacity <= 300) {
+                return (baseCost + (baseCost * (rate + 40) / 100));
+            }
+            else if (requiredCapacity <= 350) {
+                return (baseCost + (baseCost * (rate + 50) / 100));
+            }
+            else if (requiredCapacity <= 400) {
+                return (baseCost + (baseCost * (rate + 70) / 100));
+            }
+            else if (requiredCapacity <= 450) {
+                return (baseCost + (baseCost * (rate + 90) / 100));
+            }
+            else if (requiredCapacity <= 500) {
+                return (baseCost + (baseCost * (rate + 120) / 100));
+            }
+            else
+                return (baseCost + (baseCost * (rate + 200) / 100));
         }
-        if(event.equals("Conclave")){
-            return eventsCostAndRate.getConclave();
+
+    public Double getCost(String event,String vEmail) {
+
+        Double cost = null;
+        EventsCostCalculation eventsCostAndRate = venueRepo.getRateAndCost(vEmail);
+        switch (event) {
+            case "Marriage":
+               cost = eventsCostAndRate.getMarriage();
+               break;
+            case "Conclave":
+                cost = eventsCostAndRate.getConclave();
+                break;
+            case "College Function":
+                cost = eventsCostAndRate.getCollegeEvent();
+                break;
+            case "Annual Meet":
+               cost = eventsCostAndRate.getAnnualMeet();
+               break;
+            case "Family Party":
+                cost = eventsCostAndRate.getFamilyParty();
+                break;
         }
-        if(event.equals("College Function")){
-            return eventsCostAndRate.getCollegeEvent();
-        }
-        if(event.equals("Annual Meet")){
-            return eventsCostAndRate.getAnnualMeet();
-        }
-        if(event.equals("Family Party")){
-            return eventsCostAndRate.getFamilyParty();
-        }
-        return null;
+        return cost;
     }
 }
