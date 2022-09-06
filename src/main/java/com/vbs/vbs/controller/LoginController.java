@@ -24,7 +24,7 @@ public class LoginController extends BaseController{
         User signInRequest1 = authenticationService.signInAndReturnJWT(signInRequest);
         if(signInRequest1 != null){
             return new ResponseEntity<>
-                    (successResponse("Login Sucessfull",signInRequest1), HttpStatus.OK);
+                    (successResponse("Login Successful",signInRequest1), HttpStatus.OK);
         }
         return new ResponseEntity<>
                 (errorResponse("login failed",signInRequest),HttpStatus.BAD_REQUEST);
