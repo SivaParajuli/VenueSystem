@@ -163,7 +163,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .email(admin.getEmail())
                 .uname(admin.getName())
                 .password(passwordEncoder.encode(admin.getPassword()))
-                .applicationUserRole(ApplicationUserRole.CLIENT).build();
+                .applicationUserRole(ApplicationUserRole.ADMIN).build();
         userRepo.save(entity1);
         adminRepo.save(entity);
         return Admin.builder()

@@ -84,5 +84,12 @@ public class AdminController extends BaseController {
                 (successResponse("All Client fetched", clientList),HttpStatus.OK);
     }
 
+
+    @GetMapping("newRegistration")
+    public ResponseEntity<ResponseDto> getNumberOfNewRegistration(){
+        Integer newRegistrationRequests =venueService.getNumberOfNewRegistration();
+        return new ResponseEntity<>
+                (successResponse("Number of new Registration Requests", newRegistrationRequests),HttpStatus.OK);
+    }
 }
 

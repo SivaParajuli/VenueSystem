@@ -107,4 +107,11 @@ public class VenueController extends BaseController {
                     (errorResponse("Event Updation Failed",null),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("bookingRequest/{email}")
+    public ResponseEntity<ResponseDto> getNumberOfBooking(@PathVariable("email")  String email){
+        Integer bookingRequest =venueService.getNumberOfBooking(email);
+        return new ResponseEntity<>
+                (successResponse("Number of Booking Request", bookingRequest),HttpStatus.OK);
+    }
 }

@@ -27,4 +27,8 @@ public interface VenueService{
     List<?> getAllBookedDate(String email);
 
     EventsCostAndRate uploadEventDetails(EventDto eventDto, String email);
+
+    Integer getNumberOfNewRegistration();
+
+    Integer getNumberOfBooking(String email);
 }

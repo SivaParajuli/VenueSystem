@@ -2,9 +2,7 @@ package com.vbs.vbs.services.Impl;
 
 import com.vbs.vbs.dto.EventDto;
 import com.vbs.vbs.dto.VenueDto;
-import com.vbs.vbs.enums.ApplicationUserRole;
 import com.vbs.vbs.enums.BookingStatus;
-import com.vbs.vbs.enums.EventType;
 import com.vbs.vbs.enums.VenueStatus;
 import com.vbs.vbs.models.Booking;
 import com.vbs.vbs.models.EventsCostAndRate;
@@ -187,5 +185,18 @@ public class VenueServiceImpl  implements VenueService {
                 .annualMeetCost(entity.getAnnualMeetCost())
                 .build();
     }
+
+    @Override
+    public Integer getNumberOfNewRegistration() {
+        Integer newRegistration = venueRepo.newRegistration(VenueStatus.PENDING);
+        return newRegistration;
+    }
+
+    @Override
+    public Integer getNumberOfBooking(String email) {
+        Integer numberOfBooking = venueRepo.getNumberOfBooking(email , BookingStatus.PENDING);
+        return numberOfBooking;
+    }
+
 }
 
